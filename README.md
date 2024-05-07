@@ -12,9 +12,8 @@
 ## Getting Started
 
 - Clone repo ini.
-- Pastikan package manager yang kamu pakai adalah pnpm. Jika belum punya, silahkan lihat tutorial installnya [disini](https://pnpm.io/installation).
-- Masuk ke folder project, kemudian ketikkan `pnpm install` untuk menginstall semua dependencies yang diperlukan.
-- Setelah itu, ketik `pnpm run dev` untuk menjalankan project dan lihat hasilnya di Browser => http://localhost:3000 .
+- Masuk ke folder project, kemudian ketikkan `npm install` untuk menginstall semua dependencies yang diperlukan.
+- Setelah itu, ketik `npm run dev` untuk menjalankan project dan lihat hasilnya di Browser => http://localhost:3000 .
 
 ## Note
 

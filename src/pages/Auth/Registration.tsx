@@ -4,17 +4,20 @@ import { CustomLink, Heading, Paragraph } from "@/components/ui/typography";
 import { useTitle } from "@/hooks";
 import { m } from "framer-motion";
 import { FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Registration() {
+  const navigate = useNavigate();
+
   useTitle("Registration | Taritme");
 
-  function handleForm(e: FormEvent<HTMLFormElement>) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
   }
 
   return (
     <m.div
-      transition={{ duration: 2 }}
+      transition={{ duration: 0.3 }}
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 30 }}
@@ -26,14 +29,15 @@ export default function Registration() {
             type="button"
             aria-label="kembali"
             className="flex justify-center items-center space-x-2"
+            onClick={() => navigate(-1)}
           >
             <img src="/images/arrow-back-icon.svg" alt="arrow back" />
             <span className="xl:text-2xl">Kembali</span>
           </button>
         </CustomLink>
-        <form onSubmit={handleForm} className="mt-14 xl:px-9 w-full">
+        <form onSubmit={handleSubmit} className="mt-20 xl:px-9 w-full">
           <Heading as="h1">Buat Akun!</Heading>
-          <div className="mt-14 flex w-full justify-center items-center flex-col">
+          <div className="mt-12 flex w-full justify-center items-center flex-col">
             <div className="flex justify-start items-center space-y-6 flex-col w-full">
               <div className="w-full space-y-5">
                 <div className="w-full">
@@ -82,7 +86,7 @@ export default function Registration() {
             <div className="flex my-10 flex-col justify-center items-center w-full">
               <Button
                 type="submit"
-                className="bg-meat-brown text-black hover:bg-meat-brown/90 rounded-3xl w-72 px-4 py-7"
+                className="bg-secondary-color text-black hover:bg-secondary-color/90 rounded-3xl w-72 px-4 py-7"
               >
                 <Paragraph>Daftar</Paragraph>
               </Button>
@@ -101,7 +105,7 @@ export default function Registration() {
             </div>
             <Paragraph className="text-sm">
               Sudah memiliki akun?{" "}
-              <CustomLink to="/registration">Masuk</CustomLink>
+              <CustomLink to="/auth/login">Masuk</CustomLink>
             </Paragraph>
           </div>
         </form>

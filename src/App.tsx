@@ -1,9 +1,9 @@
 import { AnimatePresence, LazyMotion, domAnimation } from "framer-motion";
 import { Route, Routes, useLocation } from "react-router-dom";
-import Login from "./pages/auth/login";
-import Registration from "./pages/auth/registration";
-import Home from "./pages/home";
-import NotFound from "./pages/not-found";
+import Login from "./pages/Auth/Login";
+import Registration from "./pages/Auth/Registration";
+import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
 
 export default function App() {
   const location = useLocation();

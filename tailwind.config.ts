@@ -22,6 +22,7 @@ const config = {
       },
       colors: {
         "primary-black": "#161925",
+        "primary-color": "#761217",
         "spanish-gray": "#A09898",
         "blue-pigment": "#38429A",
         "secondary-color": "#E1B83B",

@@ -9,19 +9,22 @@ export function Heading({ children, as, className, ...props }: HeadingProps) {
   return (
     <>
       {as === "h1" ? (
-        <h1 className={cn("text-5xl font-semibold", className)} {...props}>
+        <h1
+          className={cn("text-[32px] leading-9 font-semibold", className)}
+          {...props}
+        >
           {children}
         </h1>
       ) : as === "h2" ? (
-        <h2 className={cn("text-4xl font-semibold", className)} {...props}>
+        <h2 className={cn("text-2xl font-semibold", className)} {...props}>
           {children}
         </h2>
       ) : as === "h3" ? (
-        <h3 className={cn("text-3xl font-semibold", className)} {...props}>
+        <h3 className={cn("text-base font-semibold", className)} {...props}>
           {children}
         </h3>
       ) : as === "h4" ? (
-        <h4 className={cn("text-2xl font-semibold", className)} {...props}>
+        <h4 className={cn("text-xs font-semibold", className)} {...props}>
           {children}
         </h4>
       ) : null}

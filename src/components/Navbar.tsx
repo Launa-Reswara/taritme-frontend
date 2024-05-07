@@ -11,7 +11,8 @@ export default function Navbar() {
           <li>
             <CustomLink
               to="/"
-              className="dark:text-white text-primary-black font-medium"
+              className="dark:text-white text-primary-black font-medium px-4 py-2 transition-colors duration-300 hover:bg-red-800 hover:text-white hover:rounded-lg"
+              style={{ borderRadius: '20px' }}
             >
               Temukan Pelatih
             </CustomLink>
@@ -19,7 +20,8 @@ export default function Navbar() {
           <li>
             <CustomLink
               to="/arsip-kesenian"
-              className="dark:text-white text-primary-black font-medium"
+              className="dark:text-white text-primary-black font-medium px-4 py-2 transition-colors duration-300 hover:bg-red-800 hover:text-white hover:rounded-lg"
+              style={{ borderRadius: '20px' }}
             >
               Arsip Kesenian
             </CustomLink>
@@ -27,7 +29,8 @@ export default function Navbar() {
           <li>
             <CustomLink
               to="/komunitas"
-              className="dark:text-white text-primary-black font-medium"
+              className="dark:text-white text-primary-black font-medium px-4 py-2 transition-colors duration-300 hover:bg-red-800 hover:text-white hover:rounded-lg"
+              style={{ borderRadius: '20px' }}
             >
               Komunitas
             </CustomLink>

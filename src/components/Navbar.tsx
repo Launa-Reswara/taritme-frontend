@@ -35,26 +35,26 @@ export default function Navbar() {
              </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
-              <DropdownMenuItem>
-                <CustomLink to="/" className="dark:text-white">
+              <DropdownMenuItem >
+                <CustomLink to="/" className="text-primary-black">
                   Temukan Pelatih
                 </CustomLink>
                 <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <CustomLink to="/arsip-kesenian" className="dark:text-white">
+                <CustomLink to="/arsip-kesenian" className="text-primary-black">
                   Arsip Kesenian
                 </CustomLink>
                 <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <CustomLink to="/komunitas" className="dark:text-white">
+                <CustomLink to="/komunitas" className="text-primary-black">
                   Komunitas
                 </CustomLink>
                 <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <CustomLink to="" className="dark:text-white">
+                <CustomLink to="/auth/login" className="text-primary-black">
                   Masuk
                 </CustomLink>
                 <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
@@ -96,7 +96,7 @@ export default function Navbar() {
               <div>
                 <Button variant= "outline">
                   <CustomLink
-                    to=""
+                    to="/auth/login"
                     className="text-primary-color dark:text-secondary-color font-medium"
                   >
                     Masuk

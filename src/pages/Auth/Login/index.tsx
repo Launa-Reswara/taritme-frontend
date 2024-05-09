@@ -17,10 +17,10 @@ export default function Login() {
 
   return (
     <m.div
-      transition={{ duration: 0.3 }}
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 30 }}
+      transition={{ duration: 0.4 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
       className="flex justify-start min-h-svh items-start w-full"
     >
       <div className="hidden md:block fixed left-0 top-0 md:w-1/2 min-h-svh bg-cover bg-center bg-no-repeat bg-login-side-image"></div>
@@ -46,6 +46,7 @@ export default function Login() {
                       placeholder="Masukkan email"
                       name="email"
                       className="mt-2 border-spanish-gray rounded-full px-6 py-7"
+                      required
                     />
                   </div>
                   <div className="w-full">
@@ -54,12 +55,13 @@ export default function Login() {
                       placeholder="Masukkan password"
                       name="password"
                       className="mt-2 border-spanish-gray rounded-full px-6 py-7"
+                      required
                     />
                   </div>
                 </div>
                 <div className="flex justify-between items-center w-full">
                   <div className="flex w-full justify-start space-x-2 items-center">
-                    <input type="checkbox" name="ingatkan-saya" id="" />
+                    <input type="checkbox" name="ingatkan-saya" />
                     <Paragraph className="text-xs">Ingatkan saya</Paragraph>
                   </div>
                   <CustomLink
@@ -71,7 +73,10 @@ export default function Login() {
                 </div>
               </div>
               <div className="flex my-10 flex-col justify-center items-center w-full">
-                <Button className="text-black bg-secondary-color hover:bg-secondary-color/90 rounded-3xl w-72 px-4 py-7">
+                <Button
+                  className="text-black bg-secondary-color hover:bg-secondary-color/90 rounded-3xl w-72 px-4 py-7"
+                  type="submit"
+                >
                   <Paragraph>Masuk</Paragraph>
                 </Button>
                 <div className="my-5 flex justify-center items-center w-full space-x-3 px-3">

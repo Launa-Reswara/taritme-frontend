@@ -65,7 +65,7 @@ export default function Navbar() {
           //untuk tampilan web
           <>
             <ul className="flex justify-center items-center space-x-12">
-                <li>
+              <li>
                   <CustomLink
                     to="/"
                     className="dark:text-white text-primary-black font-medium px-4 py-2 transition-colors duration-300 hover:bg-red-800 hover:text-white hover:rounded-lg"

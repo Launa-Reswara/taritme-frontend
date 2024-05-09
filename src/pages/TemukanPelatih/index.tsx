@@ -1,6 +1,6 @@
 import Layout from "@/components/Layout";
 
-export default function DetailIkutiKursus() {
+export default function TemukanPelatih() {
   return (
     <Layout>
       <div></div>

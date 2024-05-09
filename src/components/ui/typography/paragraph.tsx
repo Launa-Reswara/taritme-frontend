@@ -7,7 +7,7 @@ export function Paragraph({ className, children, ...props }: ParagraphProps) {
   return (
     <p
       className={cn(
-        "text-base font-normal leading-[1.75] tracking-wide",
+        "text-base font-normal leading-[1.75] tracking-wide text-primary-black",
         "md:leading-[1.7777778]",
         className
       )}

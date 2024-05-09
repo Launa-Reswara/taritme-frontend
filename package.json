@@ -1,7 +1,14 @@
 {
   "name": "taritme-frontend",
-  "private": true,
   "version": "1.0.0",
+  "description": "Frontend side for Taritme",
+  "author": "Launa Reswara",
+  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Launa-Reswara/taritme-frontend"
+  },
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -14,8 +21,10 @@
     "@radix-ui/react-slot": "^1.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "embla-carousel-react": "^8.0.4",
     "framer-motion": "^11.1.7",
     "lucide-react": "^0.378.0",
+    "midtrans-client": "^1.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.4",

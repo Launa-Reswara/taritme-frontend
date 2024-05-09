@@ -1,14 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import { CustomLink } from "./ui/typography";
-import { Menu } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuShortcut,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+import { Menu } from 'lucide-react';
+import {DropdownMenu,DropdownMenuContent,DropdownMenuItem,DropdownMenuShortcut,DropdownMenuTrigger,} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button"
 
 export default function Navbar() {
   const [isMobile, setIsMobile] = useState(false);
@@ -20,9 +14,9 @@ export default function Navbar() {
     };
 
     handleResize(); // Initial check
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
@@ -36,12 +30,12 @@ export default function Navbar() {
         {isMobile ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline">
-                <Menu />
-              </Button>
+             <Button variant= "outline">
+              <Menu/>
+             </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
-              <DropdownMenuItem>
+              <DropdownMenuItem >
                 <CustomLink to="/" className="text-primary-black">
                   Temukan Pelatih
                 </CustomLink>
@@ -72,43 +66,43 @@ export default function Navbar() {
           <>
             <ul className="flex justify-center items-center space-x-12">
               <li>
-                <CustomLink
-                  to="/"
-                  className="dark:text-white text-primary-black font-medium px-4 py-2 transition-colors duration-300 hover:bg-red-800 hover:text-white hover:rounded-lg"
-                  style={{ borderRadius: "20px" }}
-                >
-                  Temukan Pelatih
-                </CustomLink>
-              </li>
-              <li>
-                <CustomLink
-                  to="/arsip-kesenian"
-                  className="dark:text-white text-primary-black font-medium px-4 py-2 transition-colors duration-300 hover:bg-red-800 hover:text-white hover:rounded-lg"
-                  style={{ borderRadius: "20px" }}
-                >
-                  Arsip Kesenian
-                </CustomLink>
-              </li>
-              <li>
-                <CustomLink
-                  to="/komunitas"
-                  className="dark:text-white text-primary-black font-medium px-4 py-2 transition-colors duration-300 hover:bg-red-800 hover:text-white hover:rounded-lg"
-                  style={{ borderRadius: "20px" }}
-                >
-                  Komunitas
-                </CustomLink>
-              </li>
-            </ul>
-            <div>
-              <Button variant="outline">
-                <CustomLink
-                  to="/auth/login"
-                  className="text-primary-color dark:text-secondary-color font-medium"
-                >
-                  Masuk
-                </CustomLink>
-              </Button>
-            </div>
+                  <CustomLink
+                    to="/"
+                    className="dark:text-white text-primary-black font-medium px-4 py-2 transition-colors duration-300 hover:bg-red-800 hover:text-white hover:rounded-lg"
+                    style={{ borderRadius: '20px' }}
+                  >
+                    Temukan Pelatih
+                  </CustomLink>
+                </li>
+                <li>
+                  <CustomLink
+                    to="/arsip-kesenian"
+                    className="dark:text-white text-primary-black font-medium px-4 py-2 transition-colors duration-300 hover:bg-red-800 hover:text-white hover:rounded-lg"
+                    style={{ borderRadius: '20px' }}
+                  >
+                    Arsip Kesenian
+                  </CustomLink>
+                </li>
+                <li>
+                  <CustomLink
+                    to="/komunitas"
+                    className="dark:text-white text-primary-black font-medium px-4 py-2 transition-colors duration-300 hover:bg-red-800 hover:text-white hover:rounded-lg"
+                    style={{ borderRadius: '20px' }}
+                  >
+                    Komunitas
+                  </CustomLink>
+                </li>
+              </ul>
+              <div>
+                <Button variant= "outline">
+                  <CustomLink
+                    to="/auth/login"
+                    className="text-primary-color dark:text-secondary-color font-medium"
+                  >
+                    Masuk
+                  </CustomLink>
+                  </Button>
+              </div>
           </>
         )}
       </nav>

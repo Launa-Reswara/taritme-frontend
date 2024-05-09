@@ -1,6 +1,6 @@
 import Layout from "@/components/Layout";
 
-export default function FindTrainer() {
+export default function DetailTemukanPelatih() {
   return (
     <Layout>
       <div></div>

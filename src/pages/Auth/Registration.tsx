@@ -17,10 +17,10 @@ export default function Registration() {
 
   return (
     <m.div
-      transition={{ duration: 0.3 }}
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 30 }}
+      transition={{ duration: 0.4 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
       className="flex justify-start min-h-svh items-start w-full"
     >
       <div className="w-full md:w-1/2 py-10 px-6 xl:px-16">

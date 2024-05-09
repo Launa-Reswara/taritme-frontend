@@ -80,3 +80,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+.box-polygon-home {
+  height: 100%;
+  width: 100%;
+  clip-path: polygon(0 100%, 0 19%, 21% 19%, 35% 0, 100% 0, 100% 100%);
+}
+
+.parent-polygon-home {
+  filter: url("#polygon-home");
+}

@@ -17,7 +17,7 @@ export default function App() {
 
   return (
     <LazyMotion features={domAnimation}>
-      <AnimatePresence mode="wait" initial={false}>
+      <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<Home />} />
           <Route path="/auth/login" element={<Login />} />

@@ -10,10 +10,12 @@ import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { useTitle } from "@/hooks";
 import { cn } from "@/lib/utils/cn";
+import { listArsipKesenian } from "@/lib/utils/data";
 import { m } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link } from "react-router-dom";
+import slugify from "slugify";
 
 export default function Home() {
   useTitle("Home | Taritme");
@@ -120,109 +122,49 @@ export default function Home() {
                   className="pl-20 pr-6 py-5"
                 >
                   <CarouselContent className="flex justify-start mr-20 items-center">
-                    <CarouselItem className="basis-1/3 min-w-[250px]">
-                      <Card className="p-4 rounded-xl md:w-full max-w-full bg-white">
-                        <Image
-                          src="/images/tari-piring-home.png"
-                          alt="thumbnail"
-                          className="w-full"
-                        />
-                        <div className="mt-2">
-                          <div className="flex justify-center items-center w-fit space-x-1">
-                            <LazyLoadImage
-                              src="/images/electric-icon.svg"
-                              alt="electric icon"
-                              draggable={false}
-                            />
-                            <Paragraph className="text-xs">
-                              5 Mins read
+                    {listArsipKesenian.map((item) => (
+                      <CarouselItem className="basis-1/3 min-w-[250px]">
+                        <Card className="p-4 rounded-xl md:w-full max-w-full bg-white">
+                          <Image
+                            src="/images/tari-piring-home.png"
+                            alt="thumbnail"
+                            className="w-full"
+                          />
+                          <div className="mt-2">
+                            <div className="flex justify-center items-center w-fit space-x-1">
+                              <LazyLoadImage
+                                src="/images/electric-icon.svg"
+                                alt="electric icon"
+                                draggable={false}
+                              />
+                              <Paragraph className="text-xs">
+                                {item.readingTime}
+                              </Paragraph>
+                            </div>
+                            <Paragraph className="font-medium mt-1">
+                              {item.title}
                             </Paragraph>
+                            <div className="flex mt-2 justify-center items-center space-x-2 w-fit">
+                              <Image
+                                src="/images/leonardo-da-vince.svg"
+                                alt="author"
+                              />
+                              <Paragraph>{item.author}</Paragraph>
+                            </div>
+                            <Link
+                              to={`/arsip-kesenian/${slugify(item.title, {
+                                lower: true,
+                              })}`}
+                            >
+                              <Button className="bg-primary-color flex justify-center items-center space-x-2 rounded-full mt-8 text-white hover:bg-primary-black">
+                                <span>Baca Selengkapnya</span>
+                                <ArrowRight />
+                              </Button>
+                            </Link>
                           </div>
-                          <Paragraph className="font-medium mt-1">
-                            Kesenian Tari Piring
-                          </Paragraph>
-                          <div className="flex mt-2 justify-center items-center space-x-2 w-fit">
-                            <Image
-                              src="/images/leonardo-da-vince.svg"
-                              alt="author"
-                            />
-                            <Paragraph>Leonardo Da Vince</Paragraph>
-                          </div>
-                          <Button className="bg-primary-color flex justify-center items-center space-x-2 rounded-full mt-8 text-white hover:bg-primary-black">
-                            <span>Baca Selengkapnya</span>
-                            <ArrowRight />
-                          </Button>
-                        </div>
-                      </Card>
-                    </CarouselItem>
-                    <CarouselItem className="basis-1/3 min-w-[250px] md:w-full max-w-full">
-                      <Card className="p-4 rounded-xl bg-white">
-                        <Image
-                          src="/images/tari-piring-home.png"
-                          alt="thumbnail"
-                          className="w-full"
-                        />
-                        <div className="mt-2">
-                          <div className="flex justify-center items-center w-fit space-x-1">
-                            <LazyLoadImage
-                              src="/images/electric-icon.svg"
-                              alt="electric icon"
-                              draggable={false}
-                            />
-                            <Paragraph className="text-xs">
-                              5 Mins read
-                            </Paragraph>
-                          </div>
-                          <Paragraph className="font-medium mt-1">
-                            Kesenian Tari Piring
-                          </Paragraph>
-                          <div className="flex mt-2 justify-center items-center space-x-2 w-fit">
-                            <Image
-                              src="/images/leonardo-da-vince.svg"
-                              alt="author"
-                            />
-                            <Paragraph>Leonardo Da Vince</Paragraph>
-                          </div>
-                          <Button className="bg-primary-color rounded-full mt-8 text-white hover:bg-primary-black">
-                            Baca Selengkapnya
-                          </Button>
-                        </div>
-                      </Card>
-                    </CarouselItem>
-                    <CarouselItem className="basis-1/3 min-w-[250px] md:w-full max-w-full">
-                      <Card className="p-4 rounded-xl bg-white">
-                        <Image
-                          src="/images/tari-piring-home.png"
-                          alt="thumbnail"
-                          className="w-[300px]"
-                        />
-                        <div className="mt-2">
-                          <div className="flex justify-center items-center w-fit space-x-1">
-                            <LazyLoadImage
-                              src="/images/electric-icon.svg"
-                              alt="electric icon"
-                              draggable={false}
-                            />
-                            <Paragraph className="text-xs">
-                              5 Mins read
-                            </Paragraph>
-                          </div>
-                          <Paragraph className="font-medium mt-1">
-                            Kesenian Tari Piring
-                          </Paragraph>
-                          <div className="flex mt-2 justify-center items-center space-x-2 w-fit">
-                            <Image
-                              src="/images/leonardo-da-vince.svg"
-                              alt="author"
-                            />
-                            <Paragraph>Leonardo Da Vince</Paragraph>
-                          </div>
-                          <Button className="bg-primary-color rounded-full mt-8 text-white hover:bg-primary-black">
-                            Baca Selengkapnya
-                          </Button>
-                        </div>
-                      </Card>
-                    </CarouselItem>
+                        </Card>
+                      </CarouselItem>
+                    ))}
                     <CarouselItem className="basis-1/3">
                       <Link to="/arsip-kesenian">
                         <Button

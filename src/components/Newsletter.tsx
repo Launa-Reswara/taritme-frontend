@@ -18,7 +18,7 @@ export default function Newsletter() {
           type="email"
           className="rounded-full my-4"
         />
-        <Button className="font-medium rounded-full hover:bg-primary-black">
+        <Button className="font-medium rounded-full bg-primary-color hover:bg-primary-black">
           Subscribe
         </Button>
       </div>

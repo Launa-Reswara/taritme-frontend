@@ -67,7 +67,7 @@ export const listInstruktur = [
     name: "Luna Maya",
     description:
       "Instruktur tari Sumatra Barat yang memberikan ilmu nya melalui kursus tari.",
-    image: "/images/",
+    image: "/images/lunamaya-instruktur-tari.png",
     rate: 4.9,
     totalUlasan: 10,
     harga: 100000,
@@ -77,42 +77,42 @@ export const listInstruktur = [
 export const listKomunitas = [
   {
     id: 1,
-    name: "Komunitas sanggar budaya",
+    name: "Komunitas sanggar budaya 1",
     previewImage: "/images/sanggar1.png",
     description:
       "Sebuah komunitas yang memadukan keindahan gerakan tradisional dengan nuansa modern, menciptakan karya-karya yang memikat hati penonton dari berbagai kalangan.",
   },
   {
     id: 2,
-    name: "Komunitas sanggar budaya",
+    name: "Komunitas sanggar budaya 2",
     previewImage: "/images/sanggar2.png",
     description:
       "Menyajikan pertunjukan yang menggabungkan elemen-elemen tari dari berbagai daerah di Indonesia, merayakan keberagaman budaya dalam setiap gerakan.",
   },
   {
     id: 3,
-    name: "Komunitas sanggar budaya",
+    name: "Komunitas sanggar budaya 3",
     previewImage: "/images/sanggar3.png",
     description:
       "Menciptakan ruang bagi generasi muda untuk mempelajari dan melestarikan warisan budaya melalui tarian-tarian klasik dan kontemporer.",
   },
   {
     id: 4,
-    name: "Komunitas sanggar budaya",
+    name: "Komunitas sanggar budaya 4",
     previewImage: "/images/sanggar4.png",
     description:
       "Merangkul ragam etnis dan kepercayaan dalam tarian-tarian mereka, menggambarkan kekayaan budaya Indonesia melalui gerakan-gerakan yang penuh semangat.",
   },
   {
     id: 5,
-    name: "Komunitas sanggar budaya",
+    name: "Komunitas sanggar budaya 5",
     previewImage: "/images/sanggar5.png",
     description:
       "Menghidupkan kembali cerita-cerita klasik melalui tarian-tarian yang elegan dan penuh makna, menyuarakan warisan budaya sebagai bagian tak terpisahkan dari identitas bangsa.",
   },
   {
     id: 6,
-    name: "Komunitas sanggar budaya",
+    name: "Komunitas sanggar budaya 6",
     previewImage: "/images/sanggar6.png",
     description:
       "Menjelajahi kreativitas melalui tarian, menggabungkan elemen-elemen modern dengan tradisional untuk menciptakan karya-karya yang menyentuh dan menginspirasi.",

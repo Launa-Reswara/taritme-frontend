@@ -3,6 +3,7 @@ import Image from "@/components/ui/image";
 import { Input } from "@/components/ui/input";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { useTitle } from "@/hooks";
+import { toRupiah } from "@/lib/helpers";
 import { listInstruktur } from "@/lib/utils/data";
 import { Search } from "lucide-react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -27,26 +28,42 @@ export default function TemukanPelatih() {
           <Search className="absolute right-4" />
         </div>
       </div>
-      <Heading as="h2" className="font-medium">
-        Rekomendasi untukmu
-      </Heading>
-      <Heading as="h2" className="font-medium">
-        Pelatih lainnya
-      </Heading>
-      <div className="grid grid-cols-4">
-        {listInstruktur.map((item) => (
-          <div key={item.id} className="bg-primary-color rounded-xl">
-            <Image src="" alt="" />
-            <Heading as="h2">{item.name}</Heading>
-            <Paragraph>{item.description}</Paragraph>
-            <div>
-              <LazyLoadImage src="/images/star.png" alt="star" />
+      <div className="mt-12">
+        <Heading as="h2" className="font-medium mb-8">
+          Rekomendasi untukmu
+        </Heading>
+        <div className="grid grid-cols-4">
+          {listInstruktur.map((item) => (
+            <div key={item.id} className="bg-primary-color w-full rounded-xl">
+              <Image src={item.image} alt={item.name} className="border-2" />
+              <div className="">
+                <Heading as="h2" className="text-white">
+                  {item.name}
+                </Heading>
+                <Paragraph className="text-white">{item.description}</Paragraph>
+                <div>
+                  <div className="flex justify-center items-center w-fit space-x-2">
+                    <LazyLoadImage src="/images/star-icon.svg" alt="star" />
+                    <span className="text-base text-white">
+                      {item.rate}{" "}
+                      <span className="text-white/50 text-xs">
+                        ({item.totalUlasan} ulasan)
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <Paragraph className="text-white">
+                    {toRupiah(item.harga)}
+                  </Paragraph>
+                </div>
+              </div>
             </div>
-            <div>
-              <Paragraph>{item.harga}</Paragraph>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
+        <Heading as="h2" className="font-medium">
+          Pelatih lainnya
+        </Heading>
       </div>
     </Layout>
   );

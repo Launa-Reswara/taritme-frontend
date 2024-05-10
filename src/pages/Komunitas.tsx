@@ -2,12 +2,22 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Heading, Paragraph } from "@/components/ui/typography";
+import { useTitle } from "@/hooks";
 import { listKomunitas } from "@/lib/utils/data";
-import { ArrowRightIcon } from "lucide-react";
+import useGlobalStore from "@/store";
+import { ArrowRightIcon, X } from "lucide-react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 export default function Komunitas() {
-  // const [idModal, setIdModal] = useState<number>(0);
+  const { idModal, setIdModal, modalKomunitas, setModalKomunitas } =
+    useGlobalStore((state) => ({
+      idModal: state.idModal,
+      setIdModal: state.setIdModal,
+      modalKomunitas: state.modalKomunitas,
+      setModalKomunitas: state.setModalKomunitas,
+    }));
+
+  useTitle("Komunitas | Taritme");
 
   return (
     <>
@@ -48,7 +58,13 @@ export default function Komunitas() {
                 <Paragraph className="text-sm text-gray-600 mt-2">
                   {item.description}
                 </Paragraph>
-                <Button className="bg-primary-color flex justify-center items-center space-x-2 rounded-full mt-8 text-white hover:bg-primary-black">
+                <Button
+                  className="bg-primary-color flex justify-center items-center space-x-2 rounded-full mt-8 text-white hover:bg-primary-black"
+                  onClick={() => {
+                    setIdModal(item.id);
+                    setModalKomunitas(item);
+                  }}
+                >
                   <span>Baca Selengkapnya</span>
                   <ArrowRightIcon />
                 </Button>
@@ -57,52 +73,69 @@ export default function Komunitas() {
           ))}
         </div>
       </Layout>
-      {/*
-      WIP: modal komunitas
-      <div className="flex justify-center items-center fixed inset-0 z-50 w-full backdrop-blur-md min-h-svh">
-        <div className="w-fit bg-white">
-          <div className="relative">
-            <Image
-              src="/images/sanggar1.png"
-              alt="sanggar"
-              className="w-full"
-            />
-            <Button
-              size="icon"
-              className="absolute top-4 right-4 rounded-full bg-light-silver"
-              variant="secondary"
-            >
-              <X />
-            </Button>
-          </div>
-          <Heading as="h2" className="font-normal">
-            Komunitas sanggar budaya 1
-          </Heading>
-          <div className="flex justify-center w-fit items-center space-x-3">
-            <Button className="bg-primary-color rounded-full hover:bg-primary-black flex justify-center items-center space-x-3">
-              <Paragraph className="text-xs text-white">
-                Komunitas aktif
-              </Paragraph>
-              <div className="w-2 h-2 bg-malachite rounded-full"></div>
-            </Button>
-            <Paragraph>Created about 4y ago</Paragraph>
-          </div>
-          <div>
-            <Paragraph>
-              <span className="font-medium">Tentang</span> <br /> Sebuah
-              komunitas yang memadukan keindahan gerakan tradisional dengan
-              nuansa modern, menciptakan karya-karya yang memikat hati penonton
-              dari berbagai kalangan.
-            </Paragraph>
-          </div>
-          <div className="flex flex-col justify-center items-start">
-            <Paragraph className="font-medium">Temukan Kami</Paragraph>
-            <div className="flex justify-center items-center w-fit space-x-3">
-              <button></button>
+      {idModal === modalKomunitas.id && idModal !== 0 ? (
+        <div className="flex justify-center items-center p-4 fixed inset-0 z-50 backdrop-blur-md min-h-svh">
+          <div className="sm:w-[600px] overflow-hidden w-full rounded-lg bg-white drop-shadow-lg">
+            <div className="relative">
+              <LazyLoadImage
+                src="/images/sanggar1.png"
+                alt="sanggar"
+                className="w-full"
+              />
+              <Button
+                size="icon"
+                className="absolute top-4 right-4 rounded-full bg-light-silver"
+                variant="secondary"
+                onClick={() => setIdModal(0)}
+              >
+                <X />
+              </Button>
+            </div>
+            <div className="p-5">
+              <Heading as="h2" className="font-normal">
+                {modalKomunitas.name}
+              </Heading>
+              <div className="flex my-4 justify-center w-fit items-center space-x-3">
+                <Button className="bg-primary-color rounded-full hover:bg-primary-black flex justify-center items-center space-x-3">
+                  <Paragraph className="text-xs text-white">
+                    Komunitas aktif
+                  </Paragraph>
+                  <div className="w-2 h-2 bg-malachite rounded-full"></div>
+                </Button>
+                <Paragraph>Created about 4y ago</Paragraph>
+              </div>
+              <div className="mb-7">
+                <Paragraph className="text-primary-black/70">
+                  <span className="font-medium text-primary-black">
+                    Tentang
+                  </span>{" "}
+                  <br /> {modalKomunitas.description}
+                </Paragraph>
+              </div>
+              <div className="flex flex-col justify-center items-start">
+                <Paragraph className="font-medium">Temukan Kami</Paragraph>
+                <div className="flex justify-center items-center mt-2 w-fit space-x-3">
+                  <button>
+                    <LazyLoadImage src="/images/whatsapp.svg" alt="whatsapp" />
+                  </button>
+                  <button>
+                    <LazyLoadImage
+                      src="/images/instagram.svg"
+                      alt="instagram"
+                    />
+                  </button>
+                  <button>
+                    <LazyLoadImage src="/images/facebook.svg" alt="facebook" />
+                  </button>
+                  <button>
+                    <LazyLoadImage src="/images/twitter.svg" alt="twitter" />
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-          </div>*/}
+      ) : null}
     </>
   );
 }

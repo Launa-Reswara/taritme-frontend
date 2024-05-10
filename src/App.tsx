@@ -1,6 +1,7 @@
 import { AnimatePresence, LazyMotion, domAnimation } from "framer-motion";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Admin from "./pages/Admin";
+import ArsipKesenian from "./pages/ArsipKesenian";
 import DetailArsipKesenian from "./pages/ArsipKesenian/DetailArsipKesenian";
 import Login from "./pages/Auth/Login";
 import LoginAdmin from "./pages/Auth/Login/LoginAdmin";
@@ -24,7 +25,7 @@ export default function App() {
           <Route path="/auth/registration" element={<Registration />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/komunitas" element={<Komunitas />} />
-          <Route path="/arsip-kesenian" element={<Komunitas />} />
+          <Route path="/arsip-kesenian" element={<ArsipKesenian />} />
           <Route
             path="/arsip-kesenian/:detail"
             element={<DetailArsipKesenian />}

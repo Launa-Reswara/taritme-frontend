@@ -13,17 +13,12 @@ const config = {
       },
     },
     extend: {
-      gridTemplateColumns: {
-        "auto-fill-100": "auto 1fr",
-      },
       backgroundImage: {
         "registration-side-image": `url("/images/registration-side-image.png")`,
         "login-side-image": `url("/images/login-side-image.png")`,
         "abstract-home-image": `url("/images/abstract.svg")`,
         "payung-tari-home-image": `url("/images/payung-tari.png")`,
-      },
-      backgroundSize: {
-        full: "100%",
+        "rumah-gadang-komunitas-image": `url("/images/komunitas1.png")`,
       },
       colors: {
         "primary-black": "#161925",

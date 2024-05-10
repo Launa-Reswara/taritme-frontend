@@ -18,14 +18,12 @@ export default function Layout({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className={cn(
-          "flex justify-center min-h-svh mt-7 border-2 items-start w-full"
-        )}
+        className={cn("flex justify-center min-h-svh mt-7 items-start w-full")}
         {...props}
       >
         <section
           className={cn(
-            "w-full flex justify-center items-start px-4 flex-col max-w-[1440px]",
+            "w-full flex justify-center items-start px-4 pb-6 flex-col max-w-[1440px]",
             className
           )}
         >

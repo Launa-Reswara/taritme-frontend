@@ -11,7 +11,7 @@ import { Heading, Paragraph } from "@/components/ui/typography";
 import { useTitle } from "@/hooks";
 import { cn } from "@/lib/utils/cn";
 import { m } from "framer-motion";
-import { ArrowRight, ArrowRightIcon } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link } from "react-router-dom";
 
@@ -119,7 +119,7 @@ export default function Home() {
                   }}
                   className="pl-20 pr-6 py-5"
                 >
-                  <CarouselContent className="flex justify-start items-center">
+                  <CarouselContent className="flex justify-start mr-20 items-center">
                     <CarouselItem className="basis-1/3 min-w-[250px]">
                       <Card className="p-4 rounded-xl md:w-full max-w-full bg-white">
                         <Image
@@ -150,7 +150,7 @@ export default function Home() {
                           </div>
                           <Button className="bg-primary-color flex justify-center items-center space-x-2 rounded-full mt-8 text-white hover:bg-primary-black">
                             <span>Baca Selengkapnya</span>
-                            <ArrowRightIcon />
+                            <ArrowRight />
                           </Button>
                         </div>
                       </Card>
@@ -224,13 +224,15 @@ export default function Home() {
                       </Card>
                     </CarouselItem>
                     <CarouselItem className="basis-1/3">
-                      <Button
-                        className="bg-white rounded-full flex justify-center items-center space-x-2 px-8 py-8"
-                        variant="outline"
-                      >
-                        <span>Lihat Selengkapnya</span>
-                        <ArrowRight />
-                      </Button>
+                      <Link to="/arsip-kesenian">
+                        <Button
+                          className="bg-white rounded-full flex justify-center items-center space-x-2 px-8 py-8"
+                          variant="outline"
+                        >
+                          <span>Lihat Selengkapnya</span>
+                          <ArrowRight />
+                        </Button>
+                      </Link>
                     </CarouselItem>
                   </CarouselContent>
                 </Carousel>

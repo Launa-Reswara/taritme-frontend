@@ -4,18 +4,13 @@ import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { listArsipKesenian } from "@/lib/utils/data";
 import { MessageCircle, Share, ThumbsUp } from "lucide-react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 
 export default function DetailArsipKesenian() {
   return (
     <Layout>
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center space-x-4">
-          <LazyLoadImage
-            src="/images/logo.svg"
-            alt="logo"
-            className="w-20 h-20"
-          />
+          <Image src="/images/logo.svg" alt="logo" className="w-20 h-20" />
           <Paragraph className="text-sm">May 31th, 2024</Paragraph>
         </div>
       </div>
@@ -30,7 +25,7 @@ export default function DetailArsipKesenian() {
             <Paragraph className="font-semibold">Leonardo Da Vinci</Paragraph>
             <div className="flex items-center space-x-2">
               <Paragraph className="text-xs">Penulis</Paragraph>
-              <LazyLoadImage
+              <Image
                 src="/images/electric-icon.svg"
                 alt="electric icon"
                 className="w-4 h-4"
@@ -235,7 +230,7 @@ export default function DetailArsipKesenian() {
               </div>
               <div>
                 <div className="flex items-center space-x-2 mb-2">
-                  <LazyLoadImage
+                  <Image
                     src="/images/electric-icon.svg"
                     alt="electric icon"
                     draggable={false}

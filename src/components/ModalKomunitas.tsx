@@ -1,4 +1,4 @@
-import { LazyLoadImage } from "react-lazy-load-image-component";
+import { Image } from "react-lazy-load-image-component";
 import { Button } from "./ui/button";
 import { KomunitasProps } from "@/types";
 import { Heading, Paragraph } from "./ui/typography";
@@ -18,7 +18,7 @@ export default function ModalKomunitas({
     <div className="flex justify-center items-center p-4 fixed inset-0 z-50 backdrop-blur-md min-h-svh">
       <div className="sm:w-[600px] overflow-hidden w-full rounded-lg bg-white drop-shadow-lg">
         <div className="relative">
-          <LazyLoadImage src={previewImage} alt="sanggar" className="w-full" />
+          <Image src={previewImage} alt="sanggar" className="w-full" />
           <Button
             size="icon"
             className="absolute top-4 right-4 rounded-full bg-light-silver"
@@ -51,16 +51,16 @@ export default function ModalKomunitas({
             <Paragraph className="font-medium">Temukan Kami</Paragraph>
             <div className="flex justify-center items-center mt-2 w-fit space-x-3">
               <button>
-                <LazyLoadImage src="/images/whatsapp.svg" alt="whatsapp" />
+                <Image src="/images/whatsapp.svg" alt="whatsapp" />
               </button>
               <button>
-                <LazyLoadImage src="/images/instagram.svg" alt="instagram" />
+                <Image src="/images/instagram.svg" alt="instagram" />
               </button>
               <button>
-                <LazyLoadImage src="/images/facebook.svg" alt="facebook" />
+                <Image src="/images/facebook.svg" alt="facebook" />
               </button>
               <button>
-                <LazyLoadImage src="/images/twitter.svg" alt="twitter" />
+                <Image src="/images/twitter.svg" alt="twitter" />
               </button>
             </div>
           </div>

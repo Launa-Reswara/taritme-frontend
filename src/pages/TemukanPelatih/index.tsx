@@ -1,11 +1,11 @@
 import Layout from "@/components/Layout";
+import Image from "@/components/ui/image";
 import { Input } from "@/components/ui/input";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { useTitle } from "@/hooks";
 import { toRupiah } from "@/lib/helpers";
 import { listInstruktur } from "@/lib/utils/data";
 import { ChevronRight, Search } from "lucide-react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link } from "react-router-dom";
 import slugify from "slugify";
 
@@ -37,7 +37,7 @@ export default function TemukanPelatih() {
           {listInstruktur.slice(0, 3).map((item) => (
             <Link to={slugify(item.name, { lower: true })} key={item.id}>
               <div className="bg-primary-color p-5 h-[352px] flex justify-center items-center w-full relative rounded-xl">
-                <LazyLoadImage
+                <Image
                   src={item.image}
                   alt={item.name}
                   className="absolute -top-20"
@@ -51,7 +51,7 @@ export default function TemukanPelatih() {
                   </Paragraph>
                   <div className="mb-6">
                     <div className="flex justify-center items-center w-fit space-x-2">
-                      <LazyLoadImage src="/images/star-icon.svg" alt="star" />
+                      <Image src="/images/star-icon.svg" alt="star" />
                       <span className="text-base text-white">
                         {item.rate}{" "}
                         <span className="text-white/50 text-xs">
@@ -80,7 +80,7 @@ export default function TemukanPelatih() {
           {listInstruktur.slice(3, 8).map((item) => (
             <Link to={slugify(item.name, { lower: true })} key={item.id}>
               <div className="bg-primary-color p-5 h-[352px] flex justify-center items-center w-full relative rounded-xl">
-                <LazyLoadImage
+                <Image
                   src={item.image}
                   alt={item.name}
                   className="absolute -top-20"
@@ -94,7 +94,7 @@ export default function TemukanPelatih() {
                   </Paragraph>
                   <div className="mb-6">
                     <div className="flex justify-center items-center w-fit space-x-2">
-                      <LazyLoadImage src="/images/star-icon.svg" alt="star" />
+                      <Image src="/images/star-icon.svg" alt="star" />
                       <span className="text-base text-white">
                         {item.rate}{" "}
                         <span className="text-white/50 text-xs">

@@ -33,3 +33,9 @@ export type ModalKomunitasSliceProps = {
   modalKomunitas: KomunitasProps;
   setModalKomunitas: (modalKomunitas: KomunitasProps) => void;
 };
+
+type ValuePelatihProps = "tentang" | "ulasan";
+export type DetailPelatihTabsSliceProps = {
+  detailPelatihTabs: ValuePelatihProps;
+  setDetailPelatihTabs: (detailPelatihTabs: ValuePelatihProps) => void;
+};

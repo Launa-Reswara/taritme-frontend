@@ -2,12 +2,12 @@ import Layout from "@/components/Layout";
 import ModalKomunitas from "@/components/ModalKomunitas";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { useTitle } from "@/hooks";
 import { listKomunitas } from "@/lib/utils/data";
 import useGlobalStore from "@/store";
 import { ArrowRightIcon } from "lucide-react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 
 export default function Komunitas() {
   const { idModal, setIdModal, modalKomunitas, setModalKomunitas } =
@@ -45,7 +45,7 @@ export default function Komunitas() {
           {listKomunitas.map((item) => (
             <Card key={item.id} className="p-5 rounded-xl bg-white">
               <div className="overflow-hidden rounded-xl">
-                <LazyLoadImage
+                <Image
                   src={item.previewImage}
                   alt="thumbnail"
                   className="w-full h-full"

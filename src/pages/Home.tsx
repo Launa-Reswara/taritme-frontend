@@ -13,7 +13,6 @@ import { cn } from "@/lib/utils/cn";
 import { listArsipKesenian } from "@/lib/utils/data";
 import { m } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link } from "react-router-dom";
 import slugify from "slugify";
 
@@ -50,19 +49,19 @@ export default function Home() {
                 kolaborator untuk proyek tari Anda.
               </Paragraph>
               <div className="flex relative h-14 mt-4 justify-center items-center">
-                <LazyLoadImage
+                <Image
                   src="/images/sanggar-1-home.svg"
                   alt="sanggar 1"
                   className="absolute left-0"
                   draggable={false}
                 />
-                <LazyLoadImage
+                <Image
                   src="/images/sanggar-2-home.svg"
                   alt="sanggar 2"
                   className="absolute left-8"
                   draggable={false}
                 />
-                <LazyLoadImage
+                <Image
                   src="/images/sanggar-3-home.svg"
                   alt="sanggar 3"
                   className="absolute left-16"
@@ -77,7 +76,7 @@ export default function Home() {
               to="/temukan-pelatih"
               className="w-full xl:col-span-1 md:col-span-2"
             >
-              <LazyLoadImage
+              <Image
                 src="/images/pelatih-tari-home.png"
                 className="rounded-xl w-full relative"
                 alt="pelatih tari"
@@ -95,7 +94,7 @@ export default function Home() {
                 </div>
               </div>
             </Link>
-            <LazyLoadImage
+            <Image
               src="/images/payung-tari.png"
               alt="payung tari"
               className="w-full h-full hidden md:block rounded-xl"
@@ -117,8 +116,12 @@ export default function Home() {
                 </Heading>
               </div>
               <div className="bg-secondary-color h-full py-2 w-full box-polygon-home rounded-xl">
-                <div className="w-full flex justify-end items-center">
-                  <Paragraph className="xl:w-[410px] 2xl:w-[440px] hidden md:block mt-1 md:w-[350px] md:text-sm lg:text-base lg:w-[450px] pl-2">
+                <div className="w-full xl:mt-1 flex justify-end items-center">
+                  <Paragraph
+                    className={cn(
+                      "xl:w-[410px] 2xl:w-[440px] hidden md:block mt-1 md:w-[350px] md:text-sm lg:text-base lg:w-[450px] pl-2"
+                    )}
+                  >
                     Dengan membaca, kita bisa memahami budaya, sejarah, dan
                     nilai-nilai yang berpengaruh dalam perjalanan manusia di
                     dunia
@@ -136,14 +139,14 @@ export default function Home() {
                       .map((item) => (
                         <CarouselItem className="basis-1/3 min-w-[250px]">
                           <Card className="p-4 rounded-xl md:w-full max-w-full bg-white">
-                            <LazyLoadImage
+                            <Image
                               src="/images/tari-piring-home.png"
                               alt="thumbnail"
                               className="w-full"
                             />
                             <div className="mt-2">
                               <div className="flex justify-center items-center w-fit space-x-1">
-                                <LazyLoadImage
+                                <Image
                                   src="/images/electric-icon.svg"
                                   alt="electric icon"
                                   draggable={false}

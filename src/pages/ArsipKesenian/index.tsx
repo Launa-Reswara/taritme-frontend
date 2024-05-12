@@ -5,7 +5,6 @@ import { Heading, Paragraph } from "@/components/ui/typography";
 import { useTitle } from "@/hooks";
 import { listArsipKesenian } from "@/lib/utils/data";
 import { MessageCircle, Share, ThumbsUp } from "lucide-react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link } from "react-router-dom";
 import slugify from "slugify";
 
@@ -41,7 +40,10 @@ export default function ArsipKesenian() {
                   </Link>
                   <div className="flex flex-col md:flex-row mt-3 md:mt-6 md:justify-between w-full justify-start items-start md:items-center">
                     <div className="flex justify-start items-center space-x-1">
-                      <LazyLoadImage src="/images/electric-icon.svg" />
+                      <Image
+                        src="/images/electric-icon.svg"
+                        alt="electric icon"
+                      />
                       <span className="text-primary-black text-xs md:text-base">
                         {item.readingTime}
                       </span>

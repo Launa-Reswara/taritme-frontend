@@ -44,9 +44,11 @@ export default function LoginAdmin() {
                   <div className="w-full">
                     <label htmlFor="password">Password*</label>
                     <Input
+                      type="password"
                       placeholder="Masukkan password"
                       name="password"
                       className="mt-2 border-spanish-gray rounded-full px-6 py-7"
+                      required
                     />
                   </div>
                 </div>

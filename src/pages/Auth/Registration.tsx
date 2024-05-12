@@ -68,6 +68,7 @@ export default function Registration() {
                   </label>
                   <Input
                     required
+                    type="password"
                     placeholder="Masukkan password"
                     name="password"
                     className="mt-2 rounded-full px-6 py-7 border-spanish-gray"

@@ -5,7 +5,11 @@ import { Heading, Paragraph } from "./ui/typography";
 import useGlobalStore from "@/store";
 import { X } from "lucide-react";
 
-export default function ModalKomunitas({ name, description }: KomunitasProps) {
+export default function ModalKomunitas({
+  previewImage,
+  name,
+  description,
+}: KomunitasProps) {
   const { setIdModal } = useGlobalStore((state) => ({
     setIdModal: state.setIdModal,
   }));
@@ -14,11 +18,7 @@ export default function ModalKomunitas({ name, description }: KomunitasProps) {
     <div className="flex justify-center items-center p-4 fixed inset-0 z-50 backdrop-blur-md min-h-svh">
       <div className="sm:w-[600px] overflow-hidden w-full rounded-lg bg-white drop-shadow-lg">
         <div className="relative">
-          <LazyLoadImage
-            src="/images/sanggar1.png"
-            alt="sanggar"
-            className="w-full"
-          />
+          <LazyLoadImage src={previewImage} alt="sanggar" className="w-full" />
           <Button
             size="icon"
             className="absolute top-4 right-4 rounded-full bg-light-silver"

@@ -84,7 +84,7 @@ export default function Navbar() {
                   to="/temukan-pelatih"
                   className={cn(
                     "dark:text-white text-primary-black font-medium px-4 py-2 transition-colors duration-300 hover:bg-primary-color hover:text-white hover:rounded-lg",
-                    location.pathname === "/temukan-pelatih"
+                    location.pathname.includes("/temukan-pelatih")
                       ? "bg-primary-color text-white rounded-lg"
                       : ""
                   )}
@@ -98,7 +98,7 @@ export default function Navbar() {
                   to="/arsip-kesenian"
                   className={cn(
                     "dark:text-white text-primary-black font-medium px-4 py-2 transition-colors duration-300 hover:bg-primary-color hover:text-white hover:rounded-lg",
-                    location.pathname === "/arsip-kesenian"
+                    location.pathname.includes("/arsip-kesenian")
                       ? "bg-primary-color text-white rounded-lg"
                       : ""
                   )}

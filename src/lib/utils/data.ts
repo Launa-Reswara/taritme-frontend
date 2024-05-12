@@ -1,4 +1,6 @@
-export const listArsipKesenian = [
+import { ArsipKesenianProps, InstrukturProps, KomunitasProps } from "@/types";
+
+export const listArsipKesenian: ArsipKesenianProps[] = [
   {
     id: 1,
     author: "Leonardo Da Vince",
@@ -61,7 +63,7 @@ export const listArsipKesenian = [
   },
 ];
 
-export const listInstruktur = [
+export const listInstruktur: InstrukturProps[] = [
   {
     id: 1,
     name: "Luna Maya",
@@ -72,9 +74,69 @@ export const listInstruktur = [
     totalUlasan: 10,
     harga: 100000,
   },
+  {
+    id: 2,
+    name: "Raline Shah",
+    description:
+      "Instruktur tari Sumatra Barat yang memberikan ilmu nya melalui kursus tari.",
+    image: "/images/ralineshah-instruktur-tari.png",
+    rate: 4.9,
+    totalUlasan: 10,
+    harga: 100000,
+  },
+  {
+    id: 3,
+    name: "Pevita Pearce",
+    description:
+      "Instruktur tari Sumatra Barat yang memberikan ilmu nya melalui kursus tari.",
+    image: "/images/pevitapearce-instruktur-tari.png",
+    rate: 4.9,
+    totalUlasan: 10,
+    harga: 100000,
+  },
+  {
+    id: 4,
+    name: "Vanesa Priscilla",
+    description:
+      "Instruktur tari Sumatra Barat yang memberikan ilmu nya melalui kursus tari.",
+    image: "/images/vanesapriscilla-instruktur-tari.png",
+    rate: 4.9,
+    totalUlasan: 10,
+    harga: 100000,
+  },
+  {
+    id: 5,
+    name: "Caitlin Halderman",
+    description:
+      "Instruktur tari Sumatra Barat yang memberikan ilmu nya melalui kursus tari.",
+    image: "/images/caitlinhalderman-instruktur-tari.png",
+    rate: 4.9,
+    totalUlasan: 10,
+    harga: 100000,
+  },
+  {
+    id: 6,
+    name: "Syifa Hadju",
+    description:
+      "Instruktur tari Sumatra Barat yang memberikan ilmu nya melalui kursus tari.",
+    image: "/images/syifahadju-instruktur-tari.png",
+    rate: 4.9,
+    totalUlasan: 10,
+    harga: 100000,
+  },
+  {
+    id: 7,
+    name: "Yuki Kato",
+    description:
+      "Instruktur tari Sumatra Barat yang memberikan ilmu nya melalui kursus tari.",
+    image: "/images/yukikato-instruktur-tari.png",
+    rate: 4.9,
+    totalUlasan: 10,
+    harga: 100000,
+  },
 ];
 
-export const listKomunitas = [
+export const listKomunitas: KomunitasProps[] = [
   {
     id: 1,
     name: "Komunitas sanggar budaya 1",

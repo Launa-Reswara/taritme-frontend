@@ -1,6 +1,6 @@
 import Layout from "@/components/Layout";
 
-export default function DetailTemukanPelatih() {
+export default function DetailPelatih() {
   return (
     <Layout>
       <div></div>

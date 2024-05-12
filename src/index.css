@@ -82,9 +82,20 @@
 }
 
 .box-polygon-home {
-  height: 100%;
-  width: 100%;
-  clip-path: polygon(0 100%, 0 19%, 21% 19%, 35% 0, 100% 0, 100% 100%);
+  /*clip-path: polygon(0 100%, 0 19%, 25% 19%, 29% 0, 100% 0, 100% 100%);*/
+}
+
+@media only screen and (min-width: 768px) {
+  .box-polygon-home {
+    clip-path: polygon(0 100%, 0 19%, 25% 19%, 29% 0, 100% 0, 100% 100%);
+    /*clip-path: polygon(0 100%, 0 19%, 21% 19%, 35% 0, 100% 0, 100% 100%);*/
+  }
+}
+
+@media only screen and (min-width: 1280px) {
+  .box-polygon-home {
+    clip-path: polygon(0 100%, 0 19%, 21% 19%, 35% 0, 100% 0, 100% 100%);
+  }
 }
 
 .parent-polygon-home {

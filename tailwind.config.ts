@@ -20,6 +20,7 @@ const config = {
         "payung-tari-home-image": `url("/images/payung-tari.png")`,
         "rumah-gadang-komunitas-image": `url("/images/komunitas1.png")`,
         "temukan-pelatih-bg-image": `url("/images/temukan-pelatih-bg.png")`,
+        "pelatih-tari-home-image": `url("/images/pelatih-tari-home.png")`,
       },
       colors: {
         "primary-black": "#161925",

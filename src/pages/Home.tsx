@@ -32,14 +32,14 @@ export default function Home() {
       >
         <section
           className={cn(
-            "w-full flex justify-center items-start px-4 flex-col max-w-[1440px]"
+            "w-full flex justify-center items-start px-4 pb-6 flex-col max-w-[1440px]"
           )}
         >
-          <div className="grid w-full gap-4 grid-cols-4 grid-rows-1">
-            <div className="bg-center row-span-2 bg-cover rounded-xl bg-abstract-home-image bg-no-repeat"></div>
+          <div className="md:grid md:grid-cols-3 w-full flex flex-col justify-center items-center gap-4 xl:space-y-0 xl:grid-cols-4 md:grid-rows-1">
+            <div className="bg-center md:block h-full md:row-span-2 hidden border-2 bg-cover rounded-xl bg-abstract-home-image bg-no-repeat"></div>
             <Link
               to="/komunitas"
-              className="bg-secondary-color col-span-2 rounded-xl px-7 py-5"
+              className="bg-secondary-color h-full md:col-span-2 rounded-xl px-7 py-5"
             >
               <Heading as="h1" className="font-medium text-primary-black">
                 Komunitas
@@ -73,15 +73,18 @@ export default function Home() {
                 </div>
               </div>
             </Link>
-            <Link to="/temukan-pelatih">
-              <Image
+            <Link
+              to="/temukan-pelatih"
+              className="w-full xl:col-span-1 md:col-span-2"
+            >
+              <LazyLoadImage
                 src="/images/pelatih-tari-home.png"
-                className="rounded-xl w-full"
+                className="rounded-xl w-full relative"
                 alt="pelatih tari"
                 draggable={false}
               />
               <div className="relative">
-                <div className="absolute bottom-8 left-4 w-[300px]">
+                <div className="absolute bottom-8 left-4 2xl:pr-0 xl:pr-4 w-[300px]">
                   <Heading as="h2" className="font-medium text-white">
                     Temukan Pelatihmu
                   </Heading>
@@ -92,24 +95,30 @@ export default function Home() {
                 </div>
               </div>
             </Link>
-            <Image
+            <LazyLoadImage
               src="/images/payung-tari.png"
               alt="payung tari"
-              className="w-full h-full rounded-xl"
+              className="w-full h-full hidden md:block rounded-xl"
               draggable={false}
             />
-            <div className="w-full col-span-2 relative">
+            <div className="w-full md:col-span-2 h-full relative">
               <div className="absolute top-4 left-4">
-                <Heading as="h3" className="font-medium">
+                <Heading
+                  as="h3"
+                  className="font-medium lg:text-xl text-xl md:text-lg"
+                >
                   Arsip
                 </Heading>
-                <Heading as="h2" className="font-medium">
+                <Heading
+                  as="h2"
+                  className="font-medium lg:text-2xl text-2xl md:text-xl"
+                >
                   Kesenian
                 </Heading>
               </div>
-              <div className="bg-secondary-color py-4 w-full box-polygon-home rounded-xl">
+              <div className="bg-secondary-color h-full py-2 w-full box-polygon-home rounded-xl">
                 <div className="w-full flex justify-end items-center">
-                  <Paragraph className="w-[450px] mt-1">
+                  <Paragraph className="xl:w-[410px] 2xl:w-[440px] hidden md:block mt-1 md:w-[350px] md:text-sm lg:text-base lg:w-[450px] pl-2">
                     Dengan membaca, kita bisa memahami budaya, sejarah, dan
                     nilai-nilai yang berpengaruh dalam perjalanan manusia di
                     dunia
@@ -119,15 +128,15 @@ export default function Home() {
                   opts={{
                     align: "start",
                   }}
-                  className="pl-20 pr-6 py-5"
+                  className="xl:pl-20 px-6 py-5 mt-16 md:mt-5"
                 >
-                  <CarouselContent className="flex justify-start mr-20 items-center">
+                  <CarouselContent className="flex justify-start mr-64 sm:mr-40 items-center">
                     {listArsipKesenian
                       .filter((item) => item.id !== 4)
                       .map((item) => (
                         <CarouselItem className="basis-1/3 min-w-[250px]">
                           <Card className="p-4 rounded-xl md:w-full max-w-full bg-white">
-                            <Image
+                            <LazyLoadImage
                               src="/images/tari-piring-home.png"
                               alt="thumbnail"
                               className="w-full"

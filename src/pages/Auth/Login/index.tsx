@@ -75,7 +75,7 @@ export default function Login() {
               </div>
               <div className="flex my-10 flex-col justify-center items-center w-full">
                 <Button
-                  className="text-black bg-secondary-color hover:bg-secondary-color/90 rounded-3xl w-72 px-4 py-7"
+                  className="text-primary-black bg-secondary-color hover:bg-secondary-color/90 rounded-3xl w-72 px-4 py-7"
                   type="submit"
                 >
                   <Paragraph>Masuk</Paragraph>

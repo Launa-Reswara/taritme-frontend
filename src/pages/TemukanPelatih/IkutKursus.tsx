@@ -1,18 +1,29 @@
 import Layout from "@/components/Layout";
+import { Button } from "@/components/ui/button";
+import Image from "@/components/ui/image";
 import { Input } from "@/components/ui/input";
 import { Heading, Paragraph } from "@/components/ui/typography";
+import { useTitle } from "@/hooks";
 import { toRupiah } from "@/lib/helpers";
 import { listInstruktur } from "@/lib/utils/data";
 import { ChevronRight } from "lucide-react";
-import { Link } from "react-router-dom";
-import Image from "@/components/ui/image";
+import { Link, useLocation } from "react-router-dom";
 import slugify from "slugify";
-import { Button } from "@/components/ui/button";
 
 export default function IkutiKursus() {
+  const location = useLocation();
+
+  useTitle(
+    `Ikuti kursus ${location.pathname
+      .split("/")[2]
+      .split("-")
+      .map((item) => item[0].toUpperCase() + item.substring(1))
+      .join(" ")} | Taritme`
+  );
+
   return (
     <Layout>
-      <div className="mt-210 grid grid-cols-1 lg:grid-cols-3 gap-9">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-9">
         {/* Render kartu instruktur */}
         {listInstruktur.slice(0, 1).map((item) => (
           <Link to={slugify(item.name, { lower: true })} key={item.id}>
@@ -53,9 +64,13 @@ export default function IkutiKursus() {
 
         {/* Form ikut kursus */}
         <div className="lg:col-span-2">
-        <Heading className="text-xl mb-4 " style={{ color: "rgb(118, 18, 23)" }} as={"h1"}>
-         IKUTI KURSUS
-        </Heading>
+          <Heading
+            className="text-xl mb-4 "
+            style={{ color: "rgb(118, 18, 23)" }}
+            as={"h1"}
+          >
+            IKUTI KURSUS
+          </Heading>
           <div className="bg-white p-20 rounded-2xl border border-black">
             <div>
               <label

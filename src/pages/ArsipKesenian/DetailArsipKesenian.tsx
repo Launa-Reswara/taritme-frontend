@@ -2,10 +2,18 @@ import Layout from "@/components/Layout";
 import { Card } from "@/components/ui/card";
 import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
+import { useTitle } from "@/hooks";
+import { getLastPathname } from "@/lib/helpers";
+import { cn } from "@/lib/utils/cn";
 import { listArsipKesenian } from "@/lib/utils/data";
 import { MessageCircle, Share, ThumbsUp } from "lucide-react";
+import { useLocation } from "react-router-dom";
 
 export default function DetailArsipKesenian() {
+  const location = useLocation();
+
+  useTitle(`${getLastPathname(location.pathname)} | Taritme`);
+
   return (
     <Layout>
       <div className="flex justify-between items-center mb-4">
@@ -58,7 +66,10 @@ export default function DetailArsipKesenian() {
           Tari Piring
         </Heading>
         <div
-          className="rounded-xl text-center drop-shadow-lg flex justify-center items-center w-full h-[355px] flex-col mt-10"
+          className={cn(
+            "rounded-xl text-center drop-shadow-lg flex",
+            "justify-center items-center w-full h-[355px] flex-col mt-10"
+          )}
           style={{
             backgroundImage: `url('/images/taripiring1.png')`,
             backgroundSize: "cover",
@@ -104,7 +115,10 @@ export default function DetailArsipKesenian() {
         banyak yang ditampilkan pada acara-acara keramaian.
       </Paragraph>
       <div
-        className="rounded-xl text-center drop-shadow-lg flex justify-center items-center w-full h-[355px] flex-col mt-10"
+        className={cn(
+          "rounded-xl text-center drop-shadow-lg flex",
+          "justify-center items-center w-full h-[355px] flex-col mt-10"
+        )}
         style={{
           backgroundImage: `url('/images/taripiring2.png')`,
           backgroundSize: "cover",
@@ -124,52 +138,37 @@ export default function DetailArsipKesenian() {
         piring-piring yang dibawakan oleh para penari dilemparkan ke lantai dan
         para penari akan menari di atas pecahan-pecahan piring.
       </Paragraph>
-
-      <div className="container mx-auto mt-8">
-        <div className="grid grid-cols-5 gap-4">
-          <div className="col-span-3 order-2 lg:order-1">
-            <div className="bg-gray-200 h-96 lg:h-400 lg:w-600 rounded-xl overflow-hidden">
-              <iframe
-                className="w-full h-full"
-                src="https://www.youtube.com/embed/1O_OYwnV6iw?si=oHWbBkXFLHXDLL9e"
-                title="YouTube Video"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </div>
+      <div className="mx-auto mt-8 w-full">
+        <div className="grid grid-cols-2 md:grid-cols-4 w-full grid-rows-3 md:grid-rows-2 gap-4">
+          <div className="bg-gray-200 col-span-2 md:row-span-2 md:h-96 w-full rounded-xl overflow-hidden">
+            <iframe
+              className="w-full h-full"
+              src="https://www.youtube.com/embed/1O_OYwnV6iw?si=oHWbBkXFLHXDLL9e"
+              title="YouTube Video"
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
           </div>
 
-          <div className="col-span-2 order-1 lg:order-2">
-            <div className="grid grid-cols-2 gap-2 h-full">
-              <div className="bg-blue-200 relative rounded-xl">
-                <div
-                  className="w-full h-full bg-cover bg-center rounded-xl"
-                  style={{ backgroundImage: `url('/images/gerakantari1.png')` }}
-                ></div>
-              </div>
+          <div
+            className="w-full h-full bg-cover bg-center rounded-xl"
+            style={{ backgroundImage: `url('/images/gerakantari1.png')` }}
+          ></div>
 
-              <div className="bg-green-200 relative rounded-xl">
-                <div
-                  className="w-full h-full bg-cover bg-center rounded-xl"
-                  style={{ backgroundImage: `url('/images/gerakantari2.png')` }}
-                ></div>
-              </div>
+          <div
+            className="w-full h-full bg-cover bg-center rounded-xl"
+            style={{ backgroundImage: `url('/images/gerakantari2.png')` }}
+          ></div>
 
-              <div className="bg-yellow-200 relative rounded-xl">
-                <div
-                  className="w-full h-full bg-cover bg-center rounded-xl"
-                  style={{ backgroundImage: `url('/images/gerakantari3.png')` }}
-                ></div>
-              </div>
+          <div
+            className="w-full h-full bg-cover bg-center rounded-xl"
+            style={{ backgroundImage: `url('/images/gerakantari3.png')` }}
+          ></div>
 
-              <div className="bg-pink-200 relative rounded-xl">
-                <div
-                  className="w-full h-full bg-cover bg-center rounded-xl"
-                  style={{ backgroundImage: `url('/images/gerakantari4.png')` }}
-                ></div>
-              </div>
-            </div>
-          </div>
+          <div
+            className="w-full h-full bg-cover bg-center rounded-xl"
+            style={{ backgroundImage: `url('/images/gerakantari4.png')` }}
+          ></div>
         </div>
       </div>
       <Paragraph className="text-justify mt-10">
@@ -194,7 +193,6 @@ export default function DetailArsipKesenian() {
         basiang, gerak buai anak, gerak mangompu suto, gerak malunyah, gerak
         maiinjak piriang, gerak bagolek dan gerak manyemba lalok.
       </Paragraph>
-
       <div className="flex flex-grow justify-end space-x-4 md:space-x-8 mt-10">
         <button className="flex items-center space-x-1">
           <ThumbsUp size={16} />
@@ -209,18 +207,13 @@ export default function DetailArsipKesenian() {
           <span className="text-xs md:text-sm">12</span>
         </button>
       </div>
-
-      <h2 className="font-bold mb-2 mt-12" style={{ fontSize: "1.5rem" }}>
+      <Heading as="h2" className="font-bold mb-2 mt-12">
         Baca Juga
-      </h2>
-      <div className="flex justify-center mt-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      </Heading>
+      <div className="flex justify-center w-full mt-10">
+        <div className="grid grid-cols-1 w-full sm:grid-cols-2 md:grid-cols-3 grid-rows-1 gap-6">
           {listArsipKesenian.slice(0, 3).map((item, i) => (
-            <Card
-              key={i}
-              className="p-4 rounded-xl w-full bg-white"
-              style={{ maxWidth: "400px" }} // Set max width for better responsiveness
-            >
+            <Card key={i} className="p-4 rounded-xl w-full bg-white">
               <div className="aspect-w-16 aspect-h-9 mb-4 overflow-hidden rounded-xl">
                 <Image
                   src="/images/tari-piring-home.png"
@@ -238,8 +231,8 @@ export default function DetailArsipKesenian() {
                   />
                   <Paragraph className="text-xs">{item.readingTime}</Paragraph>
                 </div>
-                <Paragraph className="font-medium mb-2">{item.title}</Paragraph>
-                <div className="flex items-center space-x-2 mb-4">
+                <Heading as="h2">{item.title}</Heading>
+                <div className="flex items-center space-x-3 my-3">
                   <Image
                     src="/images/leonardo-da-vince.svg"
                     alt="author"

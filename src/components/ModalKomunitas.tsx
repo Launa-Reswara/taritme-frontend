@@ -1,9 +1,9 @@
-import { Image } from "react-lazy-load-image-component";
-import { Button } from "./ui/button";
-import { KomunitasProps } from "@/types";
-import { Heading, Paragraph } from "./ui/typography";
 import useGlobalStore from "@/store";
+import { KomunitasProps } from "@/types";
 import { X } from "lucide-react";
+import { Button } from "./ui/button";
+import Image from "./ui/image";
+import { Heading, Paragraph } from "./ui/typography";
 
 export default function ModalKomunitas({
   previewImage,

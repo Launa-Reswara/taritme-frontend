@@ -1,18 +1,18 @@
+import Admin from "@/pages/Admin";
+import ArsipKesenian from "@/pages/ArsipKesenian";
+import DetailArsipKesenian from "@/pages/ArsipKesenian/DetailArsipKesenian";
+import Login from "@/pages/Auth/Login";
+import LoginAdmin from "@/pages/Auth/Login/LoginAdmin";
+import Registration from "@/pages/Auth/Registration";
+import Home from "@/pages/Home";
+import Komunitas from "@/pages/Komunitas";
+import NotFound from "@/pages/NotFound";
+import TemukanPelatih from "@/pages/TemukanPelatih";
+import DetailPelatih from "@/pages/TemukanPelatih/DetailPelatih";
+import IkutiKursus from "@/pages/TemukanPelatih/IkutKursus";
 import { AnimatePresence, LazyMotion, domAnimation } from "framer-motion";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { useScrollToTop } from "./hooks";
-import Admin from "./pages/Admin";
-import ArsipKesenian from "./pages/ArsipKesenian";
-import DetailArsipKesenian from "./pages/ArsipKesenian/DetailArsipKesenian";
-import Login from "./pages/Auth/Login";
-import LoginAdmin from "./pages/Auth/Login/LoginAdmin";
-import Registration from "./pages/Auth/Registration";
-import Home from "./pages/Home";
-import Komunitas from "./pages/Komunitas";
-import NotFound from "./pages/NotFound";
-import TemukanPelatih from "./pages/TemukanPelatih";
-import DetailPelatih from "./pages/TemukanPelatih/DetailPelatih";
-import IkutiKursus from "./pages/TemukanPelatih/IkutKursus";
 
 export default function App() {
   const location = useLocation();
@@ -40,7 +40,10 @@ export default function App() {
               path="/temukan-pelatih/:detail"
               element={<DetailPelatih />}
             />
-             <Route path="/temukan-pelatih/:detail/ikuti-kursus" element={<IkutiKursus />} />
+            <Route
+              path="/temukan-pelatih/:detail/ikuti-kursus"
+              element={<IkutiKursus />}
+            />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AnimatePresence>

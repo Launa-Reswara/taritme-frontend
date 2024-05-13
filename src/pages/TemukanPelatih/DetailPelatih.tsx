@@ -4,7 +4,7 @@ import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { cn } from "@/lib/utils/cn";
 import { Heart } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function DetailPelatih() {
   const navigate = useNavigate();
@@ -74,7 +74,9 @@ export default function DetailPelatih() {
                   </Paragraph>
                 </div>
                 <div className="flex justify-between items-center">
+                  <Link to="/temukan-pelatih/:detail/ikuti-kursus">
                   <Button className="w-full">Ikut Kelas</Button>
+                  </Link>
                   <button>
                     <Heart />
                   </button>

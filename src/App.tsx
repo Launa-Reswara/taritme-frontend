@@ -12,6 +12,7 @@ import Komunitas from "./pages/Komunitas";
 import NotFound from "./pages/NotFound";
 import TemukanPelatih from "./pages/TemukanPelatih";
 import DetailPelatih from "./pages/TemukanPelatih/DetailPelatih";
+import IkutiKursus from "./pages/TemukanPelatih/IkutKursus";
 
 export default function App() {
   const location = useLocation();
@@ -39,6 +40,7 @@ export default function App() {
               path="/temukan-pelatih/:detail"
               element={<DetailPelatih />}
             />
+             <Route path="/temukan-pelatih/:detail/ikuti-kursus" element={<IkutiKursus />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AnimatePresence>

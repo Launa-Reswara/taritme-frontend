@@ -13,10 +13,12 @@ import { cn } from "@/lib/utils/cn";
 import { listArsipKesenian } from "@/lib/utils/data";
 import { m } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import slugify from "slugify";
 
 export default function Home() {
+  const navigate = useNavigate();
+
   useTitle("Home | Taritme");
 
   return (
@@ -35,10 +37,18 @@ export default function Home() {
           )}
         >
           <div className="md:grid md:grid-cols-3 w-full flex flex-col justify-center items-center gap-4 xl:space-y-0 xl:grid-cols-4 md:grid-rows-1">
-            <div className="bg-center md:block h-full md:row-span-2 hidden border-2 bg-cover rounded-xl bg-abstract-home-image bg-no-repeat"></div>
-            <Link
-              to="/komunitas"
+            <m.div
+              transition={{ duration: 0.8 }}
+              initial={{ opacity: 0, y: -50 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-center md:block h-full md:row-span-2 hidden border-2 bg-cover rounded-xl bg-abstract-home-image bg-no-repeat"
+            ></m.div>
+            <m.div
+              transition={{ duration: 0.8 }}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
               className="bg-secondary-color h-full md:col-span-2 rounded-xl px-7 py-5"
+              onClick={() => navigate("/komunitas")}
             >
               <Heading as="h1" className="font-medium text-primary-black">
                 Komunitas
@@ -71,9 +81,12 @@ export default function Home() {
                   <span className="text-xs">+3</span>
                 </div>
               </div>
-            </Link>
-            <Link
-              to="/temukan-pelatih"
+            </m.div>
+            <m.div
+              transition={{ duration: 0.8 }}
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              onClick={() => navigate("/temukan-pelatih")}
               className="w-full xl:col-span-1 md:col-span-2"
             >
               <Image
@@ -93,13 +106,20 @@ export default function Home() {
                   </Paragraph>
                 </div>
               </div>
-            </Link>
-            <Image
-              src="/images/payung-tari.png"
-              alt="payung tari"
-              className="w-full h-full hidden md:block rounded-xl"
-              draggable={false}
-            />
+            </m.div>
+            <m.div
+              transition={{ duration: 0.8, delay: 0.3 }}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="hidden md:block rounded-xl"
+            >
+              <Image
+                src="/images/payung-tari.png"
+                alt="payung tari"
+                className="w-full h-full rounded-xl"
+                draggable={false}
+              />
+            </m.div>
             <div className="w-full md:col-span-2 h-full relative">
               <div className="absolute top-4 left-4">
                 <Heading
@@ -115,7 +135,12 @@ export default function Home() {
                   Kesenian
                 </Heading>
               </div>
-              <div className="bg-secondary-color h-full py-2 w-full box-polygon-home rounded-xl">
+              <m.div
+                transition={{ duration: 0.8 }}
+                initial={{ opacity: 0, y: -50 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-secondary-color h-full py-2 w-full box-polygon-home rounded-xl"
+              >
                 <div className="w-full xl:mt-1 flex justify-end items-center">
                   <Paragraph
                     className={cn(
@@ -192,7 +217,7 @@ export default function Home() {
                     </CarouselItem>
                   </CarouselContent>
                 </Carousel>
-              </div>
+              </m.div>
             </div>
           </div>
         </section>

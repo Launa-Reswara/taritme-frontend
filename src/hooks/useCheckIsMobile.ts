@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
 
+/**
+ * A custom hook to detect screen device
+ * @export
+ * @returns {*}
+ */
 export function useCheckIsMobile() {
   const [isMobile, setIsMobile] = useState<boolean>(false);
 

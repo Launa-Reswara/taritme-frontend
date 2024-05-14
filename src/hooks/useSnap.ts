@@ -5,7 +5,7 @@
  * @returns {{ snapEmbed: (snapToken: any, embedId: any, action: any) => void; }}
  */
 
-// WIP
+// Work In Progress
 export function useSnap() {
   /*const [snap, setSnap] = useState<string | null>(null);
 

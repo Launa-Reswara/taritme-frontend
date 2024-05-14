@@ -49,7 +49,7 @@ export default function ModalKomunitas({
           </div>
           <div className="flex flex-col justify-center items-start">
             <Paragraph className="font-medium">Temukan Kami</Paragraph>
-            <div className="flex justify-center items-center mt-2 w-fit space-x-3">
+            <div className="flex justify-center items-center mt-2 w-fit space-x-4">
               <button>
                 <Image src="/images/whatsapp.svg" alt="whatsapp" />
               </button>

@@ -3,7 +3,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useCheckIsMobile } from "@/hooks";
@@ -31,33 +30,54 @@ export default function Navbar() {
                 <Menu />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
+            <DropdownMenuContent className="w-48">
               <DropdownMenuItem>
                 <CustomLink
                   to="/temukan-pelatih"
-                  className="text-primary-black"
+                  className={cn(
+                    "text-primary-black font-medium",
+                    location.pathname.includes("/temukan-pelatih")
+                      ? "font-bold"
+                      : ""
+                  )}
                 >
                   Temukan Pelatih
                 </CustomLink>
-                <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <CustomLink to="/arsip-kesenian" className="text-primary-black">
+                <CustomLink
+                  to="/arsip-kesenian"
+                  className={cn(
+                    "text-primary-black font-medium",
+                    location.pathname.includes("/arsip-kesenian")
+                      ? "font-bold"
+                      : ""
+                  )}
+                >
                   Arsip Kesenian
                 </CustomLink>
-                <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <CustomLink to="/komunitas" className="text-primary-black">
+                <CustomLink
+                  to="/komunitas"
+                  className={cn(
+                    "text-primary-black font-medium",
+                    location.pathname === "/komunitas" ? "font-bold" : ""
+                  )}
+                >
                   Komunitas
                 </CustomLink>
-                <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <CustomLink to="/auth/login" className="text-primary-black">
+                <CustomLink
+                  to="/auth/login"
+                  className={cn(
+                    "text-primary-black font-medium",
+                    location.pathname === "/auth/login" ? "font-bold" : ""
+                  )}
+                >
                   Masuk
                 </CustomLink>
-                <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -108,16 +128,14 @@ export default function Navbar() {
                 </CustomLink>
               </li>
             </ul>
-            <div>
-              <Button variant="outline">
-                <CustomLink
-                  to="/auth/login"
-                  className="text-primary-color dark:text-secondary-color font-medium"
-                >
-                  Masuk
-                </CustomLink>
+            <CustomLink to="/auth/login">
+              <Button
+                variant="outline"
+                className="text-primary-color dark:text-secondary-color font-medium"
+              >
+                Masuk
               </Button>
-            </div>
+            </CustomLink>
           </>
         )}
       </nav>

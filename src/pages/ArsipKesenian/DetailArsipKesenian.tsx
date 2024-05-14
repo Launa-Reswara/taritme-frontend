@@ -16,9 +16,10 @@ export default function DetailArsipKesenian() {
 
   return (
     <Layout>
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex justify-between items-center mb-8">
         <div className="flex items-center space-x-4">
-          <Image src="/images/logo.svg" alt="logo" className="w-20 h-20" />
+          <Image src="/images/arrow-back-icon.svg" alt="arrow back" />
+          <Image src="/images/logo-back-button.svg" alt="logo" />
           <Paragraph className="text-sm">May 31th, 2024</Paragraph>
         </div>
       </div>

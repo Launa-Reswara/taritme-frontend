@@ -4,10 +4,14 @@ import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { useTitle } from "@/hooks";
 import { getLastPathname, toRupiah } from "@/lib/helpers";
+import { cn } from "@/lib/utils/cn";
 import { Heart } from "lucide-react";
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function DetailPelatih() {
+  const [tabs, setTabs] = useState<"Tentang" | "Ulasan">("Tentang");
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -25,8 +29,8 @@ export default function DetailPelatih() {
           <Image src="/images/arrow-back-icon.svg" alt="arrow back" />
           <span className="xl:text-2xl">Kembali</span>
         </button>
-        <div className="my-10">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 grid-rows-1">
+        <div className="my-10 w-full">
+          <div className="grid grid-cols-2 w-full md:grid-cols-3 gap-4 grid-rows-1">
             <Image
               src="/images/lunamaya-detail-pelatih-1.png"
               alt="detail pelatih"
@@ -46,43 +50,78 @@ export default function DetailPelatih() {
               className="w-full"
             />
           </div>
-          <div className="my-14 w-full">
+          <div className="mt-14 w-full">
             <div className="space-x-8 w-fit">
-              <button className="text-primary-black text-base md:text-2xl">
+              <button
+                className={cn(
+                  "text-primary-black text-base md:text-2xl",
+                  tabs === "Tentang" ? "font-semibold" : ""
+                )}
+                onClick={() => setTabs("Tentang")}
+              >
                 Tentang
               </button>
-              <button className="text-primary-black text-base md:text-2xl">
+              <button
+                className={cn(
+                  "text-primary-black text-base md:text-2xl",
+                  tabs === "Ulasan" ? "font-semibold" : ""
+                )}
+                onClick={() => setTabs("Ulasan")}
+              >
                 Ulasan
               </button>
             </div>
-            <div className="space-y-6 mt-10">
-              <Heading as="h1">Pelatih Tari Piring</Heading>
-              <div>
-                <Heading as="h2" className="mb-2">
-                  Tentang Pelatih
-                </Heading>
-                <Paragraph>
-                  Seorang pelatih nari berpengalaman yang telah mengajar seni
-                  tari selama lebih dari lima tahun, memiliki keahlian dalam
-                  menari berbagai jenis tarian, termasuk tarian daerah Sumatera
-                  Barat.
-                </Paragraph>
+            {tabs === "Tentang" ? (
+              <div className="space-y-6 mt-10">
+                <Heading as="h1">Pelatih Tari Piring</Heading>
+                <div>
+                  <Heading as="h2" className="mb-2">
+                    Tentang Pelatih
+                  </Heading>
+                  <Paragraph>
+                    Seorang pelatih nari berpengalaman yang telah mengajar seni
+                    tari selama lebih dari lima tahun, memiliki keahlian dalam
+                    menari berbagai jenis tarian, termasuk tarian daerah
+                    Sumatera Barat.
+                  </Paragraph>
+                </div>
+                <div>
+                  <Heading as="h2" className="mb-2">
+                    Tentang Kursus
+                  </Heading>
+                  <Paragraph>
+                    Kami menyediakan kursus tarian daerah yang menawarkan
+                    berbagai tarif untuk setiap jenis kursus, sesuai dengan
+                    tingkat keterampilan dan durasi pelatihan yang diinginkan.
+                    Selain itu, kami juga menawarkan beragam paket menarik yang
+                    dapat memenuhi kebutuhan dan minat para peserta, termasuk
+                    diskon untuk pendaftaran kelompok, program loyalitas, serta
+                    layanan konsultasi gratis sebelum memilih kursus yang
+                    sesuai.
+                  </Paragraph>
+                </div>
               </div>
-              <div>
-                <Heading as="h2" className="mb-2">
-                  Tentang Kursus
-                </Heading>
-                <Paragraph>
-                  Kami menyediakan kursus tarian daerah yang menawarkan berbagai
-                  tarif untuk setiap jenis kursus, sesuai dengan tingkat
-                  keterampilan dan durasi pelatihan yang diinginkan. Selain itu,
-                  kami juga menawarkan beragam paket menarik yang dapat memenuhi
-                  kebutuhan dan minat para peserta, termasuk diskon untuk
-                  pendaftaran kelompok, program loyalitas, serta layanan
-                  konsultasi gratis sebelum memilih kursus yang sesuai.
-                </Paragraph>
+            ) : (
+              <div className="w-full mt-10">
+                <div className="border-l-4 w-full py-2 px-3 border-l-primary-black">
+                  <div className="w-full justify-between flex items-center">
+                    <Paragraph className="font-medium">Cika</Paragraph>
+                    <div className="flex justify-center items-center w-fit space-x-2">
+                      <span>5</span>
+                      <Image
+                        src="/images/star-icon.svg"
+                        alt="star"
+                        className="w-4 h-4"
+                      />
+                    </div>
+                  </div>
+                  <Paragraph className="text-[14px] w-full">
+                    Pelatih Lunamaya sangat keren, dan mudah dipahami jika
+                    memberikan gerakan
+                  </Paragraph>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

@@ -83,7 +83,7 @@ export default function IkutiKursus() {
                 id="tanggal-kursus"
                 type="date"
                 placeholder="DD/MM/YYYY"
-                className="mt-1 w-full border border-gray-300 rounded-lg p-2"
+                className="mt-1 w-full border border-spanish-gray rounded-full p-2"
                 style={{ maxWidth: "375px" }}
               />
             </div>
@@ -106,7 +106,7 @@ export default function IkutiKursus() {
                   id="nama"
                   type="text"
                   placeholder="Nama Anda"
-                  className="mt-1 w-full border border-gray-300 rounded-lg p-2"
+                  className="mt-1 w-full border border-spanish-gray rounded-full p-2"
                 />
               </div>
               <div>
@@ -120,7 +120,7 @@ export default function IkutiKursus() {
                   id="nomor-hp"
                   type="tel"
                   placeholder="Nomor HP"
-                  className="mt-1 w-full border border-gray-300 rounded-lg p-2"
+                  className="mt-1 w-full border border-spanish-gray rounded-full p-2"
                 />
               </div>
               <div>
@@ -132,7 +132,7 @@ export default function IkutiKursus() {
                 </label>
                 <select
                   id="metode-pembayaran"
-                  className="mt-1 w-full border border-gray-300 rounded-lg p-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  className="mt-1 w-full border border-spanish-gray rounded-full p-2 focus:ring-indigo-500 focus:border-indigo-500"
                 >
                   <option value="transfer">Transfer Bank</option>
                   <option value="kartu-kredit">Kartu Kredit</option>
@@ -189,19 +189,19 @@ export default function IkutiKursus() {
                 <Input
                   id="bukti-pembayaran"
                   type="file"
-                  className="mt-1 w-full border border-gray-300 rounded-lg p-2"
+                  className="mt-1 w-full border border-spanish-gray rounded-full p-2"
                   style={{ maxWidth: "275px" }}
                 />
               </div>
             </div>
             <div className="mt-10"></div>
-            <div className="mt-6 justify-center flex">
-              <Link to="/temukan-pelatih/:detail/ikuti-kursus">
-                <Button className="w-40 mx-auto bg-secondary-color ">
-                  Konfirmasi
+            <div className="flex my-10 flex-col justify-center items-center w-full">
+                <Link to={"/temukan-pelatih/:detail/ikuti-kursus"}>
+                <Button className="text-black bg-secondary-color hover:bg-secondary-color/90 rounded-3xl w-72 px-4 py-7">
+                  <Paragraph>Konfirmasi</Paragraph>
                 </Button>
-              </Link>
-            </div>
+                </Link>
+              </div>
           </div>
         </div>
       </div>

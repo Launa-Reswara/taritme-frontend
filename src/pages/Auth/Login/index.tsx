@@ -46,7 +46,7 @@ export default function Login() {
                       placeholder="Masukkan email"
                       name="email"
                       className="mt-2 border-spanish-gray rounded-full px-6 py-7"
-                      type="password"
+                      type="text"
                       required
                     />
                   </div>
@@ -54,6 +54,7 @@ export default function Login() {
                     <label htmlFor="password">Password*</label>
                     <Input
                       placeholder="Masukkan password"
+                      type="password"
                       name="password"
                       className="mt-2 border-spanish-gray rounded-full px-6 py-7"
                       required

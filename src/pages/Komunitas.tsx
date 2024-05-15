@@ -6,17 +6,19 @@ import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { useTitle } from "@/hooks";
 import { listKomunitas } from "@/lib/utils/data";
-import useGlobalStore from "@/store";
+import {
+  setIdModal,
+  setModalKomunitas,
+} from "@/store/slices/modalKomunitas.slice";
+import { ModalKomunitasSliceProps } from "@/types";
 import { ArrowRightIcon } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Komunitas() {
-  const { idModal, setIdModal, modalKomunitas, setModalKomunitas } =
-    useGlobalStore((state) => ({
-      idModal: state.idModal,
-      setIdModal: state.setIdModal,
-      modalKomunitas: state.modalKomunitas,
-      setModalKomunitas: state.setModalKomunitas,
-    }));
+  const dispatch = useDispatch();
+  const { idModal, dataModalKomunitas } = useSelector(
+    (state: ModalKomunitasSliceProps) => state.modalKomunitas
+  );
 
   useTitle("Komunitas | Taritme");
 
@@ -62,8 +64,8 @@ export default function Komunitas() {
                 <Button
                   className="bg-primary-color flex justify-center items-center space-x-2 rounded-full mt-8 text-white hover:bg-primary-black"
                   onClick={() => {
-                    setIdModal(item.id);
-                    setModalKomunitas(item);
+                    dispatch(setIdModal(item.id));
+                    dispatch(setModalKomunitas(item));
                   }}
                 >
                   <span>Baca Selengkapnya</span>
@@ -74,8 +76,8 @@ export default function Komunitas() {
           ))}
         </div>
       </Layout>
-      {idModal === modalKomunitas.id && idModal !== 0 ? (
-        <ModalKomunitas {...modalKomunitas} />
+      {idModal === dataModalKomunitas.id && idModal !== 0 ? (
+        <ModalKomunitas {...dataModalKomunitas} />
       ) : null}
     </>
   );

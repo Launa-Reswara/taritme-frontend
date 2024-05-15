@@ -28,10 +28,12 @@ export type InstrukturProps = {
 };
 
 export type ModalKomunitasSliceProps = {
-  idModal: number;
-  setIdModal: (idModal: number) => void;
-  modalKomunitas: KomunitasProps;
-  setModalKomunitas: (modalKomunitas: KomunitasProps) => void;
+  modalKomunitas: {
+    idModal: number;
+    setIdModal: (idModal: number) => void;
+    dataModalKomunitas: KomunitasProps;
+    setModalKomunitas: (dataModalKomunitas: KomunitasProps) => void;
+  };
 };
 
 type ValuePelatihProps = "tentang" | "ulasan";

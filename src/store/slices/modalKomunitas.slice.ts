@@ -1,17 +1,26 @@
-import { ModalKomunitasSliceProps } from "@/types";
-import { StateCreator } from "zustand";
+import { createSlice } from "@reduxjs/toolkit";
 
-const modalKomunitasSlice: StateCreator<
-  ModalKomunitasSliceProps,
-  [],
-  [],
-  ModalKomunitasSliceProps
-> = (set) => ({
-  idModal: 0,
-  setIdModal: (idModal) => set({ idModal: idModal }),
-  modalKomunitas: { id: 0, name: "", description: "", previewImage: "" },
-  setModalKomunitas: (modalKomunitas) =>
-    set({ modalKomunitas: modalKomunitas }),
+export const modalKomunitasSlice = createSlice({
+  name: "modalKomunitas",
+  initialState: {
+    idModal: 0,
+    dataModalKomunitas: {
+      id: 0,
+      name: "",
+      previewImage: "",
+      description: "",
+    },
+  },
+  reducers: {
+    setIdModal: (state, action) => {
+      state.idModal = action.payload;
+    },
+    setModalKomunitas: (state, action) => {
+      state.dataModalKomunitas = action.payload;
+    },
+  },
 });
 
-export default modalKomunitasSlice;
+export const { setIdModal, setModalKomunitas } = modalKomunitasSlice.actions;
+
+export default modalKomunitasSlice.reducer;

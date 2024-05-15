@@ -1,6 +1,7 @@
-import useGlobalStore from "@/store";
+import { setIdModal } from "@/store/slices/modalKomunitas.slice";
 import { KomunitasProps } from "@/types";
 import { X } from "lucide-react";
+import { useDispatch } from "react-redux";
 import { Button } from "./ui/button";
 import Image from "./ui/image";
 import { Heading, Paragraph } from "./ui/typography";
@@ -10,9 +11,7 @@ export default function ModalKomunitas({
   name,
   description,
 }: KomunitasProps) {
-  const { setIdModal } = useGlobalStore((state) => ({
-    setIdModal: state.setIdModal,
-  }));
+  const dispatch = useDispatch();
 
   return (
     <div className="flex justify-center items-center p-4 fixed inset-0 z-50 backdrop-blur-md min-h-svh">
@@ -23,7 +22,7 @@ export default function ModalKomunitas({
             size="icon"
             className="absolute top-4 right-4 rounded-full bg-light-silver"
             variant="secondary"
-            onClick={() => setIdModal(0)}
+            onClick={() => dispatch(setIdModal(0))}
           >
             <X />
           </Button>

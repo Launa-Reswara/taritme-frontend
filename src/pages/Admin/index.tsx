@@ -4,7 +4,7 @@ import { LogOut } from "lucide-react";
 
 export default function Admin() {
   return (
-    <aside>
+    <aside className="sticky top-0 drop-shadow-lg">
       <div>
         <Image src="/images/logo.svg" alt="logo" />
         <div>

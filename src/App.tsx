@@ -13,6 +13,8 @@ import IkutiKursus from "@/pages/TemukanPelatih/IkutKursus";
 import { AnimatePresence, LazyMotion, domAnimation } from "framer-motion";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { useScrollToTop } from "./hooks";
+import { Provider } from "react-redux";
+import store from "./store";
 
 export default function App() {
   const location = useLocation();
@@ -20,29 +22,34 @@ export default function App() {
   useScrollToTop();
 
   return (
-    <LazyMotion features={domAnimation}>
-      <AnimatePresence mode="wait">
-        <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<Home />} />
-          <Route path="/auth/login" element={<Login />} />
-          <Route path="/auth/login/admin" element={<LoginAdmin />} />
-          <Route path="/auth/registration" element={<Registration />} />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/komunitas" element={<Komunitas />} />
-          <Route path="/arsip-kesenian" element={<ArsipKesenian />} />
-          <Route
-            path="/arsip-kesenian/:detail"
-            element={<DetailArsipKesenian />}
-          />
-          <Route path="/temukan-pelatih" element={<TemukanPelatih />} />
-          <Route path="/temukan-pelatih/:detail" element={<DetailPelatih />} />
-          <Route
-            path="/temukan-pelatih/:detail/ikuti-kursus"
-            element={<IkutiKursus />}
-          />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </AnimatePresence>
-    </LazyMotion>
+    <Provider store={store}>
+      <LazyMotion features={domAnimation}>
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<Home />} />
+            <Route path="/auth/login" element={<Login />} />
+            <Route path="/auth/login/admin" element={<LoginAdmin />} />
+            <Route path="/auth/registration" element={<Registration />} />
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/komunitas" element={<Komunitas />} />
+            <Route path="/arsip-kesenian" element={<ArsipKesenian />} />
+            <Route
+              path="/arsip-kesenian/:detail"
+              element={<DetailArsipKesenian />}
+            />
+            <Route path="/temukan-pelatih" element={<TemukanPelatih />} />
+            <Route
+              path="/temukan-pelatih/:detail"
+              element={<DetailPelatih />}
+            />
+            <Route
+              path="/temukan-pelatih/:detail/ikuti-kursus"
+              element={<IkutiKursus />}
+            />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AnimatePresence>
+      </LazyMotion>
+    </Provider>
   );
 }

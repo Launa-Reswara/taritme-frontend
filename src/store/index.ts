@@ -1,12 +1,10 @@
-import { ModalKomunitasSliceProps } from "@/types";
-import { devtools } from "zustand/middleware";
-import { createWithEqualityFn } from "zustand/traditional";
-import modalKomunitasSlice from "./slices/modalKomunitas.slice";
+import { configureStore } from "@reduxjs/toolkit";
+import modalKomunitasReducer from "./slices/modalKomunitas.slice";
 
-const useGlobalStore = createWithEqualityFn<ModalKomunitasSliceProps>()(
-  devtools((...set) => ({
-    ...modalKomunitasSlice(...set),
-  }))
-);
+const store = configureStore({
+  reducer: {
+    modalKomunitas: modalKomunitasReducer,
+  },
+});
 
-export default useGlobalStore;
+export default store;

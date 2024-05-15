@@ -38,13 +38,13 @@ export default function Home() {
         >
           <div className="md:grid md:grid-cols-3 w-full flex flex-col justify-center items-center gap-4 xl:space-y-0 xl:grid-cols-4 md:grid-rows-1">
             <m.div
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.6 }}
               initial={{ opacity: 0, y: -50 }}
               animate={{ opacity: 1, y: 0 }}
               className="bg-center md:block h-full md:row-span-2 hidden border-2 bg-cover rounded-xl bg-abstract-home-image bg-no-repeat"
             ></m.div>
             <m.div
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.6 }}
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               className="bg-secondary-color h-full md:col-span-2 rounded-xl px-7 py-5"
@@ -83,7 +83,7 @@ export default function Home() {
               </div>
             </m.div>
             <m.div
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.6 }}
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               onClick={() => navigate("/temukan-pelatih")}
@@ -108,7 +108,7 @@ export default function Home() {
               </div>
             </m.div>
             <m.div
-              transition={{ duration: 0.8, delay: 0.3 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               className="hidden md:block rounded-xl"
@@ -121,7 +121,12 @@ export default function Home() {
               />
             </m.div>
             <div className="w-full md:col-span-2 h-full relative">
-              <div className="absolute top-4 left-4">
+              <m.div
+                transition={{ duration: 0.6, delay: 0.3 }}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="absolute top-4 left-4"
+              >
                 <Heading
                   as="h3"
                   className="font-medium lg:text-xl text-xl md:text-lg"
@@ -134,9 +139,9 @@ export default function Home() {
                 >
                   Kesenian
                 </Heading>
-              </div>
+              </m.div>
               <m.div
-                transition={{ duration: 0.8 }}
+                transition={{ duration: 0.6 }}
                 initial={{ opacity: 0, y: -50 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="bg-secondary-color h-full py-2 w-full box-polygon-home rounded-xl"

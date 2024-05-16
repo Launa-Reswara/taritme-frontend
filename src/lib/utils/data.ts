@@ -180,3 +180,21 @@ export const listKomunitas: KomunitasProps[] = [
       "Menjelajahi kreativitas melalui tarian, menggabungkan elemen-elemen modern dengan tradisional untuk menciptakan karya-karya yang menyentuh dan menginspirasi.",
   },
 ];
+
+export const sidebarLinksList = [
+  {
+    id: 1,
+    name: "Dashboard",
+    pathname: "/admin",
+  },
+  {
+    id: 2,
+    name: "Pelatih",
+    pathname: "/admin/pelatih",
+  },
+  {
+    id: 3,
+    name: "Arsip",
+    pathname: "/admin/arsip",
+  },
+];

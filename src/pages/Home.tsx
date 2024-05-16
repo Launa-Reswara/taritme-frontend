@@ -24,13 +24,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <m.main
-        transition={{ duration: 0.4 }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className={cn("flex justify-center mt-7 items-start w-full")}
-      >
+      <m.main className={cn("flex justify-center mt-7 items-start w-full")}>
         <section
           className={cn(
             "w-full flex justify-center items-start px-4 pb-6 flex-col max-w-[1440px]"
@@ -41,12 +35,14 @@ export default function Home() {
               transition={{ duration: 0.6 }}
               initial={{ opacity: 0, y: -50 }}
               animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
               className="bg-center md:block h-full md:row-span-2 hidden border-2 bg-cover rounded-xl bg-abstract-home-image bg-no-repeat"
             ></m.div>
             <m.div
               transition={{ duration: 0.6 }}
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
               className="bg-secondary-color h-full md:col-span-2 rounded-xl px-7 py-5"
               onClick={() => navigate("/komunitas")}
             >
@@ -86,6 +82,7 @@ export default function Home() {
               transition={{ duration: 0.6 }}
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0 }}
               onClick={() => navigate("/temukan-pelatih")}
               className="w-full xl:col-span-1 md:col-span-2"
             >
@@ -108,9 +105,10 @@ export default function Home() {
               </div>
             </m.div>
             <m.div
-              transition={{ duration: 0.6, delay: 0.3 }}
+              transition={{ duration: 0.6 }}
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
               className="hidden md:block rounded-xl"
             >
               <Image
@@ -122,9 +120,10 @@ export default function Home() {
             </m.div>
             <div className="w-full md:col-span-2 h-full relative">
               <m.div
-                transition={{ duration: 0.6, delay: 0.3 }}
+                transition={{ duration: 0.6 }}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0 }}
                 className="absolute top-4 left-4"
               >
                 <Heading
@@ -144,6 +143,7 @@ export default function Home() {
                 transition={{ duration: 0.6 }}
                 initial={{ opacity: 0, y: -50 }}
                 animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
                 className="bg-secondary-color h-full py-2 w-full box-polygon-home rounded-xl"
               >
                 <div className="w-full xl:mt-1 flex justify-end items-center">

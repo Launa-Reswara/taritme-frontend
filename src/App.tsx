@@ -15,6 +15,8 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import { useScrollToTop } from "./hooks";
 import { Provider } from "react-redux";
 import store from "./store";
+import Pelatih from "./pages/Admin/Pelatih";
+import Arsip from "./pages/Admin/Arsip";
 
 export default function App() {
   const location = useLocation();
@@ -30,7 +32,6 @@ export default function App() {
             <Route path="/auth/login" element={<Login />} />
             <Route path="/auth/login/admin" element={<LoginAdmin />} />
             <Route path="/auth/registration" element={<Registration />} />
-            <Route path="/admin" element={<Admin />} />
             <Route path="/komunitas" element={<Komunitas />} />
             <Route path="/arsip-kesenian" element={<ArsipKesenian />} />
             <Route
@@ -46,6 +47,9 @@ export default function App() {
               path="/temukan-pelatih/:detail/ikuti-kursus"
               element={<IkutiKursus />}
             />
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/admin/pelatih" element={<Pelatih />} />
+            <Route path="/admin/arsip" element={<Arsip />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AnimatePresence>

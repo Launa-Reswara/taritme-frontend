@@ -36,8 +36,9 @@ export type ModalKomunitasSliceProps = {
   };
 };
 
-type ValuePelatihProps = "tentang" | "ulasan";
-export type DetailPelatihTabsSliceProps = {
-  detailPelatihTabs: ValuePelatihProps;
-  setDetailPelatihTabs: (detailPelatihTabs: ValuePelatihProps) => void;
+export type tambahPelatihSliceProps = {
+  tambahPelatih: {
+    isTambahPelatih: boolean;
+    setIsTambahPelatih: (isTambahPelatih: boolean) => void;
+  };
 };

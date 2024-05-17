@@ -1,50 +1,62 @@
 import {
-  ArcElement,
-  BarElement,
-  CategoryScale,
-  Chart as ChartJS,
-  Legend,
-  LinearScale,
+  CartesianGrid,
+  Line,
+  LineChart,
+  ResponsiveContainer,
   Tooltip,
-} from "chart.js";
-import { Chart } from "react-chartjs-2";
+  XAxis,
+  YAxis,
+} from "recharts";
+
+const data = [
+  {
+    name: "Feb",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Mar",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Apr",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "May",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Jun",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Jul",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+];
 
 export default function ChartTotalUser() {
-  ChartJS.register(
-    ArcElement,
-    CategoryScale,
-    BarElement,
-    LinearScale,
-    Tooltip,
-    Legend
-  );
-
-  const data = [
-    { activity: "Grocery", today: 326800 },
-    { activity: "Transportation", today: 15000 },
-    { activity: "Housing", today: 185750 },
-    { activity: "Food and Drink", monday: 156000 },
-    { activity: "Entertainment", monday: 35200 },
-  ];
-
   return (
-    <Chart
-      type="bar"
-      data={{
-        labels: data.map((item) => item.activity),
-        datasets: [
-          {
-            label: "Today",
-            data: data.map((item) => item.today),
-            backgroundColor: "#793FDF",
-          },
-          {
-            label: "Monday",
-            data: data.map((item) => item.monday),
-            backgroundColor: "#FFFD8C",
-          },
-        ],
-      }}
-    />
+    <ResponsiveContainer width="100%" height={350}>
+      <LineChart data={data}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis
+          dataKey="name"
+          stroke="#000000"
+          fontSize={12}
+          tickLine
+          axisLine
+        />
+        <YAxis
+          stroke="#000000"
+          fontSize={12}
+          tickLine
+          axisLine
+          tickFormatter={(value) => value}
+        />
+        <Tooltip />
+        <Line dataKey="total" stroke="#E1B83B" />
+      </LineChart>
+    </ResponsiveContainer>
   );
 }

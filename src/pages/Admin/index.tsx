@@ -3,16 +3,23 @@ import SidebarAdmin from "@/components/SidebarAdmin";
 import { Calendar } from "@/components/ui/calendar";
 import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
+import { m } from "framer-motion";
 import { UserRound } from "lucide-react";
 
 export default function Admin() {
   return (
     <>
       <SidebarAdmin />
-      <main className="border-2 ml-[358px] min-h-svh flex justify-center items-center flex-col">
-        <section>
-          <div className="flex justify-center w-full items-center space-x-7">
-            <div className="bg-primary-color rounded-xl px-8 py-6 flex justify-between items-center w-[253px]">
+      <m.main
+        transition={{ duration: 0.4 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="border-2 ml-[358px] min-h-svh flex justify-center items-center flex-col p-10"
+      >
+        <m.section>
+          <div className="flex justify-between w-full space-x-7 items-center">
+            <div className="bg-primary-color rounded-xl px-8 py-6 flex justify-between items-center w-[350px]">
               <div>
                 <span className="text-white font-bold text-2xl">10</span>
                 <Paragraph className="text-white">Pengguna</Paragraph>
@@ -21,7 +28,7 @@ export default function Admin() {
                 <UserRound />
               </div>
             </div>
-            <div className="bg-primary-color rounded-xl px-8 py-6 flex justify-between items-center w-[253px]">
+            <div className="bg-primary-color rounded-xl px-8 py-6 flex justify-between items-center w-[350px]">
               <div>
                 <span className="text-white font-bold text-2xl">10</span>
                 <Paragraph className="text-white">Pengguna</Paragraph>
@@ -30,7 +37,7 @@ export default function Admin() {
                 <Image src="/images/floating-guru-icon.svg" alt="instruktur" />
               </div>
             </div>
-            <div className="bg-primary-color rounded-xl px-8 py-6 flex justify-between items-center w-[253px]">
+            <div className="bg-primary-color rounded-xl px-8 py-6 flex justify-between items-center w-[350px]">
               <div>
                 <span className="text-white font-bold text-2xl">10</span>
                 <Paragraph className="text-white">Customer</Paragraph>
@@ -115,8 +122,8 @@ export default function Admin() {
               </div>
             </div>
           </div>
-        </section>
-      </main>
+        </m.section>
+      </m.main>
     </>
   );
 }

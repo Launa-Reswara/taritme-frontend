@@ -1,11 +1,12 @@
+import { useTitle } from "@/hooks";
 import { cn } from "@/lib/utils/cn";
 import { sidebarLinksList } from "@/lib/utils/data";
-import { LogOut } from "lucide-react";
+import { LogOut, Menu } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import Image from "./ui/image";
-import { Heading, Paragraph } from "./ui/typography";
-import { useTitle } from "@/hooks";
 import { Button } from "./ui/button";
+import Image from "./ui/image";
+import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import { Heading, Paragraph } from "./ui/typography";
 
 export default function SidebarAdmin() {
   const location = useLocation();
@@ -20,8 +21,33 @@ export default function SidebarAdmin() {
             src="/images/logo.svg"
             alt="logo"
             draggable={false}
-            className="w-32 lg:w-full"
+            className="w-32 lg:w-full hidden lg:block"
           />
+          <div className="lg:hidden block w-fit">
+            <Sheet>
+              <SheetTrigger>
+                <Button variant="outline">
+                  <Menu />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left">
+                {sidebarLinksList.map((item) => (
+                  <Link to={item.pathname} key={item.id}>
+                    <Button
+                      className={cn(
+                        "py-6 bg-transparent text-primary-black hover:text-white hover:bg-primary-color w-full rounded-full text-base lg:text-2xl font-medium",
+                        location.pathname === item.pathname
+                          ? "bg-primary-color text-white"
+                          : ""
+                      )}
+                    >
+                      {item.name}
+                    </Button>
+                  </Link>
+                ))}
+              </SheetContent>
+            </Sheet>
+          </div>
           <div className="lg:mt-6 lg:w-full">
             <div className="flex lg:border-b-2 lg:border-primary-black space-x-3 lg:space-x-0 lg:p-2 lg:flex-col justify-center items-center">
               <Image
@@ -35,7 +61,7 @@ export default function SidebarAdmin() {
             </div>
             <ul className="w-full hidden lg:block space-y-6 py-8">
               {sidebarLinksList.map((item) => (
-                <li>
+                <li key={item.id}>
                   <Link to={item.pathname}>
                     <Button
                       className={cn(
@@ -56,7 +82,7 @@ export default function SidebarAdmin() {
       </div>
       <div
         onClick={() => {}}
-        className="bg-secondary-color w-full hidden lg:block cursor-pointer md:flex justify-between items-center p-4"
+        className="bg-secondary-color w-full cursor-pointer hidden lg:flex justify-between items-center p-4"
       >
         <Paragraph className="text-white text-2xl font-medium">
           Keluar

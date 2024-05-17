@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/table";
 import { useTitle } from "@/hooks";
 import { pelatihList } from "@/lib/utils/data";
+import { m } from "framer-motion";
 import { Pencil, Trash } from "lucide-react";
 
 export default function Arsip() {
@@ -19,10 +20,20 @@ export default function Arsip() {
   return (
     <>
       <SidebarAdmin />
-      <main className="border-2 lg:ml-[358px] min-h-svh flex justify-start p-4 lg:p-10 items-center flex-col">
+      <m.main
+        transition={{ duration: 0.4 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="border-2 lg:ml-[358px] min-h-svh flex justify-start p-4 lg:p-10 items-center flex-col"
+      >
         <section className="flex w-full justify-center items-center">
           <div className="w-full">
-            <button className="text-primary-black text-2xl">
+            <button
+              className="text-primary-black text-2xl"
+              type="button"
+              aria-label="tambah arsip"
+            >
               + Tambah Arsip
             </button>
             <Table className="w-full mt-10">
@@ -73,7 +84,7 @@ export default function Arsip() {
             </Table>
           </div>
         </section>
-      </main>
+      </m.main>
     </>
   );
 }

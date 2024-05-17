@@ -1,25 +1,39 @@
 import { cn } from "@/lib/utils/cn";
 import { sidebarLinksList } from "@/lib/utils/data";
 import { LogOut } from "lucide-react";
-import { Button } from "react-day-picker";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Image from "./ui/image";
 import { Heading, Paragraph } from "./ui/typography";
+import { useTitle } from "@/hooks";
+import { Button } from "./ui/button";
 
 export default function SidebarAdmin() {
+  const location = useLocation();
+
+  useTitle("Dashboard | Taritme");
+
   return (
-    <nav className="fixed z-50 bg-white w-full hidden max-w-[359px] border-2 left-0 min-h-screen lg:flex justify-between flex-col items-start top-0 drop-shadow-lg">
-      <div className="w-full flex flex-col justify-center items-center p-8">
-        <div className="w-full flex-col flex justify-center items-center">
-          <Image src="/images/logo.svg" alt="logo" draggable={false} />
-          <div className="mt-6 w-full">
-            <div className="flex border-b-2 border-primary-black p-2 flex-col justify-center items-center">
-              <Image src="/images/admin-icon.svg" alt="admin icon" />
-              <Heading as="h2" className="mt-2">
+    <nav className="lg:fixed sticky z-50 bg-white w-full lg:max-w-[359px] border-2 left-0 lg:min-h-svh flex justify-between flex-col items-start top-0 drop-shadow-lg">
+      <div className="w-full flex flex-col justify-center items-center p-4 lg:p-8">
+        <div className="w-full lg:flex-col flex justify-between lg:justify-center items-center">
+          <Image
+            src="/images/logo.svg"
+            alt="logo"
+            draggable={false}
+            className="w-32 lg:w-full"
+          />
+          <div className="lg:mt-6 lg:w-full">
+            <div className="flex lg:border-b-2 lg:border-primary-black space-x-3 lg:space-x-0 lg:p-2 lg:flex-col justify-center items-center">
+              <Image
+                src="/images/admin-icon.svg"
+                alt="admin icon"
+                className="w-10 h-10"
+              />
+              <Heading as="h2" className="mt-2 text-base lg:text-2xl">
                 Admin
               </Heading>
             </div>
-            <ul className="w-full space-y-6 py-8">
+            <ul className="w-full hidden lg:block space-y-6 py-8">
               {sidebarLinksList.map((item) => (
                 <li>
                   <Link to={item.pathname}>
@@ -42,7 +56,7 @@ export default function SidebarAdmin() {
       </div>
       <div
         onClick={() => {}}
-        className="bg-secondary-color w-full cursor-pointer flex justify-between items-center p-4"
+        className="bg-secondary-color w-full hidden lg:block cursor-pointer md:flex justify-between items-center p-4"
       >
         <Paragraph className="text-white text-2xl font-medium">
           Keluar

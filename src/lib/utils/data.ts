@@ -198,3 +198,22 @@ export const sidebarLinksList = [
     pathname: "/admin/arsip",
   },
 ];
+
+export const pelatihList = [
+  {
+    id: 1,
+    foto: "/images/foto-icon.svg",
+    nama: "Riri Sarwati",
+    nohp: "081234567810",
+    email: "ririesarwa@mail",
+    status: "Tidak Aktif",
+  },
+  {
+    id: 2,
+    foto: "/images/foto-icon.svg",
+    nama: "Luna Maya",
+    nohp: "089765412389",
+    email: "lunamay@mail",
+    status: "Aktif",
+  },
+];

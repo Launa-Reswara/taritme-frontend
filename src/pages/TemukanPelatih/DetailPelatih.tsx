@@ -30,11 +30,18 @@ export default function DetailPelatih() {
           <span className="xl:text-2xl">Kembali</span>
         </button>
         <div className="my-10 w-full">
-          <div className="grid grid-cols-2 w-full md:grid-cols-3 gap-4 grid-rows-1">
+          {/** Solusi 1: buat breakpoints custom untuk width bungkus grid */}
+          <div
+            className={cn(
+              "grid grid-cols-2 w-[350px]",
+              "sm:w-[610px] md:w-[700px] xl:w-[900px] md:grid-cols-3",
+              "gap-4 grid-rows-1"
+            )}
+          >
             <Image
               src="/images/lunamaya-detail-pelatih-1.png"
               alt="detail pelatih"
-              className="row-span-2 w-full h-full col-span-2"
+              className="row-span-2 h-full mx-auto w-full col-span-2"
               draggable={false}
             />
             <Image
@@ -125,7 +132,7 @@ export default function DetailPelatih() {
           </div>
         </div>
       </div>
-      <div className="w-full top-20 md:sticky">
+      <div className="w-full top-20 md:sticky p-2">
         <div>
           <div>
             <div className="mb-8">
@@ -162,7 +169,7 @@ export default function DetailPelatih() {
               <Image src="/images/tag-icon.svg" alt="tag" />
               <Paragraph>Rincian</Paragraph>
             </div>
-            <div className="flex justify-between items-start mt-3 w-full">
+            <div className="flex justify-start space-x-8 md:justify-between items-start mt-3 w-full">
               <div>
                 <Heading as="h2" className="font-medium mb-1.5">
                   Tarif per jam

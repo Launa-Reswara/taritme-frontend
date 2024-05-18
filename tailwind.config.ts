@@ -29,6 +29,7 @@ const config = {
         "secondary-color": "#E1B83B",
         "spanish-gray": "#A09898",
         "light-silver": "#D9D9D9",
+        "auro-metal-saurus": "#6B7280",
         malachite: "#00FF47",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

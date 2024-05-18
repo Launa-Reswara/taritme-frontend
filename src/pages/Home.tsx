@@ -24,7 +24,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <m.main className={cn("flex justify-center mt-7 items-start w-full")}>
+      <m.main className={cn("flex justify-center mt-10 items-start w-full")}>
         <section
           className={cn(
             "w-full flex justify-center items-start px-4 pb-6 flex-col max-w-[1440px]"
@@ -36,7 +36,7 @@ export default function Home() {
               initial={{ opacity: 0, y: -50 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className="bg-center md:block h-full md:row-span-2 hidden border-2 bg-cover rounded-xl bg-abstract-home-image bg-no-repeat"
+              className="bg-center md:block h-full md:row-span-2 hidden bg-cover rounded-xl bg-abstract-home-image bg-no-repeat"
             ></m.div>
             <m.div
               transition={{ duration: 0.6 }}

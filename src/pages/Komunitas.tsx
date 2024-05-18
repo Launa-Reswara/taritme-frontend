@@ -26,10 +26,12 @@ export default function Komunitas() {
     <>
       <Layout className="justify-center items-center">
         {/* Gambar dan Teks */}
-        <Heading as="h1" className="text-center">
-          Komunitas
-        </Heading>
-        <div className="relative w-full bg-cover bg-no-repeat mt-14 mb-10 p-4 rounded-xl flex justify-center items-center drop-shadow-lg h-[200px] sm:h-[355px] bg-rumah-gadang-komunitas-image mx-auto my-4">
+        <div className="w-full">
+          <Heading as="h1" className="text-start">
+            Komunitas
+          </Heading>
+        </div>
+        <div className="relative w-full bg-cover bg-no-repeat mt-10 mb-10 p-4 rounded-xl flex justify-center items-center drop-shadow-lg h-[200px] sm:h-[355px] bg-rumah-gadang-komunitas-image mx-auto my-4">
           <div className="text-center">
             <Heading
               as="h2"

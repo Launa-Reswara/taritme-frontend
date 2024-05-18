@@ -5,6 +5,7 @@ import { Heading, Paragraph } from "@/components/ui/typography";
 import { useTitle } from "@/hooks";
 import { getLastPathname, toRupiah } from "@/lib/helpers";
 import { cn } from "@/lib/utils/cn";
+import { ulasanList } from "@/lib/utils/data";
 import { Heart } from "lucide-react";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -109,30 +110,34 @@ export default function DetailPelatih() {
                 </div>
               </div>
             ) : (
-              <div className="w-full mt-10">
-                <div className="border-l-4 w-full py-2 px-3 border-l-primary-black">
-                  <div className="w-full justify-between flex items-center">
-                    <Paragraph className="font-medium">Cika</Paragraph>
-                    <div className="flex justify-center items-center w-fit space-x-2">
-                      <span>5</span>
-                      <Image
-                        src="/images/star-icon.svg"
-                        alt="star"
-                        className="w-4 h-4"
-                      />
+              <div className="w-full space-y-4 mt-10">
+                {ulasanList.map((item) => (
+                  <div
+                    key={item.id}
+                    className="border-l-4 w-full py-2 px-3 border-l-primary-black"
+                  >
+                    <div className="w-full justify-between flex items-center">
+                      <Paragraph className="font-medium">{item.name}</Paragraph>
+                      <div className="flex justify-center items-center w-fit space-x-2">
+                        <span>{item.rate}</span>
+                        <Image
+                          src="/images/star-icon.svg"
+                          alt="star"
+                          className="w-4 h-4"
+                        />
+                      </div>
                     </div>
+                    <Paragraph className="text-[14px] w-full">
+                      {item.comment}
+                    </Paragraph>
                   </div>
-                  <Paragraph className="text-[14px] w-full">
-                    Pelatih Lunamaya sangat keren, dan mudah dipahami jika
-                    memberikan gerakan
-                  </Paragraph>
-                </div>
+                ))}
               </div>
             )}
           </div>
         </div>
       </div>
-      <div className="w-full top-20 md:sticky p-2">
+      <aside className="w-full top-20 md:sticky p-2">
         <div>
           <div>
             <div className="mb-8">
@@ -193,12 +198,16 @@ export default function DetailPelatih() {
               {Array(5)
                 .fill(null)
                 .map((_, index) => (
-                  <Image key={index + 1} src="/images/unstar.svg" alt="" />
+                  <Image
+                    key={index + 1}
+                    src="/images/unstar.svg"
+                    alt="unstar"
+                  />
                 ))}
             </div>
           </div>
         </div>
-      </div>
+      </aside>
     </Layout>
   );
 }

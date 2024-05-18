@@ -34,14 +34,14 @@ export default function IkutiKursus() {
                 className="absolute -top-20"
               />
               <div className="mt-36">
-                <Heading as="h2" className="text-white">
+                <Heading as="h2" className="text-white font-medium">
                   {item.name}
                 </Heading>
                 <Paragraph className="text-white mt-1 mb-2 text-xs">
                   {item.description}
                 </Paragraph>
                 <div className="mb-6">
-                  <div className="flex justify-center items-center space-x-2">
+                  <div className="flex border-2 w-fit justify-center items-center space-x-2">
                     <Image src="/images/star-icon.svg" alt="star" />
                     <span className="text-base text-white">
                       {item.rate}{" "}
@@ -64,14 +64,10 @@ export default function IkutiKursus() {
 
         {/* Form ikut kursus */}
         <div className="lg:col-span-2">
-          <Heading
-            className="text-xl mb-4 "
-            style={{ color: "rgb(118, 18, 23)" }}
-            as={"h1"}
-          >
-            IKUTI KURSUS
+          <Heading className="mb-4 text-primary-color" as="h1">
+            Ikuti Kursus
           </Heading>
-          <div className="bg-white p-20 rounded-2xl border border-black">
+          <form className="bg-white py-10 px-5 rounded-2xl border border-black">
             <div>
               <label
                 htmlFor="tanggal-kursus"
@@ -196,13 +192,14 @@ export default function IkutiKursus() {
             </div>
             <div className="mt-10"></div>
             <div className="flex my-10 flex-col justify-center items-center w-full">
-                <Link to={"/temukan-pelatih/:detail/ikuti-kursus"}>
-                <Button className="text-black bg-secondary-color hover:bg-secondary-color/90 rounded-3xl w-72 px-4 py-7">
-                  <Paragraph>Konfirmasi</Paragraph>
-                </Button>
-                </Link>
-              </div>
-          </div>
+              <Button
+                type="submit"
+                className="text-black bg-secondary-color hover:bg-secondary-color/90 rounded-3xl w-72 px-4 py-7"
+              >
+                <Paragraph>Konfirmasi</Paragraph>
+              </Button>
+            </div>
+          </form>
         </div>
       </div>
     </Layout>

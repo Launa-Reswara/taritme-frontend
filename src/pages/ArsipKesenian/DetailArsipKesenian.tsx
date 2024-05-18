@@ -7,21 +7,25 @@ import { getLastPathname } from "@/lib/helpers";
 import { cn } from "@/lib/utils/cn";
 import { listArsipKesenian } from "@/lib/utils/data";
 import { MessageCircle, Share, ThumbsUp } from "lucide-react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function DetailArsipKesenian() {
   const location = useLocation();
-
+  const navigate = useNavigate();
   useTitle(`${getLastPathname(location.pathname)} | Taritme`);
 
   return (
     <Layout>
       <div className="flex justify-between items-center mb-8">
-        <div className="flex items-center space-x-4">
-          <Image src="/images/arrow-back-icon.svg" alt="arrow back" />
-          <Image src="/images/logo-back-button.svg" alt="logo" />
-          <Paragraph className="text-sm">May 31th, 2024</Paragraph>
-        </div>
+        <button
+          type="button"
+          aria-label="kembali"
+          className="flex justify-center items-center space-x-2"
+          onClick={() => navigate(-1)}
+        >
+          <img src="/images/arrow-back-icon.svg" alt="arrow back" />
+          <span className="xl:text-2xl">Kembali</span>
+        </button>
       </div>
       <div className="flex w-full justify-between">
         <div className="flex items-center space-x-4">
@@ -33,7 +37,9 @@ export default function DetailArsipKesenian() {
           <div className="flex flex-col">
             <Paragraph className="font-semibold">Leonardo Da Vinci</Paragraph>
             <div className="flex items-center space-x-2">
-              <Paragraph className="text-xs">Penulis</Paragraph>
+              <Paragraph className="text-xs">
+                May 31th, 2024 | Penulis
+              </Paragraph>
               <Image
                 src="/images/electric-icon.svg"
                 alt="electric icon"

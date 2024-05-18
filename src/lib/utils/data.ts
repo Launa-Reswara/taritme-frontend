@@ -217,3 +217,90 @@ export const pelatihList = [
     status: "Aktif",
   },
 ];
+
+export const arsipList = [
+  {
+    id: 1,
+    tanggal: "",
+    penulis: "",
+    judul: "",
+    isi: "",
+    foto: "",
+  },
+  {
+    id: 2,
+    tanggal: "",
+    penulis: "",
+    judul: "",
+    isi: "",
+    foto: "",
+  },
+];
+
+export const riwayatKursusList = [
+  {
+    id: 1,
+    name: "Luna Maya",
+    description:
+      "Instruktur tari Sumatra Barat yang memberikan ilmu nya melalui kursus tari.",
+    image: "/images/lunamaya-instruktur-tari.png",
+    rate: 4.9,
+    totalUlasan: 5,
+    harga: 100000,
+  },
+  {
+    id: 2,
+    name: "Soimah",
+    description:
+      "Instruktur tari Sumatra Barat yang memberikan ilmu nya melalui kursus tari.",
+    image: "/images/soimah-instruktur-tari.png",
+    rate: 4.9,
+    totalUlasan: 10,
+    harga: 100000,
+  },
+  {
+    id: 3,
+    name: "Sandrina",
+    description:
+      "Instruktur tari Sumatra Barat yang memberikan ilmu nya melalui kursus tari.",
+    image: "/images/sandrina-instruktur-tari.png",
+    rate: 4.9,
+    totalUlasan: 10,
+    harga: 100000,
+  },
+];
+
+export const ulasanList = [
+  {
+    id: 1,
+    name: "Cika",
+    rate: 5,
+    comment:
+      "Pelatih Lunamaya sangat keren, dan mudah dipahami jika memberikan gerakan",
+  },
+  {
+    id: 2,
+    name: "Kaguya-sama",
+    rate: 5,
+    comment:
+      "Sangat rekomen, penjelasannya sangat mudah dipahami serta natural",
+  },
+  {
+    id: 3,
+    name: "Rimuru",
+    rate: 5,
+    comment: "GGWP, aku langsung jadi sepuh bjir dalam waktu 1 minggu 😎😎",
+  },
+  {
+    id: 4,
+    name: "Roronoa Zoro",
+    rate: 5,
+    comment: "Bagus",
+  },
+  {
+    id: 5,
+    name: "Anonymous",
+    rate: 4,
+    comment: "Pelatih ini datangnya lama, jadi harus lama menunggu",
+  },
+];

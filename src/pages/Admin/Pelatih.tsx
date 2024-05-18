@@ -25,8 +25,8 @@ import { Link } from "react-router-dom";
 
 export default function Pelatih() {
   const dispatch = useDispatch();
-  const { editPelatih, tambahPelatih } = useSelector(
-    (state: PelatihSliceProps) => state
+  const { isEditPelatih, isTambahPelatih } = useSelector(
+    (state: PelatihSliceProps) => state.pelatih
   );
 
   useTitle("Pelatih | Taritme");
@@ -103,8 +103,8 @@ export default function Pelatih() {
           </div>
         </section>
       </m.main>
-      {tambahPelatih.isTambahPelatih ? <FormTambahPelatih /> : null}
-      {editPelatih.isEditPelatih ? <FormEditpelatih /> : null}
+      {isTambahPelatih ? <FormTambahPelatih /> : null}
+      {isEditPelatih ? <FormEditpelatih /> : null}
     </>
   );
 }

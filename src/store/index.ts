@@ -1,12 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
+import arsipSliceReducer from "./slices/arsip.slice";
 import modalKomunitasReducer from "./slices/modalKomunitas.slice";
-import { editPelatihSlice, tambahPelatihSlice } from "./slices/pelatih.slice";
+import pelatihReducer from "./slices/pelatih.slice";
 
 const store = configureStore({
   reducer: {
     modalKomunitas: modalKomunitasReducer,
-    tambahPelatih: tambahPelatihSlice.reducer,
-    editPelatih: editPelatihSlice.reducer,
+    pelatih: pelatihReducer,
+    arsip: arsipSliceReducer,
   },
 });
 

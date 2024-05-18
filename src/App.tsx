@@ -1,4 +1,6 @@
 import Admin from "@/pages/Admin";
+import Arsip from "@/pages/Admin/Arsip";
+import Pelatih from "@/pages/Admin/Pelatih";
 import ArsipKesenian from "@/pages/ArsipKesenian";
 import DetailArsipKesenian from "@/pages/ArsipKesenian/DetailArsipKesenian";
 import Login from "@/pages/Auth/Login";
@@ -9,14 +11,14 @@ import Komunitas from "@/pages/Komunitas";
 import NotFound from "@/pages/NotFound";
 import TemukanPelatih from "@/pages/TemukanPelatih";
 import DetailPelatih from "@/pages/TemukanPelatih/DetailPelatih";
-import IkutiKursus from "@/pages/TemukanPelatih/IkutKursus";
+import IkutiKursus from "@/pages/TemukanPelatih/DetailPelatih/IkutKursus";
 import { AnimatePresence, LazyMotion, domAnimation } from "framer-motion";
+import { Provider } from "react-redux";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { useScrollToTop } from "./hooks";
-import { Provider } from "react-redux";
+import RiwayatKursus from "./pages/RiwayatKursus";
+import Penilaian from "./pages/TemukanPelatih/DetailPelatih/Penilaian";
 import store from "./store";
-import Pelatih from "./pages/Admin/Pelatih";
-import Arsip from "./pages/Admin/Arsip";
 
 export default function App() {
   const location = useLocation();
@@ -47,9 +49,14 @@ export default function App() {
               path="/temukan-pelatih/:detail/ikuti-kursus"
               element={<IkutiKursus />}
             />
+            <Route
+              path="/temukan-pelatih/:detail/penilaian"
+              element={<Penilaian />}
+            />
             <Route path="/admin" element={<Admin />} />
             <Route path="/admin/pelatih" element={<Pelatih />} />
             <Route path="/admin/arsip" element={<Arsip />} />
+            <Route path="/riwayat-kursus" element={<RiwayatKursus />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AnimatePresence>

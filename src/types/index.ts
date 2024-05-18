@@ -37,12 +37,19 @@ export type ModalKomunitasSliceProps = {
 };
 
 export type PelatihSliceProps = {
-  tambahPelatih: {
+  pelatih: {
     isTambahPelatih: boolean;
     setIsTambahPelatih: (isTambahPelatih: boolean) => void;
-  };
-  editPelatih: {
     isEditPelatih: boolean;
     setIsEditPelatih: (isEditPelatih: boolean) => void;
+  };
+};
+
+export type ArsipSliceProps = {
+  arsip: {
+    isTambahArsip: boolean;
+    setIsTambahArsip: (isTambahArsip: boolean) => void;
+    isEditArsip: boolean;
+    setIsEditArsip: (isEditArsip: boolean) => void;
   };
 };

@@ -1,28 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const tambahPelatihSlice = createSlice({
-  name: "tambahPelatih",
+export const pelatihSlice = createSlice({
+  name: "pelatih",
   initialState: {
+    isEditPelatih: false,
     isTambahPelatih: false,
   },
   reducers: {
+    setIsEditPelatih: (state, action) => {
+      state.isEditPelatih = action.payload;
+    },
     setIsTambahPelatih: (state, action) => {
       state.isTambahPelatih = action.payload;
     },
   },
 });
 
-export const editPelatihSlice = createSlice({
-  name: "editPelatih",
-  initialState: {
-    isEditPelatih: false,
-  },
-  reducers: {
-    setIsEditPelatih: (state, action) => {
-      state.isEditPelatih = action.payload;
-    },
-  },
-});
+export const { setIsEditPelatih, setIsTambahPelatih } = pelatihSlice.actions;
 
-export const { setIsTambahPelatih } = tambahPelatihSlice.actions;
-export const { setIsEditPelatih } = editPelatihSlice.actions;
+export default pelatihSlice.reducer;

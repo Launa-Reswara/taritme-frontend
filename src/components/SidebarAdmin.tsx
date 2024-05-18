@@ -31,20 +31,22 @@ export default function SidebarAdmin() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="left">
-                {sidebarLinksList.map((item) => (
-                  <Link to={item.pathname} key={item.id}>
-                    <Button
-                      className={cn(
-                        "py-6 bg-transparent text-primary-black hover:text-white hover:bg-primary-color w-full rounded-full text-base lg:text-2xl font-medium",
-                        location.pathname === item.pathname
-                          ? "bg-primary-color text-white"
-                          : ""
-                      )}
-                    >
-                      {item.name}
-                    </Button>
-                  </Link>
-                ))}
+                <div className="mt-4 space-y-6 flex flex-col justify-center">
+                  {sidebarLinksList.map((item) => (
+                    <Link to={item.pathname} key={item.id}>
+                      <Button
+                        className={cn(
+                          "py-6 bg-transparent text-primary-black hover:text-white hover:bg-primary-color w-full rounded-full text-base lg:text-2xl font-medium",
+                          location.pathname === item.pathname
+                            ? "bg-primary-color text-white"
+                            : ""
+                        )}
+                      >
+                        {item.name}
+                      </Button>
+                    </Link>
+                  ))}
+                </div>
               </SheetContent>
             </Sheet>
           </div>

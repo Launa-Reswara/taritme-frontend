@@ -18,7 +18,7 @@ export default function Layout({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className={cn("flex justify-center min-h-svh mt-7 items-start w-full")}
+        className={cn("flex justify-center min-h-svh mt-10 items-start w-full")}
         {...props}
       >
         <section

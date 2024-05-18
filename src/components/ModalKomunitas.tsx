@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { Button } from "./ui/button";
 import Image from "./ui/image";
 import { Heading, Paragraph } from "./ui/typography";
+import { m } from "framer-motion";
 
 export default function ModalKomunitas({
   previewImage,
@@ -15,7 +16,13 @@ export default function ModalKomunitas({
 
   return (
     <div className="flex justify-center items-center p-4 fixed inset-0 z-50 backdrop-blur-md min-h-svh">
-      <div className="sm:w-[600px] overflow-hidden w-full rounded-lg bg-white drop-shadow-lg">
+      <m.div
+        transition={{ duration: 0.4 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="sm:w-[600px] overflow-hidden w-full rounded-lg bg-white drop-shadow-lg"
+      >
         <div className="relative">
           <Image src={previewImage} alt="sanggar" className="w-full" />
           <Button
@@ -64,7 +71,7 @@ export default function ModalKomunitas({
             </div>
           </div>
         </div>
-      </div>
+      </m.div>
     </div>
   );
 }

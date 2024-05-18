@@ -1,6 +1,7 @@
 import SidebarAdmin from "@/components/SidebarAdmin";
 import { Button } from "@/components/ui/button";
 import Image from "@/components/ui/image";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -9,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Textarea } from "@/components/ui/textarea";
 import { useTitle } from "@/hooks";
 import { pelatihList } from "@/lib/utils/data";
 import { m } from "framer-motion";
@@ -85,6 +87,83 @@ export default function Arsip() {
           </div>
         </section>
       </m.main>
+      <TambahArsip />
     </>
+  );
+}
+
+function TambahArsip() {
+  return (
+    <div className="flex justify-center items-center p-4 fixed inset-0 z-50 backdrop-blur-lg min-h-svh">
+      <div className="w-full sm:w-[800px] sm:h-[800px] max-w-[600px] overflow-hidden rounded-lg bg-white drop-shadow-lg p-6 sm:p-8">
+        <form className="space-y-10">
+          <div className="flex items-center">
+            <label
+              htmlFor="tanggal"
+              className="block font-normal text-primary-black"
+            >
+              Tanggal
+            </label>
+            <Input
+              type="date"
+              placeholder="DD/MM/YYYY"
+              className="border-spanish-gray w-full sm:max-w-[250px] rounded-full p-2"
+            />
+          </div>
+          <div className="flex items-center">
+            <label
+              htmlFor="penulis"
+              className="block font-normal text-primary-black"
+            >
+              Penulis
+            </label>
+            <Input
+              type="text"
+              placeholder="Penulis"
+              className="border-spanish-gray w-full sm:max-w-[250px] rounded-full p-2"
+            />
+          </div>
+          <div className="flex items-center">
+            <label
+              htmlFor="judul"
+              className="block font-normal text-primary-black"
+            >
+              Judul
+            </label>
+            <Input
+              type="text"
+              placeholder="Judul"
+              className="border-spanish-gray w-full sm:max-w-[250px] rounded-full p-2"
+            />
+          </div>
+          <div className="flex items-start">
+            <label
+              htmlFor="isi"
+              className="block font-normal text-primary-black"
+            >
+              Isi
+            </label>
+            <Textarea
+              name="isi"
+              placeholder="Isi"
+              className="border-spanish-gray w-full rounded-2xl p-4"
+            />
+          </div>
+          <div className="flex items-center">
+            <label
+              htmlFor="foto"
+              className="block font-normal text-primary-black"
+            >
+              Foto
+            </label>
+            <Input
+              type="file"
+              placeholder="Unggah Foto"
+              className="border-spanish-gray w-full sm:max-w-[250px] rounded-full p-2"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
   );
 }

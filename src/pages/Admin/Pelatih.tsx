@@ -13,8 +13,11 @@ import {
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { useTitle } from "@/hooks";
 import { pelatihList } from "@/lib/utils/data";
-import { setIsTambahPelatih } from "@/store/slices/tambahPelatih.slice";
-import { tambahPelatihSliceProps } from "@/types";
+import {
+  setIsEditPelatih,
+  setIsTambahPelatih,
+} from "@/store/slices/pelatih.slice";
+import { PelatihSliceProps } from "@/types";
 import { m } from "framer-motion";
 import { Pencil, Trash, X } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,8 +25,8 @@ import { Link } from "react-router-dom";
 
 export default function Pelatih() {
   const dispatch = useDispatch();
-  const { isTambahPelatih } = useSelector(
-    (state: tambahPelatihSliceProps) => state.tambahPelatih
+  const { editPelatih, tambahPelatih } = useSelector(
+    (state: PelatihSliceProps) => state
   );
 
   useTitle("Pelatih | Taritme");
@@ -83,7 +86,10 @@ export default function Pelatih() {
                     <TableCell className="text-center">{item.email}</TableCell>
                     <TableCell className="text-center">{item.status}</TableCell>
                     <TableCell className="flex justify-center items-center space-x-4">
-                      <Button variant="outline">
+                      <Button
+                        variant="outline"
+                        onClick={() => dispatch(setIsEditPelatih(true))}
+                      >
                         <Pencil />
                       </Button>
                       <Button variant="outline">
@@ -97,94 +103,108 @@ export default function Pelatih() {
           </div>
         </section>
       </m.main>
-      {isTambahPelatih ? <FormEditpelatih /> : null}
+      {tambahPelatih.isTambahPelatih ? <FormTambahPelatih /> : null}
+      {editPelatih.isEditPelatih ? <FormEditpelatih /> : null}
     </>
   );
 }
 
 function FormEditpelatih() {
+  const dispatch = useDispatch();
+
   return (
     <div className="flex justify-center items-center p-4 fixed inset-0 z-50 backdrop-blur-lg min-h-svh">
-      <div className="sm:w-[800px] sm:h-[800px] w-full max-w-[600px] overflow-hidden rounded-lg bg-white drop-shadow-lg p-6 sm:p-8">
-        <div className="relative">
-          <Button
-            size="icon"
-            className="absolute top-4 right-4 rounded-full bg-light-silver"
-            variant="secondary"
-          >
-            <X />
-          </Button>
-        </div>
+      <div className="w-full sm:w-[800px] sm:h-[800px] max-w-[600px] overflow-hidden rounded-lg bg-white drop-shadow-lg p-6 sm:p-8">
         <form className="mt-5 w-full">
-          <Heading as="h1" className="text-primary-color mx-12">
-            Edit Pelatih
-          </Heading>
+          <div className="flex justify-between items-center">
+            <Heading as="h1" className="text-primary-color sm:mx-12">
+              Edit Pelatih
+            </Heading>
+            <Button
+              size="icon"
+              className="rounded-full bg-light-silver"
+              variant="secondary"
+              onClick={() => dispatch(setIsEditPelatih(false))}
+            >
+              <X />
+            </Button>
+          </div>
           <div className="mt-12 flex justify-center items-center flex-col">
             <div className="flex justify-start items-center space-y-6 flex-col w-full">
               <div className="w-full space-y-5 mt-5">
-                <div className="w-full mx-12">
-                  <label htmlFor="foto" className="block font-semibold">
+                <div className="w-full sm:mx-12">
+                  <label
+                    htmlFor="foto"
+                    className="block font-normal text-primary-black"
+                  >
                     Foto
                   </label>
                   <Input
                     placeholder="Unggah foto"
                     type="file"
                     name="foto"
-                    className="mt-2 border-spanish-gray rounded-full p-2"
-                    style={{ maxWidth: "250px" }}
+                    className="mt-2 border-spanish-gray w-full sm:max-w-[250px] rounded-full p-2"
                   />
                 </div>
 
-                <div className="w-full mx-12">
-                  <label htmlFor="nama" className="block font-semibold">
+                <div className="w-full sm:mx-12">
+                  <label
+                    htmlFor="nama"
+                    className="block font-normal text-primary-black"
+                  >
                     Nama
                   </label>
                   <Input
                     type="text"
                     placeholder="Nama anda"
                     name="nama"
-                    className="mt-2 border-spanish-gray rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
+                    className="mt-2 border-spanish-gray w-full sm:w-[420px] rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
                     required
-                    style={{ maxWidth: "420px" }}
                   />
                 </div>
 
-                <div className="w-full mx-12">
-                  <label htmlFor="hp" className="block font-semibold">
+                <div className="w-full sm:mx-12">
+                  <label
+                    htmlFor="hp"
+                    className="block font-normal text-primary-black"
+                  >
                     No Hp
                   </label>
                   <Input
                     type="tel"
                     placeholder="No HP anda"
                     name="hp"
-                    className="mt-2 border-spanish-gray rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
+                    className="mt-2 border-spanish-gray w-full sm:w-[420px] rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
                     required
-                    style={{ maxWidth: "420px" }}
                   />
                 </div>
 
-                <div className="w-full mx-12">
-                  <label htmlFor="email" className="block font-semibold">
+                <div className="w-full sm:mx-12">
+                  <label
+                    htmlFor="email"
+                    className="block font-normal text-primary-black"
+                  >
                     Email
                   </label>
                   <Input
                     type="email"
                     placeholder="Email anda"
                     name="email"
-                    className="mt-2 border-spanish-gray rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
+                    className="mt-2 border-spanish-gray w-full sm:w-[420px] rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
                     required
-                    style={{ maxWidth: "420px" }}
                   />
                 </div>
 
-                <div className="w-full mx-12">
-                  <label htmlFor="status" className="block font-semibold">
+                <div className="w-full sm:mx-12">
+                  <label
+                    htmlFor="status"
+                    className="block font-normal text-primary-black"
+                  >
                     Status
                   </label>
                   <select
-                    className="mt-1 w-full border border-spanish-gray rounded-full p-2 focus:ring-indigo-500 focus:border-indigo-500"
+                    className="mt-1 w-full border sm:w-[420px] border-spanish-gray rounded-full p-2 focus:ring-indigo-500 focus:border-indigo-500"
                     defaultValue=""
-                    style={{ maxWidth: "420px" }}
                   >
                     <option value="" disabled hidden>
                       Pilih Status
@@ -210,88 +230,101 @@ function FormEditpelatih() {
 }
 
 function FormTambahPelatih() {
+  const dispatch = useDispatch();
+
   return (
     <div className="flex justify-center items-center p-4 fixed inset-0 z-50 backdrop-blur-lg min-h-svh">
-      <div className="sm:w-[800px] sm:h-[800px] w-full max-w-[600px] overflow-hidden rounded-lg bg-white drop-shadow-lg p-6 sm:p-8">
-        <div className="relative">
-          <Button
-            size="icon"
-            className="absolute top-4 right-4 rounded-full bg-light-silver"
-            variant="secondary"
-          >
-            <X />
-          </Button>
-        </div>
+      <div className="w-full sm:w-[800px] sm:h-[800px] max-w-[600px] overflow-hidden rounded-lg bg-white drop-shadow-lg p-6 sm:p-8">
         <form className="mt-5 w-full">
-          <Heading as="h1" className="text-primary-color mx-12">
-            Tambah Pelatih
-          </Heading>
+          <div className="flex justify-between items-center">
+            <Heading as="h1" className="text-primary-color sm:mx-12">
+              Tambah Pelatih
+            </Heading>
+            <Button
+              size="icon"
+              className="rounded-full bg-light-silver"
+              variant="secondary"
+              onClick={() => dispatch(setIsTambahPelatih(false))}
+            >
+              <X />
+            </Button>
+          </div>
           <div className="mt-12 flex justify-center items-center flex-col">
             <div className="flex justify-start items-center space-y-6 flex-col w-full">
               <div className="w-full space-y-5 mt-5">
-                <div className="w-full mx-12">
-                  <label htmlFor="foto" className="block font-semibold">
+                <div className="w-full sm:mx-12">
+                  <label
+                    htmlFor="foto"
+                    className="block font-normal text-primary-black"
+                  >
                     Foto
                   </label>
                   <Input
                     placeholder="Unggah foto"
                     type="file"
                     name="foto"
-                    className="mt-2 border-spanish-gray rounded-full p-2"
-                    style={{ maxWidth: "250px" }}
+                    className="mt-2 border-spanish-gray w-full sm:max-w-[250px] rounded-full p-2"
                   />
                 </div>
 
-                <div className="w-full mx-12">
-                  <label htmlFor="nama" className="block font-semibold">
+                <div className="w-full sm:mx-12">
+                  <label
+                    htmlFor="nama"
+                    className="block font-normal text-primary-black"
+                  >
                     Nama
                   </label>
                   <Input
                     type="text"
                     placeholder="Nama anda"
                     name="nama"
-                    className="mt-2 border-spanish-gray rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
+                    className="mt-2 border-spanish-gray w-full sm:w-[420px] rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
                     required
-                    style={{ maxWidth: "420px" }}
                   />
                 </div>
 
-                <div className="w-full mx-12">
-                  <label htmlFor="hp" className="block font-semibold">
+                <div className="w-full sm:mx-12">
+                  <label
+                    htmlFor="hp"
+                    className="block font-normal text-primary-black"
+                  >
                     No Hp
                   </label>
                   <Input
                     type="tel"
                     placeholder="No HP anda"
                     name="hp"
-                    className="mt-2 border-spanish-gray rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
+                    className="mt-2 border-spanish-gray w-full sm:w-[420px] rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
                     required
-                    style={{ maxWidth: "420px" }}
                   />
                 </div>
 
-                <div className="w-full mx-12">
-                  <label htmlFor="email" className="block font-semibold">
+                <div className="w-full sm:mx-12">
+                  <label
+                    htmlFor="email"
+                    className="block font-normal text-primary-black"
+                  >
                     Email
                   </label>
                   <Input
                     type="email"
                     placeholder="Email anda"
                     name="email"
-                    className="mt-2 border-spanish-gray rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
+                    className="mt-2 border-spanish-gray w-full sm:w-[420px] rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
                     required
-                    style={{ maxWidth: "420px" }}
                   />
                 </div>
 
-                <div className="w-full mx-12">
-                  <label htmlFor="status" className="block font-semibold">
+                <div className="w-full sm:mx-12">
+                  <label
+                    htmlFor="status"
+                    className="block font-normal text-primary-black"
+                  >
                     Status
                   </label>
                   <select
-                    className="mt-1 w-full border border-spanish-gray rounded-full p-2 focus:ring-indigo-500 focus:border-indigo-500"
+                    className="mt-1 w-full border sm:w-[420px] border-spanish-gray rounded-full p-2 focus:ring-indigo-500 focus:border-indigo-500"
                     defaultValue=""
-                    style={{ maxWidth: "420px" }}
                   >
                     <option value="" disabled hidden>
                       Pilih Status

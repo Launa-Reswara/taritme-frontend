@@ -12,7 +12,7 @@ export default function Penilaian() {
   return (
     <Layout className="">
       <div className="flex w-full flex-col md:flex-row md:space-x-8 justify-center items-center md:justify-start md:items-start">
-        <aside>
+        <div>
           <div>
             <button
               type="button"
@@ -52,7 +52,7 @@ export default function Penilaian() {
               </div>
             </div>
           </div>
-        </aside>
+        </div>
         <div className="w-full md:mt-0 mt-10">
           <Heading as="h1" className="font-normal text-primary-color">
             Berikan Penilaian

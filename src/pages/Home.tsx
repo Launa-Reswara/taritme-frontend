@@ -109,7 +109,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className="hidden md:block rounded-xl"
+              className="hidden md:block h-full w-full rounded-xl"
             >
               <Image
                 src="/images/payung-tari.png"

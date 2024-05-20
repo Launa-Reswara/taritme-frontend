@@ -11,7 +11,7 @@ export function useCheckIsMobile() {
   useEffect(() => {
     // Check screen size on mount and resize
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 950); // Adjust this breakpoint as needed
+      setIsMobile(window.innerWidth <= 767); // Adjust this breakpoint as needed
     };
 
     handleResize(); // Initial check

@@ -27,7 +27,7 @@ export default function DetailArsipKesenian() {
           <span className="xl:text-2xl">Kembali</span>
         </button>
       </div>
-      <div className="flex w-full justify-between">
+      <div className="flex w-full flex-col sm:flex-row justify-between">
         <div className="flex items-center space-x-4">
           <Image
             src="/images/leonardo-da-vince.svg"
@@ -49,7 +49,7 @@ export default function DetailArsipKesenian() {
             </div>
           </div>
         </div>
-        <div className="flex items-center space-x-4 md:space-x-8">
+        <div className="flex items-center mt-5 space-x-4 sm:space-x-8">
           <button className="flex items-center space-x-1">
             <ThumbsUp size={16} />
             <span className="text-xs md:text-sm">999</span>

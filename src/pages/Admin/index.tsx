@@ -15,7 +15,7 @@ export default function Admin() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="border-2 lg:ml-[358px] min-h-svh flex justify-center items-center flex-col p-4 2xl:p-10"
+        className="lg:ml-[358px] min-h-svh flex justify-center items-center flex-col p-4 2xl:p-10"
       >
         <m.section className="w-full 2xl:w-fit">
           <div className="flex justify-between flex-col 2xl:flex-row w-full space-y-7 2xl:space-y-0 2xl:space-x-7 items-center">
@@ -74,7 +74,7 @@ export default function Admin() {
                 </div>
               </div>
             </div>
-            <div className="bg-white 2xl:mt-0 mt-6 w-full 2xl:w-[400px] flex flex-col space-y-6 2xl:space-y-0 justify-start items-start border-2 rounded-xl drop-shadow-lg p-4">
+            <div className="bg-white 2xl:mt-0 mt-6 w-full 2xl:w-[400px] flex flex-col space-y-6 2xl:space-y-0 justify-start items-start rounded-xl drop-shadow-lg p-4">
               <div className="2xl:pb-8">
                 <Heading as="h2" className="font-normal">
                   Pengguna

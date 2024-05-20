@@ -2,7 +2,7 @@ import { useTitle } from "@/hooks";
 import { cn } from "@/lib/utils/cn";
 import { sidebarLinksList } from "@/lib/utils/data";
 import { LogOut, Menu } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import Image from "./ui/image";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
@@ -10,11 +10,12 @@ import { Heading, Paragraph } from "./ui/typography";
 
 export default function SidebarAdmin() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   useTitle("Dashboard | Taritme");
 
   return (
-    <nav className="lg:fixed sticky z-50 bg-white w-full lg:max-w-[359px] border-2 left-0 lg:min-h-svh flex justify-between flex-col items-start top-0 drop-shadow-lg">
+    <nav className="lg:fixed sticky z-50 bg-white w-full lg:max-w-[359px] left-0 lg:min-h-svh flex justify-between flex-col items-start top-0 drop-shadow-lg">
       <div className="w-full flex flex-col justify-center items-center p-4 lg:p-8">
         <div className="w-full lg:flex-col flex justify-between lg:justify-center items-center">
           <Image
@@ -82,15 +83,15 @@ export default function SidebarAdmin() {
           </div>
         </div>
       </div>
-      <div
-        onClick={() => {}}
+      <button
+        onClick={() => navigate("/auth/login")}
         className="bg-secondary-color w-full cursor-pointer hidden lg:flex justify-between items-center p-4"
       >
         <Paragraph className="text-white text-2xl font-medium">
           Keluar
         </Paragraph>
         <LogOut className="text-white" />
-      </div>
+      </button>
     </nav>
   );
 }

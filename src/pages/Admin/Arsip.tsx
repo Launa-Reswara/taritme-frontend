@@ -37,7 +37,7 @@ export default function Arsip() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="border-2 lg:ml-[358px] min-h-svh flex justify-start p-4 lg:p-10 items-center flex-col"
+        className="lg:ml-[358px] min-h-svh flex justify-start p-4 lg:p-10 items-center flex-col"
       >
         <section className="flex w-full justify-center items-center">
           <div className="w-full">

@@ -221,19 +221,19 @@ export const pelatihList = [
 export const arsipList = [
   {
     id: 1,
-    tanggal: "",
-    penulis: "",
-    judul: "",
-    isi: "",
-    foto: "",
+    tanggal: "12/03/2024",
+    penulis: "Leonardo Da Vince",
+    judul: "Tari Piring",
+    isi: "Tari piring adalah...",
+    foto: "/images/foto-tari-piring-arsip.png",
   },
   {
     id: 2,
-    tanggal: "",
-    penulis: "",
-    judul: "",
-    isi: "",
-    foto: "",
+    tanggal: "10/04/2024",
+    penulis: "Leonardo Da Vince",
+    judul: "Tari Payung",
+    isi: "Tari payung berasal",
+    foto: "/images/foto-tari-payung-arsip.png",
   },
 ];
 

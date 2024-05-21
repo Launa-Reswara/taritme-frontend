@@ -13,7 +13,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { useTitle } from "@/hooks";
-import { pelatihList } from "@/lib/utils/data";
+import { arsipList } from "@/lib/utils/data";
 import { setIsEditArsip, setIsTambahArsip } from "@/store/slices/arsip.slice";
 import { ArsipSliceProps } from "@/types";
 import { m } from "framer-motion";
@@ -67,22 +67,22 @@ export default function Arsip() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {pelatihList.map((item) => (
+                {arsipList.map((item) => (
                   <TableRow
                     key={item.id}
                     className="bg-secondary-color hover:bg-secondary-color hover:odd:bg-light-silver odd:bg-light-silver"
                   >
                     <TableCell className="text-center flex justify-center items-center">
-                      <Image
-                        src={item.foto}
-                        alt={item.nama}
-                        className="w-10 h-10"
-                      />
+                      {item.tanggal}
                     </TableCell>
-                    <TableCell className="text-center">{item.nama}</TableCell>
-                    <TableCell className="text-center">{item.nohp}</TableCell>
-                    <TableCell className="text-center">{item.email}</TableCell>
-                    <TableCell className="text-center">{item.status}</TableCell>
+                    <TableCell className="text-center">
+                      {item.penulis}
+                    </TableCell>
+                    <TableCell className="text-center">{item.judul}</TableCell>
+                    <TableCell className="text-center">{item.isi}</TableCell>
+                    <TableCell className="text-center">
+                      <Image src={item.foto} alt={item.judul} />
+                    </TableCell>
                     <TableCell className="flex justify-center items-center space-x-4">
                       <Button
                         variant="outline"

@@ -38,14 +38,14 @@ export default function ModalKomunitas({
           <Heading as="h2" className="font-normal">
             {name}
           </Heading>
-          <div className="flex my-4 justify-center w-fit items-center space-x-3">
+          <div className="flex my-4 justify-start sm:space-x-3 sm:flex-row sm:justify-center sm:items-center flex-col w-fit items-start">
             <Button className="bg-primary-color rounded-full hover:bg-primary-black flex justify-center items-center space-x-3">
               <Paragraph className="text-xs text-white">
                 Komunitas aktif
               </Paragraph>
               <div className="w-2 h-2 bg-malachite rounded-full"></div>
             </Button>
-            <Paragraph>Created about 4y ago</Paragraph>
+            <Paragraph className="mt-2 sm:mt-0">Created about 4y ago</Paragraph>
           </div>
           <div className="mb-7">
             <Paragraph className="text-primary-black/70">

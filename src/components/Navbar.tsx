@@ -14,6 +14,35 @@ import { CustomLink } from "./ui/typography";
 export default function Navbar() {
   const location = useLocation();
 
+  // WIP: auth
+  /*const [token, setToken] = useState<string>("");
+
+  useEffect(() => {
+    async function getNewToken() {
+      try {
+        const response = await fetch("http://localhost:5000/api/auth/login", {
+          method: "POST",
+          body: {
+            email,
+          },
+        });
+        const data = await response.json();
+
+        localStorage.setItem("token", JSON.stringify(data.token));
+      } catch (err) {
+        throw new Error("Failed to fetch data!");
+      }
+    }
+
+    getNewToken();
+
+    if (localStorage.getItem("token")) {
+      setToken(localStorage.getItem("token")?.toString() || "");
+    }
+  }, [setToken]);
+
+  console.log(token);*/
+
   return (
     <header className="dark:bg-primary-black/80 backdrop-blur-lg bg-white/80 w-full flex justify-center items-center">
       <nav className="max-w-[1440px] w-full px-4 py-3 justify-between flex items-center">

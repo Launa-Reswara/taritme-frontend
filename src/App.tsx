@@ -50,7 +50,7 @@ export default function App() {
               element={<IkutiKursus />}
             />
             <Route
-              path="/temukan-pelatih/:detail/penilaian"
+              path="/temukan-pelatih/:detail/ikuti-kursus/penilaian"
               element={<Penilaian />}
             />
             <Route path="/admin" element={<Admin />} />

@@ -167,7 +167,10 @@ export default function Home() {
                     {listArsipKesenian
                       .filter((item) => item.id !== 4)
                       .map((item) => (
-                        <CarouselItem className="basis-1/3 min-w-[250px]">
+                        <CarouselItem
+                          key={item.id}
+                          className="basis-1/3 min-w-[250px]"
+                        >
                           <Card className="p-4 rounded-xl md:w-full max-w-full bg-white">
                             <Image
                               src="/images/tari-piring-home.png"

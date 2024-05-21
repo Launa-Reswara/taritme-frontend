@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils/cn";
 import { ulasanList } from "@/lib/utils/data";
 import { Heart } from "lucide-react";
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export default function DetailPelatih() {
   const [tabs, setTabs] = useState<"Tentang" | "Ulasan">("Tentang");
@@ -16,7 +16,9 @@ export default function DetailPelatih() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  useTitle(`Pelatih ${getLastPathname(location.pathname)} | Taritme`);
+  const pelatihName = getLastPathname(location.pathname);
+
+  useTitle(`Pelatih ${pelatihName} | Taritme`);
 
   return (
     <Layout className="md:flex-row flex-col-reverse justify-between items-start">
@@ -160,9 +162,11 @@ export default function DetailPelatih() {
                 </Paragraph>
               </div>
               <div className="flex justify-between space-x-5 drop-shadow-lg items-center">
-                <Button className="text-primary-black bg-secondary-color hover:bg-secondary-color/90 rounded-3xl px-4 w-full">
-                  Ikut Kelas
-                </Button>
+                <Link to="ikuti-kursus" className="w-full">
+                  <Button className="text-primary-black bg-secondary-color hover:bg-secondary-color/90 rounded-3xl px-4 w-full">
+                    Ikut Kelas
+                  </Button>
+                </Link>
                 <button>
                   <Heart />
                 </button>

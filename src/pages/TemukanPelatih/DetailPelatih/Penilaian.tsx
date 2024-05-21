@@ -3,14 +3,30 @@ import { Button } from "@/components/ui/button";
 import Image from "@/components/ui/image";
 import { Textarea } from "@/components/ui/textarea";
 import { Heading, Paragraph } from "@/components/ui/typography";
+import { useTitle } from "@/hooks";
 import { toRupiah } from "@/lib/helpers";
+import { penilaianSchema } from "@/lib/utils/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 export default function Penilaian() {
   const navigate = useNavigate();
 
+  useTitle(`Penilaian pelatih | Taritme`);
+
+  const {
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    defaultValues: { ulasan: "" },
+    resolver: zodResolver(penilaianSchema),
+  });
+
+  function onSubmit() {}
+
   return (
-    <Layout className="">
+    <Layout>
       <div className="flex w-full flex-col md:flex-row md:space-x-8 justify-center items-center md:justify-start md:items-start">
         <div>
           <div>
@@ -57,7 +73,10 @@ export default function Penilaian() {
           <Heading as="h1" className="font-normal text-primary-color">
             Berikan Penilaian
           </Heading>
-          <form className="rounded-lg border p-4 lg:p-10 border-spanish-gray mt-6 flex justify-center items-center flex-col">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="rounded-lg border p-4 lg:p-10 border-spanish-gray mt-6 flex justify-center items-center flex-col"
+          >
             <div className="flex justify-center items-center flex-col">
               <Paragraph className="text-2xl text-auro-metal-saurus">
                 Berikan ulasan anda terkait instruktur ini
@@ -74,10 +93,15 @@ export default function Penilaian() {
                   ))}
               </div>
             </div>
-            <Textarea
-              className="border border-spanish-gray rounded-lg h-52 px-3 mt-10"
-              placeholder="Contoh : Kak Luna Maya sangat pandai melatih, sehingga gerakannya mudah di pahami"
-            />
+            <div className="w-full">
+              <Textarea
+                className="border border-spanish-gray rounded-lg h-52 px-3 mt-10"
+                placeholder="Contoh : Kak Luna Maya sangat pandai melatih, sehingga gerakannya mudah di pahami"
+              />
+              <Paragraph className="text-xs mt-2 font-medium">
+                {errors.ulasan?.message}
+              </Paragraph>
+            </div>
             <div className="w-full flex justify-end items-end mt-6">
               <Button
                 type="submit"

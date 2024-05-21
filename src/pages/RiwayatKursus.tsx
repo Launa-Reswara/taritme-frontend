@@ -4,6 +4,8 @@ import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { toRupiah } from "@/lib/helpers";
 import { riwayatKursusList } from "@/lib/utils/data";
+import { Link } from "react-router-dom";
+import slugify from "slugify";
 
 export default function RiwayatKursus() {
   return (
@@ -33,12 +35,15 @@ export default function RiwayatKursus() {
                   </Paragraph>
                 </div>
                 <div className="w-full justify-center md:justify-end md:items-end items-center flex">
-                  <Button
-                    className="text-primary-black bg-secondary-color hover:bg-secondary-color/90 rounded-full w-full md:w-72 px-4 py-7"
-                    type="submit"
+                  <Link
+                    to={`/temukan-pelatih/${slugify(item.name, {
+                      lower: true,
+                    })}/ikuti-kursus/penilaian`}
                   >
-                    <Paragraph>Beri Penilaian</Paragraph>
-                  </Button>
+                    <Button className="text-primary-black bg-secondary-color hover:bg-secondary-color/90 rounded-full w-full md:w-72 px-4 py-7">
+                      <Paragraph>Beri Penilaian</Paragraph>
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>

@@ -2,8 +2,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CustomLink, Heading, Paragraph } from "@/components/ui/typography";
 import { useTitle } from "@/hooks";
+import { loginSchema } from "@/lib/utils/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { m } from "framer-motion";
-import { FormEvent } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
@@ -11,9 +13,52 @@ export default function Login() {
 
   useTitle("Login | Taritme");
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-  }
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    defaultValues: { email: "", password: "" },
+    resolver: zodResolver(loginSchema),
+  });
+
+  // WIP: auth
+  /*function onSubmit() {
+    async function login() {
+      try {
+        const response = await ofetch(
+          `${
+            CONDITION === "development"
+              ? DEVELOPMENT_API_URL
+              : PRODUCTION_API_URL
+          }/api/auth/login`,
+          {
+            method: "POST",
+            parseResponse: JSON.parse,
+            responseType: "json",
+            body: {
+              email: getValues("email"),
+              password: getValues("password"),
+            },
+          }
+        );
+
+        localStorage.setItem("token", JSON.stringify(response.token));
+      } catch (err) {
+        throw new Error("Failed to fetch data!");
+      }
+    }
+
+    login();
+  }*/
+
+  /*useEffect(() => {
+    if (localStorage.getItem("token")?.length) {
+      navigate("/");
+    }
+  }, [navigate]);*/
+
+  function onSubmit() {}
 
   return (
     <m.div
@@ -35,7 +80,10 @@ export default function Login() {
             <img src="/images/arrow-back-icon.svg" alt="arrow back" />
             <span className="xl:text-2xl">Kembali</span>
           </button>
-          <form onSubmit={handleSubmit} className="mt-20 xl:px-9 w-full">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="mt-20 xl:px-9 w-full"
+          >
             <Heading as="h1">Selamat Datang</Heading>
             <div className="mt-12 flex w-full justify-center items-center flex-col">
               <div className="flex justify-start items-center space-y-6 flex-col w-full">
@@ -44,21 +92,25 @@ export default function Login() {
                     <label htmlFor="email">Email*</label>
                     <Input
                       placeholder="Masukkan email"
-                      name="email"
                       className="mt-2 border-spanish-gray rounded-full px-6 py-7"
                       type="text"
-                      required
+                      {...register("email", { required: true })}
                     />
+                    <Paragraph className="font-medium mt-2 text-xs">
+                      {errors.email?.message}
+                    </Paragraph>
                   </div>
                   <div className="w-full">
                     <label htmlFor="password">Password*</label>
                     <Input
                       placeholder="Masukkan password"
                       type="password"
-                      name="password"
                       className="mt-2 border-spanish-gray rounded-full px-6 py-7"
-                      required
+                      {...register("password", { required: true })}
                     />
+                    <Paragraph className="font-medium mt-2 text-xs">
+                      {errors.password?.message}
+                    </Paragraph>
                   </div>
                 </div>
                 <div className="flex justify-between items-center w-full">

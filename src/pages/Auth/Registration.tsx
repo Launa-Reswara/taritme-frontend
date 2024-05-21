@@ -2,8 +2,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CustomLink, Heading, Paragraph } from "@/components/ui/typography";
 import { useTitle } from "@/hooks";
+import { registrationSchema } from "@/lib/utils/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { m } from "framer-motion";
-import { FormEvent } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 export default function Registration() {
@@ -11,8 +13,32 @@ export default function Registration() {
 
   useTitle("Registration | Taritme");
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  const {
+    formState: { errors },
+    register,
+    handleSubmit,
+  } = useForm({
+    defaultValues: { nama_lengkap: "", email: "", password: "" },
+    resolver: zodResolver(registrationSchema),
+  });
+
+  function onSubmit() {
+    /*async function registAccount() {
+      try {
+        await ofetch("http://localhost:5000/api/auth/registration", {
+          method: "POST",
+          body: {
+            nama_lengkap: getValues("nama_lengkap"),
+            email: getValues("email"),
+            password: getValues("password"),
+          },
+        });
+      } catch (err) {
+        throw new Error("Failed to POST data!");
+      }
+    }
+
+    registAccount();*/
   }
 
   return (
@@ -35,49 +61,61 @@ export default function Registration() {
             <span className="xl:text-2xl">Kembali</span>
           </button>
         </CustomLink>
-        <form onSubmit={handleSubmit} className="mt-20 xl:px-9 w-full">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="mt-20 xl:px-9 w-full"
+        >
           <Heading as="h1">Buat Akun!</Heading>
           <div className="mt-12 flex w-full justify-center items-center flex-col">
             <div className="flex justify-start items-center space-y-6 flex-col w-full">
               <div className="w-full space-y-5">
                 <div className="w-full">
-                  <label htmlFor="nama-lengkap">
+                  <label htmlFor="nama_lengkap">
                     <Paragraph>Nama Lengkap*</Paragraph>
                   </label>
                   <Input
-                    required
+                    {...register("nama_lengkap", { required: true })}
                     placeholder="Masukkan nama"
-                    name="nama-lengkap"
+                    name="nama_lengkap"
                     className="mt-2 rounded-full px-6 py-7 border-spanish-gray"
                   />
+                  <Paragraph className="text-xs font-medium mt-2">
+                    {errors.nama_lengkap?.message}
+                  </Paragraph>
                 </div>
                 <div className="w-full">
                   <label htmlFor="email">
                     <Paragraph>Email*</Paragraph>
                   </label>
                   <Input
-                    required
+                    {...register("email", { required: true })}
                     placeholder="Masukkan email"
                     name="email"
                     className="mt-2 rounded-full px-6 py-7 border-spanish-gray"
                   />
+                  <Paragraph className="text-xs font-medium mt-2">
+                    {errors.email?.message}
+                  </Paragraph>
                 </div>
                 <div className="w-full">
                   <label htmlFor="password">
                     <Paragraph>Password*</Paragraph>
                   </label>
                   <Input
-                    required
+                    {...register("password", { required: true })}
                     type="password"
                     placeholder="Masukkan password"
                     name="password"
                     className="mt-2 rounded-full px-6 py-7 border-spanish-gray"
                   />
+                  <Paragraph className="text-xs font-medium mt-2">
+                    {errors.password?.message}
+                  </Paragraph>
                 </div>
               </div>
               <div className="flex justify-start items-center w-full">
                 <div className="flex w-full justify-start space-x-2 items-center">
-                  <input type="checkbox" name="ingatkan-saya" id="" required />
+                  <input type="checkbox" name="ingatkan_saya" />
                   <Paragraph className="text-xs">
                     I agree to the terms of service and privacy and policy
                   </Paragraph>

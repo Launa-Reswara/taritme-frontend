@@ -14,6 +14,7 @@
 - Clone repo ini.
 - Masuk ke folder project, kemudian ketikkan `npm install` untuk menginstall semua dependencies yang diperlukan.
 - Setelah itu, ketik `npm run dev` untuk menjalankan project dan lihat hasilnya di Browser => http://localhost:3000
+- Jika ingin mengetes project ini dengan Docker, silahkan pastikan Docker telah terinstall, dan ketik `docker compose up --build`.
 
 ## Note
 

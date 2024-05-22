@@ -7,41 +7,27 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils/cn";
 import { Menu } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
-import { Link } from "react-router-dom";
-import { CustomLink } from "./ui/typography";
+import { Link, useNavigate } from "react-router-dom";
+import { CustomLink, Paragraph } from "./ui/typography";
 
 export default function Navbar() {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+  const navigate = useNavigate();
   const location = useLocation();
 
-  // WIP: auth
-  /*const [token, setToken] = useState<string>("");
+  function signOut() {
+    localStorage.remove("token");
+    navigate("/auth/login");
+  }
 
   useEffect(() => {
-    async function getNewToken() {
-      try {
-        const response = await fetch("http://localhost:5000/api/auth/login", {
-          method: "POST",
-          body: {
-            email,
-          },
-        });
-        const data = await response.json();
-
-        localStorage.setItem("token", JSON.stringify(data.token));
-      } catch (err) {
-        throw new Error("Failed to fetch data!");
-      }
-    }
-
-    getNewToken();
-
     if (localStorage.getItem("token")) {
-      setToken(localStorage.getItem("token")?.toString() || "");
+      setIsLoggedIn(true);
     }
-  }, [setToken]);
-
-  console.log(token);*/
+  }, [setIsLoggedIn]);
 
   return (
     <header className="dark:bg-primary-black/80 backdrop-blur-lg bg-white/80 w-full flex justify-center items-center">
@@ -157,14 +143,57 @@ export default function Navbar() {
             </CustomLink>
           </li>
         </ul>
-        <CustomLink to="/auth/login" className="hidden lg:block">
-          <Button
-            variant="outline"
-            className="text-primary-color dark:text-secondary-color font-medium"
-          >
-            Masuk
-          </Button>
-        </CustomLink>
+        {!isLoggedIn ? (
+          <CustomLink to="/auth/login" className="hidden lg:block">
+            <Button
+              variant="outline"
+              className="text-primary-color dark:text-secondary-color font-medium"
+            >
+              Masuk
+            </Button>
+          </CustomLink>
+        ) : (
+          <>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="icon">
+                  <img src="/images/user-navbar-logo.svg" alt="user" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem>
+                  <CustomLink
+                    to="/profile"
+                    className="font-medium text-primary-black text-base"
+                  >
+                    Profile
+                  </CustomLink>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <CustomLink
+                    to="/settings"
+                    className="font-medium text-primary-black text-base"
+                  >
+                    Settings
+                  </CustomLink>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <CustomLink
+                    to="/riwayat-kursus"
+                    className="font-medium text-primary-black text-base"
+                  >
+                    Riwayat
+                  </CustomLink>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Paragraph className="font-medium" onClick={signOut}>
+                    Sign Out
+                  </Paragraph>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </>
+        )}
       </nav>
     </header>
   );

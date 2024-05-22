@@ -2,12 +2,15 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
+import { useTitle } from "@/hooks";
 import { toRupiah } from "@/lib/helpers";
 import { riwayatKursusList } from "@/lib/utils/data";
 import { Link } from "react-router-dom";
 import slugify from "slugify";
 
 export default function RiwayatKursus() {
+  useTitle("Riwayat kursus | Taritme");
+
   return (
     <Layout>
       <div className="w-full">

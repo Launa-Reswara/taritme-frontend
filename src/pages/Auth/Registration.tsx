@@ -17,8 +17,9 @@ export default function Registration() {
     formState: { errors },
     register,
     handleSubmit,
+    watch,
   } = useForm({
-    defaultValues: { nama_lengkap: "", email: "", password: "" },
+    defaultValues: { name: "", email: "", password: "" },
     resolver: zodResolver(registrationSchema),
   });
 
@@ -39,6 +40,7 @@ export default function Registration() {
     }
 
     registAccount();*/
+    console.log(watch);
   }
 
   return (
@@ -70,17 +72,17 @@ export default function Registration() {
             <div className="flex justify-start items-center space-y-6 flex-col w-full">
               <div className="w-full space-y-5">
                 <div className="w-full">
-                  <label htmlFor="nama_lengkap">
+                  <label htmlFor="name">
                     <Paragraph>Nama Lengkap*</Paragraph>
                   </label>
                   <Input
-                    {...register("nama_lengkap", { required: true })}
+                    {...register("name", { required: true })}
                     placeholder="Masukkan nama"
-                    name="nama_lengkap"
+                    name="name"
                     className="mt-2 rounded-full px-6 py-7 border-spanish-gray"
                   />
                   <Paragraph className="text-xs font-medium mt-2">
-                    {errors.nama_lengkap?.message}
+                    {errors.name?.message}
                   </Paragraph>
                 </div>
                 <div className="w-full">

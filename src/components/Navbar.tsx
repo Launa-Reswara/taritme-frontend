@@ -6,28 +6,26 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils/cn";
+import { LoginSliceProps } from "@/types";
 import { Menu } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import { Link, useNavigate } from "react-router-dom";
 import { CustomLink, Paragraph } from "./ui/typography";
+import { setIsLoggedIn } from "@/store/slices/login.slice";
 
 export default function Navbar() {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const { isLoggedIn } = useSelector((state: LoginSliceProps) => state.login);
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
   const location = useLocation();
 
   function signOut() {
-    localStorage.remove("token");
+    localStorage.removeItem("token");
+    dispatch(setIsLoggedIn(false));
     navigate("/auth/login");
   }
-
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      setIsLoggedIn(true);
-    }
-  }, [setIsLoggedIn]);
 
   return (
     <header className="dark:bg-primary-black/80 backdrop-blur-lg bg-white/80 w-full flex justify-center items-center">
@@ -40,64 +38,6 @@ export default function Navbar() {
             draggable={false}
           />
         </Link>
-        {/* tampilan mobile */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild className="block lg:hidden">
-            <Button variant="outline">
-              <Menu />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-48">
-            <DropdownMenuItem>
-              <CustomLink
-                to="/temukan-pelatih"
-                className={cn(
-                  "text-primary-black font-medium",
-                  location.pathname.includes("/temukan-pelatih")
-                    ? "font-bold"
-                    : ""
-                )}
-              >
-                Temukan Pelatih
-              </CustomLink>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <CustomLink
-                to="/arsip-kesenian"
-                className={cn(
-                  "text-primary-black font-medium",
-                  location.pathname.includes("/arsip-kesenian")
-                    ? "font-bold"
-                    : ""
-                )}
-              >
-                Arsip Kesenian
-              </CustomLink>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <CustomLink
-                to="/komunitas"
-                className={cn(
-                  "text-primary-black font-medium",
-                  location.pathname === "/komunitas" ? "font-bold" : ""
-                )}
-              >
-                Komunitas
-              </CustomLink>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <CustomLink
-                to="/auth/login"
-                className={cn(
-                  "text-primary-black font-medium",
-                  location.pathname === "/auth/login" ? "font-bold" : ""
-                )}
-              >
-                Masuk
-              </CustomLink>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
         {/* tampilan desktop */}
         <ul className="lg:flex justify-center hidden items-center space-x-12">
           <li>
@@ -143,17 +83,74 @@ export default function Navbar() {
             </CustomLink>
           </li>
         </ul>
-        {!isLoggedIn ? (
-          <CustomLink to="/auth/login" className="hidden lg:block">
-            <Button
-              variant="outline"
-              className="text-primary-color dark:text-secondary-color font-medium"
-            >
-              Masuk
-            </Button>
-          </CustomLink>
-        ) : (
-          <>
+        <div className="flex justify-center items-center space-x-3">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild className="block lg:hidden">
+              <Button variant="outline">
+                <Menu />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem>
+                <CustomLink
+                  to="/temukan-pelatih"
+                  className={cn(
+                    "text-primary-black font-medium",
+                    location.pathname.includes("/temukan-pelatih")
+                      ? "font-bold"
+                      : ""
+                  )}
+                >
+                  Temukan Pelatih
+                </CustomLink>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <CustomLink
+                  to="/arsip-kesenian"
+                  className={cn(
+                    "text-primary-black font-medium",
+                    location.pathname.includes("/arsip-kesenian")
+                      ? "font-bold"
+                      : ""
+                  )}
+                >
+                  Arsip Kesenian
+                </CustomLink>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <CustomLink
+                  to="/komunitas"
+                  className={cn(
+                    "text-primary-black font-medium",
+                    location.pathname === "/komunitas" ? "font-bold" : ""
+                  )}
+                >
+                  Komunitas
+                </CustomLink>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <CustomLink
+                  to="/auth/login"
+                  className={cn(
+                    "text-primary-black font-medium",
+                    location.pathname === "/auth/login" ? "font-bold" : ""
+                  )}
+                >
+                  Masuk
+                </CustomLink>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          {!isLoggedIn ? (
+            <CustomLink to="/auth/login" className="hidden lg:block">
+              <Button
+                variant="outline"
+                className="text-primary-color dark:text-secondary-color font-medium"
+              >
+                Masuk
+              </Button>
+            </CustomLink>
+          ) : (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="icon">
@@ -186,14 +183,14 @@ export default function Navbar() {
                   </CustomLink>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Paragraph className="font-medium" onClick={signOut}>
-                    Sign Out
-                  </Paragraph>
+                  <button className="" onClick={signOut}>
+                    <Paragraph className="font-medium">Sign Out</Paragraph>
+                  </button>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          </>
-        )}
+          )}
+        </div>
       </nav>
     </header>
   );

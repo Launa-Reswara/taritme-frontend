@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export type KomunitasProps = {
   id: number;
   name: string;
@@ -52,4 +54,15 @@ export type ArsipSliceProps = {
     isEditArsip: boolean;
     setIsEditArsip: (isEditArsip: boolean) => void;
   };
+};
+
+export type LoginSliceProps = {
+  login: {
+    isLoggedIn: boolean;
+    setIsLoggedIn: (isLoggedIn: boolean) => void;
+  };
+};
+
+export type ChildrenProps = {
+  children: ReactNode;
 };

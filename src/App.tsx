@@ -9,15 +9,16 @@ import Registration from "@/pages/Auth/Registration";
 import Home from "@/pages/Home";
 import Komunitas from "@/pages/Komunitas";
 import NotFound from "@/pages/NotFound";
+import RiwayatKursus from "@/pages/RiwayatKursus";
 import TemukanPelatih from "@/pages/TemukanPelatih";
 import DetailPelatih from "@/pages/TemukanPelatih/DetailPelatih";
 import IkutiKursus from "@/pages/TemukanPelatih/DetailPelatih/IkutKursus";
+import Penilaian from "@/pages/TemukanPelatih/DetailPelatih/Penilaian";
 import { AnimatePresence, LazyMotion, domAnimation } from "framer-motion";
 import { Provider } from "react-redux";
 import { Route, Routes, useLocation } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute";
 import { useScrollToTop } from "./hooks";
-import RiwayatKursus from "./pages/RiwayatKursus";
-import Penilaian from "./pages/TemukanPelatih/DetailPelatih/Penilaian";
 import store from "./store";
 
 export default function App() {
@@ -47,16 +48,52 @@ export default function App() {
             />
             <Route
               path="/temukan-pelatih/:detail/ikuti-kursus"
-              element={<IkutiKursus />}
+              element={
+                <ProtectedRoute>
+                  <IkutiKursus />
+                </ProtectedRoute>
+              }
             />
             <Route
               path="/temukan-pelatih/:detail/ikuti-kursus/penilaian"
-              element={<Penilaian />}
+              element={
+                <ProtectedRoute>
+                  <Penilaian />
+                </ProtectedRoute>
+              }
             />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/admin/pelatih" element={<Pelatih />} />
-            <Route path="/admin/arsip" element={<Arsip />} />
-            <Route path="/riwayat-kursus" element={<RiwayatKursus />} />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute>
+                  <Admin />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/pelatih"
+              element={
+                <ProtectedRoute>
+                  <Pelatih />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/arsip"
+              element={
+                <ProtectedRoute>
+                  <Arsip />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/riwayat-kursus"
+              element={
+                <ProtectedRoute>
+                  <RiwayatKursus />
+                </ProtectedRoute>
+              }
+            />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AnimatePresence>

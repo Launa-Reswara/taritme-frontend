@@ -17,30 +17,36 @@ export default function Registration() {
     formState: { errors },
     register,
     handleSubmit,
-    watch,
   } = useForm({
     defaultValues: { name: "", email: "", password: "" },
     resolver: zodResolver(registrationSchema),
   });
 
+  // WIP: register account
   function onSubmit() {
     /*async function registAccount() {
       try {
-        await ofetch("http://localhost:5000/api/auth/registration", {
-          method: "POST",
-          body: {
-            nama_lengkap: getValues("nama_lengkap"),
-            email: getValues("email"),
-            password: getValues("password"),
-          },
-        });
+        await ofetch(
+          `${
+            CONDITION === "development"
+              ? DEVELOPMENT_API_URL
+              : PRODUCTION_API_URL
+          }/api/auth/registration`,
+          {
+            method: "POST",
+            body: {
+              nama_lengkap: getValues("name"),
+              email: getValues("email"),
+              password: getValues("password"),
+            },
+          }
+        );
       } catch (err) {
         throw new Error("Failed to POST data!");
       }
     }
 
     registAccount();*/
-    console.log(watch);
   }
 
   return (

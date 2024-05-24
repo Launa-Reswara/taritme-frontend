@@ -66,3 +66,12 @@ export type LoginSliceProps = {
 export type ChildrenProps = {
   children: ReactNode;
 };
+
+export type TokenSliceProps = {
+  token: {
+    isTokenUserAvailable: boolean;
+    setIsTokenUserAvailable: (isTokenUserAvailable: boolean) => void;
+    isTokenAdminAvailable: boolean;
+    setIsTokenAdminAvailable: (isTokenAdminAvailable: boolean) => void;
+  };
+};

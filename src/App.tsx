@@ -32,9 +32,30 @@ export default function App() {
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Home />} />
-            <Route path="/auth/login" element={<Login />} />
-            <Route path="/auth/login/admin" element={<LoginAdmin />} />
-            <Route path="/auth/registration" element={<Registration />} />
+            <Route
+              path="/auth/login"
+              element={
+                <ProtectedRoute.UserAuth>
+                  <Login />
+                </ProtectedRoute.UserAuth>
+              }
+            />
+            <Route
+              path="/auth/login/admin"
+              element={
+                <ProtectedRoute.AdminAuth>
+                  <LoginAdmin />
+                </ProtectedRoute.AdminAuth>
+              }
+            />
+            <Route
+              path="/auth/registration"
+              element={
+                <ProtectedRoute.UserAuth>
+                  <Registration />
+                </ProtectedRoute.UserAuth>
+              }
+            />
             <Route path="/komunitas" element={<Komunitas />} />
             <Route path="/arsip-kesenian" element={<ArsipKesenian />} />
             <Route
@@ -49,49 +70,49 @@ export default function App() {
             <Route
               path="/temukan-pelatih/:detail/ikuti-kursus"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute.User>
                   <IkutiKursus />
-                </ProtectedRoute>
+                </ProtectedRoute.User>
               }
             />
             <Route
               path="/temukan-pelatih/:detail/ikuti-kursus/penilaian"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute.User>
                   <Penilaian />
-                </ProtectedRoute>
+                </ProtectedRoute.User>
               }
             />
             <Route
               path="/admin"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute.Admin>
                   <Admin />
-                </ProtectedRoute>
+                </ProtectedRoute.Admin>
               }
             />
             <Route
               path="/admin/pelatih"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute.Admin>
                   <Pelatih />
-                </ProtectedRoute>
+                </ProtectedRoute.Admin>
               }
             />
             <Route
               path="/admin/arsip"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute.Admin>
                   <Arsip />
-                </ProtectedRoute>
+                </ProtectedRoute.Admin>
               }
             />
             <Route
               path="/riwayat-kursus"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute.User>
                   <RiwayatKursus />
-                </ProtectedRoute>
+                </ProtectedRoute.User>
               }
             />
             <Route path="*" element={<NotFound />} />

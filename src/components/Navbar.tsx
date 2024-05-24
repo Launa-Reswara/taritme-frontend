@@ -6,13 +6,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils/cn";
+import { setIsLoggedIn } from "@/store/slices/login.slice";
 import { LoginSliceProps } from "@/types";
 import { Menu } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import { Link, useNavigate } from "react-router-dom";
 import { CustomLink, Paragraph } from "./ui/typography";
-import { setIsLoggedIn } from "@/store/slices/login.slice";
 
 export default function Navbar() {
   const { isLoggedIn } = useSelector((state: LoginSliceProps) => state.login);

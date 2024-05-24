@@ -60,8 +60,8 @@ export default function Login() {
         );
 
         if (response.statusCode === 200) {
-          setIsWrongLoginData(false);
           localStorage.setItem("token", response.token);
+          setIsWrongLoginData(false);
 
           dispatch(setIsLoggedIn(true));
 

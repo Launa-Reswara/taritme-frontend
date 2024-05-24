@@ -1,16 +1,16 @@
-import { ChildrenProps } from "@/types";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { ChildrenProps, TokenSliceProps } from "@/types";
+import { useSelector } from "react-redux";
+import { Link, Outlet } from "react-router-dom";
 import { Button } from "./ui/button";
 import { Heading, Paragraph } from "./ui/typography";
 
-export default function ProtectedRoute({ children }: ChildrenProps) {
-  const [isTokenAvailable] = useState<boolean>(
-    localStorage.getItem("token") ? true : false
+function User({ children }: ChildrenProps) {
+  const { isTokenUserAvailable } = useSelector(
+    (state: TokenSliceProps) => state.token
   );
 
-  return !isTokenAvailable ? (
-    <div className="flex fixed w-full justify-center backdrop-blur-md items-center min-h-svh">
+  return !isTokenUserAvailable ? (
+    <div className="flex fixed w-full justify-center bg-white items-center min-h-svh">
       <div className="p-4">
         <div className="bg-white p-4 rounded-xl drop-shadow-lg sm:p-10">
           <Heading
@@ -38,3 +38,36 @@ export default function ProtectedRoute({ children }: ChildrenProps) {
     children
   );
 }
+
+function UserAuth({ children }: ChildrenProps) {
+  const { isTokenUserAvailable } = useSelector(
+    (state: TokenSliceProps) => state.token
+  );
+
+  return isTokenUserAvailable ? <Outlet /> : children;
+}
+
+function Admin({ children }: ChildrenProps) {
+  const { isTokenAdminAvailable } = useSelector(
+    (state: TokenSliceProps) => state.token
+  );
+
+  return isTokenAdminAvailable ? children : <Outlet />;
+}
+
+function AdminAuth({ children }: ChildrenProps) {
+  const { isTokenAdminAvailable } = useSelector(
+    (state: TokenSliceProps) => state.token
+  );
+
+  return isTokenAdminAvailable ? <Outlet /> : children;
+}
+
+const ProtectedRoute = {
+  User,
+  UserAuth,
+  Admin,
+  AdminAuth,
+};
+
+export default ProtectedRoute;

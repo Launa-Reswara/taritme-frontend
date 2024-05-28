@@ -2,29 +2,76 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CustomLink, Heading, Paragraph } from "@/components/ui/typography";
 import { useTitle } from "@/hooks";
+import {
+  CONDITION,
+  DEVELOPMENT_API_URL,
+  PRODUCTION_API_URL,
+} from "@/lib/utils/constants";
 import { loginAdminSchema } from "@/lib/utils/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { m } from "framer-motion";
+import { ofetch } from "ofetch";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginAdmin() {
+  const [isWrongAdminData, setIsWrongAdminData] = useState<boolean>(false);
+  const [, setIsAdmin] = useState<boolean>(false);
+
+  const navigate = useNavigate();
+
   useTitle("Login Admin | Taritme");
 
   const {
     formState: { errors },
     register,
     handleSubmit,
+    getValues,
   } = useForm({
     defaultValues: { email: "", password: "" },
     resolver: zodResolver(loginAdminSchema),
   });
 
-  // WIP: auth
+  // Auth logic
   function onSubmit() {
-    /*navigate("/admin");
+    async function login() {
+      try {
+        const response = await ofetch(
+          `${
+            CONDITION === "development"
+              ? DEVELOPMENT_API_URL
+              : PRODUCTION_API_URL
+          }/api/auth/login/admin`,
+          {
+            method: "POST",
+            parseResponse: JSON.parse,
+            responseType: "json",
+            body: {
+              email: getValues("email"),
+              password: getValues("password"),
+            },
+          }
+        );
 
-    getValues("email");
-    getValues("password");*/
+        if (response.statusCode === 200) {
+          localStorage.setItem("token-admin", response.token);
+          setIsWrongAdminData(false);
+
+          setIsAdmin(true);
+
+          setTimeout(() => {
+            navigate("/");
+          }, 2000);
+        } else {
+          setIsWrongAdminData(true);
+        }
+      } catch (err) {
+        throw new Error("Failed to fetch data!");
+      }
+    }
+
+    login();
   }
 
   return (
@@ -50,7 +97,7 @@ export default function LoginAdmin() {
                     <label htmlFor="email">Email*</label>
                     <Input
                       type="email"
-                      {...register("email")}
+                      {...register("email", { required: true })}
                       placeholder="Masukkan email"
                       name="email"
                       className="mt-2 border-spanish-gray rounded-full px-6 py-7"
@@ -90,6 +137,12 @@ export default function LoginAdmin() {
                 <Button className="text-black bg-secondary-color hover:bg-secondary-color/90 rounded-3xl w-72 px-4 py-7">
                   <Paragraph>Masuk</Paragraph>
                 </Button>
+                {isWrongAdminData ? (
+                  <Paragraph className="font-medium text-red-500 text-center mt-5">
+                    Username atau password yang kamu masukkan salah! Silahkan
+                    coba lagi.
+                  </Paragraph>
+                ) : null}
               </div>
             </div>
           </form>

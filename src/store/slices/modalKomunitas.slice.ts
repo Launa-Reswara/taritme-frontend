@@ -7,7 +7,7 @@ export const modalKomunitasSlice = createSlice({
     dataModalKomunitas: {
       id: 0,
       name: "",
-      previewImage: "",
+      image: "",
       description: "",
     },
   },

@@ -3,8 +3,10 @@ import { ReactNode } from "react";
 export type KomunitasProps = {
   id: number;
   name: string;
-  previewImage: string;
+  image: string;
   description: string;
+  is_active: 0 | 1;
+  date: string;
 };
 
 export type ArsipKesenianProps = {
@@ -12,11 +14,11 @@ export type ArsipKesenianProps = {
   author: string;
   title: string;
   date: string;
-  previewWriting: string;
-  previewImage: string;
-  readingTime: string;
-  like: number;
-  comments: number;
+  preview_writing: string;
+  preview_image: string;
+  reading_time: string;
+  total_like: number;
+  total_comments: number;
 };
 
 export type InstrukturProps = {
@@ -24,9 +26,9 @@ export type InstrukturProps = {
   name: string;
   description: string;
   image: string;
-  rate: number;
-  totalUlasan: number;
-  harga: number;
+  rating: number;
+  total_review: number;
+  price: number;
 };
 
 export type ModalKomunitasSliceProps = {

@@ -11,20 +11,19 @@ import { LoginSliceProps } from "@/types";
 import { Menu } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { CustomLink, Paragraph } from "./ui/typography";
 
 export default function Navbar() {
   const { isLoggedIn } = useSelector((state: LoginSliceProps) => state.login);
   const dispatch = useDispatch();
 
-  const navigate = useNavigate();
   const location = useLocation();
 
   function signOut() {
     localStorage.removeItem("token");
     dispatch(setIsLoggedIn(false));
-    navigate("/auth/login");
+    window.location.replace("/auth/login");
   }
 
   return (

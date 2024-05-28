@@ -1,23 +1,59 @@
+import IsError from "@/components/IsError";
+import IsPending from "@/components/IsPending";
 import Layout from "@/components/Layout";
 import Newsletter from "@/components/Newsletter";
 import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { useTitle } from "@/hooks";
 import { cn } from "@/lib/utils/cn";
-import { listArsipKesenian } from "@/lib/utils/data";
+import {
+  CONDITION,
+  DEVELOPMENT_API_URL,
+  PRODUCTION_API_URL,
+} from "@/lib/utils/constants";
+import { ArsipKesenianProps } from "@/types";
+import { useQuery } from "@tanstack/react-query";
 import { MessageCircle, Share, ThumbsUp } from "lucide-react";
+import { ofetch } from "ofetch";
 import { Link } from "react-router-dom";
 import slugify from "slugify";
 
 export default function ArsipKesenian() {
   useTitle("Arsip Kesenian | Taritme");
 
+  async function getArsipKesenian(): Promise<ArsipKesenianProps[]> {
+    try {
+      const response = await ofetch(
+        `${
+          CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
+        }/api/arsip-kesenian`,
+        {
+          method: "GET",
+          parseResponse: JSON.parse,
+          responseType: "json",
+        }
+      );
+
+      return response.data as ArsipKesenianProps[];
+    } catch (err) {
+      throw new Error("Failed to fetch data!");
+    }
+  }
+
+  const { data, isPending, isError } = useQuery({
+    queryKey: ["arsip-kesenian"],
+    queryFn: () => getArsipKesenian(),
+  });
+
+  if (isPending) return <IsPending />;
+  if (isError) return <IsError />;
+
   return (
     <Layout className="flex-row justify-between items-start">
       <div className="xl:mr-28 md:mr-14">
         <Heading as="h1">Arsip Kesenian</Heading>
         <div className="flex flex-col space-y-14 my-10 justify-start items-start">
-          {listArsipKesenian.map((item) => (
+          {data.map((item) => (
             <div key={item.id} className="xl:w-[821px]">
               <div className="flex justify-start items-center w-fit space-x-4">
                 <Image
@@ -45,7 +81,7 @@ export default function ArsipKesenian() {
                   >
                     <Heading as="h3">{item.title}</Heading>
                     <Paragraph className="mt-2">
-                      {item.previewWriting}
+                      {item.preview_writing}
                     </Paragraph>
                   </Link>
                   <div
@@ -60,20 +96,20 @@ export default function ArsipKesenian() {
                         alt="electric icon"
                       />
                       <span className="text-primary-black text-xs md:text-base">
-                        {item.readingTime}
+                        {item.reading_time}
                       </span>
                     </div>
                     <div className="flex justify-start items-center space-x-4 md:space-x-8 mt-2 md:mt-0">
                       <button className="flex justify-start items-center space-x-2">
                         <ThumbsUp size={20} />
                         <span className="text-primary-black text-xs md:text-base">
-                          {item.like}
+                          {item.total_like}
                         </span>
                       </button>
                       <button className="flex justify-start items-center space-x-2">
                         <MessageCircle size={20} />
                         <span className="text-primary-black text-xs md:text-base">
-                          {item.comments}
+                          {item.total_comments}
                         </span>
                       </button>
                       <button className="flex justify-start items-center space-x-2">
@@ -86,7 +122,7 @@ export default function ArsipKesenian() {
                   </div>
                 </div>
                 <Image
-                  src={item.previewImage}
+                  src={item.preview_image}
                   alt={item.title}
                   className="hidden md:block"
                 />

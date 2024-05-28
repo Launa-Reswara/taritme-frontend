@@ -1,16 +1,19 @@
 import { setIdModal } from "@/store/slices/modalKomunitas.slice";
 import { KomunitasProps } from "@/types";
+import { m } from "framer-motion";
 import { X } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { Button } from "./ui/button";
 import Image from "./ui/image";
 import { Heading, Paragraph } from "./ui/typography";
-import { m } from "framer-motion";
+import { differenceInYears } from "date-fns";
 
 export default function ModalKomunitas({
-  previewImage,
+  image,
   name,
   description,
+  is_active,
+  date,
 }: KomunitasProps) {
   const dispatch = useDispatch();
 
@@ -24,7 +27,7 @@ export default function ModalKomunitas({
         className="sm:w-[600px] overflow-hidden w-full rounded-lg bg-white drop-shadow-lg"
       >
         <div className="relative">
-          <Image src={previewImage} alt="sanggar" className="w-full" />
+          <Image src={image} alt="sanggar" className="w-full" />
           <Button
             size="icon"
             className="absolute top-4 right-4 rounded-full bg-light-silver"
@@ -41,11 +44,13 @@ export default function ModalKomunitas({
           <div className="flex my-4 justify-start sm:space-x-3 sm:flex-row sm:justify-center sm:items-center flex-col w-fit items-start">
             <Button className="bg-primary-color rounded-full hover:bg-primary-black flex justify-center items-center space-x-3">
               <Paragraph className="text-xs text-white">
-                Komunitas aktif
+                Komunitas {is_active ? "Aktif" : "Tidak Aktif"}
               </Paragraph>
               <div className="w-2 h-2 bg-malachite rounded-full"></div>
             </Button>
-            <Paragraph className="mt-2 sm:mt-0">Created about 4y ago</Paragraph>
+            <Paragraph className="mt-2 sm:mt-0">
+              Created about {differenceInYears(new Date(), date)}y ago
+            </Paragraph>
           </div>
           <div className="mb-7">
             <Paragraph className="text-primary-black/70">

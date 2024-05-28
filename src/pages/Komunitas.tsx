@@ -4,13 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
+import { getKomunitas } from "@/features";
 import { useTitle } from "@/hooks";
-import { listKomunitas } from "@/lib/utils/data";
 import {
   setIdModal,
   setModalKomunitas,
 } from "@/store/slices/modalKomunitas.slice";
-import { ModalKomunitasSliceProps } from "@/types";
+import { KomunitasProps, ModalKomunitasSliceProps } from "@/types";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { ArrowRightIcon } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -20,7 +21,19 @@ export default function Komunitas() {
     (state: ModalKomunitasSliceProps) => state.modalKomunitas
   );
 
+  const { data, isPending, isError } = useQuery({
+    queryKey: ["komunitas"],
+    queryFn: async () => getKomunitas(),
+    placeholderData: keepPreviousData,
+    refetchOnWindowFocus: false,
+  });
+
   useTitle("Komunitas | Taritme");
+
+  if (isPending) return <p>Anime</p>;
+  if (isError) return <p>Error!</p>;
+
+  const listKomunitas = data.data as KomunitasProps[];
 
   return (
     <>
@@ -48,7 +61,7 @@ export default function Komunitas() {
             <Card key={item.id} className="p-5 rounded-xl bg-white">
               <div className="overflow-hidden rounded-xl">
                 <Image
-                  src={item.previewImage}
+                  src={item.image}
                   alt="thumbnail"
                   className="w-full h-full"
                   draggable={false}

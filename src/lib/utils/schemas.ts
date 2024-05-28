@@ -21,15 +21,9 @@ export const penilaianSchema = z.object({
 });
 
 export const ikutiKursusSchema = z.object({
-  tgl_kursus: z.date(),
+  tgl_kursus: z.string().date().min(1),
   nama: z.string().min(1),
-  no_hp: z.number().min(1),
-  metode_pembayaran: z.enum([
-    "Transfer Bank",
-    "Kartu Kredit",
-    "E-Wallet",
-    "Tunai",
-  ]),
-  jenis_kelamin: z.enum(["Laki-laki", "Perempuan"]),
-  bukti_pembayaran: z.string().min(1),
+  no_hp: z.string().min(12),
+  email: z.string().email().min(1),
+  daerah: z.string().min(1),
 });

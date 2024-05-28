@@ -6,12 +6,18 @@ import { useTitle } from "@/hooks";
 import { getLastPathname, toRupiah } from "@/lib/helpers";
 import { cn } from "@/lib/utils/cn";
 import { ulasanList } from "@/lib/utils/data";
+import { TokenSliceProps } from "@/types";
 import { Heart } from "lucide-react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export default function DetailPelatih() {
   const [tabs, setTabs] = useState<"Tentang" | "Ulasan">("Tentang");
+
+  const { isTokenAdminAvailable, isTokenUserAvailable } = useSelector(
+    (state: TokenSliceProps) => state.token
+  );
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -193,23 +199,25 @@ export default function DetailPelatih() {
               </div>
             </div>
           </div>
-          <div>
-            <Paragraph>Ratings</Paragraph>
-            <Paragraph className="text-xs mt-2">
-              Apakah kamu menyukai keseluruhan service yang diberikan?
-            </Paragraph>
-            <div className="flex mt-5 justify-center items-center w-fit space-x-4">
-              {Array(5)
-                .fill(null)
-                .map((_, index) => (
-                  <Image
-                    key={index + 1}
-                    src="/images/unstar.svg"
-                    alt="unstar"
-                  />
-                ))}
+          {isTokenUserAvailable || isTokenAdminAvailable ? (
+            <div>
+              <Paragraph>Ratings</Paragraph>
+              <Paragraph className="text-xs mt-2">
+                Apakah kamu menyukai keseluruhan service yang diberikan?
+              </Paragraph>
+              <div className="flex mt-5 justify-center items-center w-fit space-x-4">
+                {Array(5)
+                  .fill(null)
+                  .map((_, index) => (
+                    <Image
+                      key={index + 1}
+                      src="/images/unstar.svg"
+                      alt="unstar"
+                    />
+                  ))}
+              </div>
             </div>
-          </div>
+          ) : null}
         </div>
       </aside>
     </Layout>

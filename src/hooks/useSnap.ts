@@ -4,10 +4,12 @@
  * @see https://docs.midtrans.com/docs/snap-snap-integration-guide
  * @returns {{ snapEmbed: (snapToken: any, embedId: any, action: any) => void; }}
  */
+import { MIDTRANS_API_URL, MIDTRANS_CLIENT_ID } from "@/lib/utils/constants";
+import { useEffect, useState } from "react";
 
 // Work In Progress
 export function useSnap() {
-  /*const [snap, setSnap] = useState<string | null>(null);
+  const [snap, setSnap] = useState<any>(null);
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -40,5 +42,5 @@ export function useSnap() {
 
   return {
     snapEmbed,
-  };*/
+  };
 }

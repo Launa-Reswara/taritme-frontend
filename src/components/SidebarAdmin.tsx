@@ -14,6 +14,11 @@ export default function SidebarAdmin() {
 
   useTitle("Dashboard | Taritme");
 
+  function logout() {
+    localStorage.removeItem("token-admin");
+    navigate("/auth/login/admin");
+  }
+
   return (
     <nav className="lg:fixed sticky z-50 bg-white w-full lg:max-w-[359px] left-0 lg:min-h-svh flex justify-between flex-col items-start top-0 drop-shadow-lg">
       <div className="w-full flex flex-col justify-center items-center p-4 lg:p-8">
@@ -84,7 +89,7 @@ export default function SidebarAdmin() {
         </div>
       </div>
       <button
-        onClick={() => navigate("/auth/login")}
+        onClick={logout}
         className="bg-secondary-color w-full cursor-pointer hidden lg:flex justify-between items-center p-4"
       >
         <Paragraph className="text-white text-2xl font-medium">

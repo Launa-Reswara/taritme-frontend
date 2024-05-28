@@ -66,7 +66,7 @@ export default function Login() {
           dispatch(setIsLoggedIn(true));
 
           setTimeout(() => {
-            navigate("/");
+            window.location.replace("/");
           }, 2000);
         } else {
           setIsWrongLoginData(true);

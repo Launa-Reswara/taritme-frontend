@@ -4,45 +4,24 @@ import Layout from "@/components/Layout";
 import Newsletter from "@/components/Newsletter";
 import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
+import { getArsipKesenian } from "@/features";
 import { useTitle } from "@/hooks";
 import { cn } from "@/lib/utils/cn";
-import {
-  CONDITION,
-  DEVELOPMENT_API_URL,
-  PRODUCTION_API_URL,
-} from "@/lib/utils/constants";
-import { ArsipKesenianProps } from "@/types";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { format } from "date-fns";
 import { MessageCircle, Share, ThumbsUp } from "lucide-react";
-import { ofetch } from "ofetch";
 import { Link } from "react-router-dom";
 import slugify from "slugify";
 
 export default function ArsipKesenian() {
   useTitle("Arsip Kesenian | Taritme");
 
-  async function getArsipKesenian(): Promise<ArsipKesenianProps[]> {
-    try {
-      const response = await ofetch(
-        `${
-          CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-        }/api/arsip-kesenian`,
-        {
-          method: "GET",
-          parseResponse: JSON.parse,
-          responseType: "json",
-        }
-      );
-
-      return response.data as ArsipKesenianProps[];
-    } catch (err) {
-      throw new Error("Failed to fetch data!");
-    }
-  }
-
   const { data, isPending, isError } = useQuery({
     queryKey: ["arsip-kesenian"],
     queryFn: () => getArsipKesenian(),
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    placeholderData: keepPreviousData,
   });
 
   if (isPending) return <IsPending />;
@@ -69,7 +48,7 @@ export default function ArsipKesenian() {
                 >
                   <Paragraph>{item.author}</Paragraph>
                   <Paragraph className="text-sm md:text-base md:mt-0 mt-1">
-                    {item.date}
+                    {format(item.date, "LLLL d, yyyy")}
                   </Paragraph>
                 </div>
               </div>
@@ -96,7 +75,7 @@ export default function ArsipKesenian() {
                         alt="electric icon"
                       />
                       <span className="text-primary-black text-xs md:text-base">
-                        {item.reading_time}
+                        5 mins read
                       </span>
                     </div>
                     <div className="flex justify-start items-center space-x-4 md:space-x-8 mt-2 md:mt-0">

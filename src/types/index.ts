@@ -16,12 +16,24 @@ export type ArsipKesenianProps = {
   date: string;
   preview_writing: string;
   preview_image: string;
-  reading_time: string;
   total_like: number;
   total_comments: number;
 };
 
-export type InstrukturProps = {
+export type DetailArsipKesenianProps = {
+  id: number;
+  arsip_kesenian_id: number;
+  arsip_kesenian_author: string;
+  arsip_kesenian_title: string;
+  arsip_kesenian_total_like: number;
+  arsip_kesenian_total_comments: number;
+  content: string;
+};
+
+export type JoinArsipKesenianProps = ArsipKesenianProps &
+  DetailArsipKesenianProps;
+
+export type PelatihProps = {
   id: number;
   name: string;
   description: string;
@@ -30,6 +42,18 @@ export type InstrukturProps = {
   total_review: number;
   price: number;
 };
+
+export type DetailPelatihProps = {
+  id: number;
+  pelatih_tari_id: number;
+  tentang_pelatih: string;
+  image_1: string;
+  image_2: string;
+  image_3: string;
+  price_per_paket: number;
+};
+
+export type JoinPelatihProps = PelatihProps & DetailPelatihProps;
 
 export type ModalKomunitasSliceProps = {
   modalKomunitas: {
@@ -77,3 +101,5 @@ export type TokenSliceProps = {
     setIsTokenAdminAvailable: (isTokenAdminAvailable: boolean) => void;
   };
 };
+
+export type RiwayatKursusProps = PelatihProps;

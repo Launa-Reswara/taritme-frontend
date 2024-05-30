@@ -4,45 +4,20 @@ import Layout from "@/components/Layout";
 import Image from "@/components/ui/image";
 import { Input } from "@/components/ui/input";
 import { Heading, Paragraph } from "@/components/ui/typography";
+import { getPelatihTari } from "@/features";
 import { useTitle } from "@/hooks";
 import { toRupiah } from "@/lib/helpers";
-import {
-  CONDITION,
-  DEVELOPMENT_API_URL,
-  PRODUCTION_API_URL,
-} from "@/lib/utils/constants";
-import { InstrukturProps } from "@/types";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { ChevronRight, Search } from "lucide-react";
-import { ofetch } from "ofetch";
 import { Link } from "react-router-dom";
 import slugify from "slugify";
 
 export default function TemukanPelatih() {
   useTitle("Temukan Pelatih | Taritme");
 
-  async function getAllPelatih() {
-    try {
-      const response = await ofetch(
-        `${
-          CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-        }/api/pelatih-tari`,
-        {
-          method: "GET",
-          parseResponse: JSON.parse,
-          responseType: "json",
-        }
-      );
-
-      return response.data as InstrukturProps[];
-    } catch (err) {
-      throw new Error("Failed to fetch data!");
-    }
-  }
-
   const { data, isPending, isError } = useQuery({
     queryKey: ["temukan-pelatih"],
-    queryFn: () => getAllPelatih(),
+    queryFn: () => getPelatihTari(),
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
     placeholderData: keepPreviousData,

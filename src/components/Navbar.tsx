@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { CustomLink, Paragraph } from "./ui/typography";
+import Cookies from "js-cookie";
 
 export default function Navbar() {
   const { isLoggedIn } = useSelector((state: LoginSliceProps) => state.login);
@@ -21,7 +22,7 @@ export default function Navbar() {
   const location = useLocation();
 
   function signOut() {
-    localStorage.removeItem("token");
+    Cookies.remove("token");
     dispatch(setIsLoggedIn(false));
     window.location.replace("/auth/login");
   }

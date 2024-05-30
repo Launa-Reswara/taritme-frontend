@@ -1,18 +1,36 @@
+import IsError from "@/components/IsError";
+import IsPending from "@/components/IsPending";
 import Layout from "@/components/Layout";
 import { Card } from "@/components/ui/card";
 import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
+import { getDetailArsipKesenian } from "@/features";
 import { useTitle } from "@/hooks";
 import { getLastPathname } from "@/lib/helpers";
 import { cn } from "@/lib/utils/cn";
 import { listArsipKesenian } from "@/lib/utils/data";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { MessageCircle, Share, ThumbsUp } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function DetailArsipKesenian() {
   const location = useLocation();
   const navigate = useNavigate();
-  useTitle(`${getLastPathname(location.pathname)} | Taritme`);
+
+  const detailArsipKesenianRoute = getLastPathname(location.pathname);
+
+  useTitle(`${detailArsipKesenianRoute} | Taritme`);
+
+  const { data, isPending, isError } = useQuery({
+    queryKey: [detailArsipKesenianRoute],
+    queryFn: () => getDetailArsipKesenian(detailArsipKesenianRoute),
+    placeholderData: keepPreviousData,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+  });
+
+  if (isPending) return <IsPending />;
+  if (isError) return <IsError />;
 
   return (
     <Layout>
@@ -236,7 +254,7 @@ export default function DetailArsipKesenian() {
                     draggable={false}
                     className="w-4 h-4"
                   />
-                  <Paragraph className="text-xs">{item.readingTime}</Paragraph>
+                  <Paragraph className="text-xs">{item.reading_time}</Paragraph>
                 </div>
                 <Heading as="h2">{item.title}</Heading>
                 <div className="flex items-center space-x-3 my-3">

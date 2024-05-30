@@ -1,3 +1,5 @@
+import IsError from "@/components/IsError";
+import IsPending from "@/components/IsPending";
 import Layout from "@/components/Layout";
 import ModalKomunitas from "@/components/ModalKomunitas";
 import { Button } from "@/components/ui/button";
@@ -26,12 +28,13 @@ export default function Komunitas() {
     queryFn: async () => getKomunitas(),
     placeholderData: keepPreviousData,
     refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
   });
 
   useTitle("Komunitas | Taritme");
 
-  if (isPending) return <p>Anime</p>;
-  if (isError) return <p>Error!</p>;
+  if (isPending) return <IsPending />;
+  if (isError) return <IsError />;
 
   const listKomunitas = data.data as KomunitasProps[];
 

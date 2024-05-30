@@ -1,15 +1,31 @@
+import IsError from "@/components/IsError";
+import IsPending from "@/components/IsPending";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
+import { getRiwayatKursus } from "@/features";
 import { useTitle } from "@/hooks";
 import { toRupiah } from "@/lib/helpers";
-import { riwayatKursusList } from "@/lib/utils/data";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import slugify from "slugify";
 
 export default function RiwayatKursus() {
   useTitle("Riwayat kursus | Taritme");
+
+  const { data, isPending, isError } = useQuery({
+    queryKey: ["riwayat_kursus"],
+    queryFn: () => getRiwayatKursus(),
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    placeholderData: keepPreviousData,
+  });
+
+  if (isPending) return <IsPending />;
+  if (isError) return <IsError />;
+
+  const riwayatKursus = data.data;
 
   return (
     <Layout>
@@ -18,7 +34,7 @@ export default function RiwayatKursus() {
           Riwayat Kursus
         </Heading>
         <div className="flex justify-start mt-10 space-y-10 items-center w-full flex-col">
-          {riwayatKursusList.map((item) => (
+          {riwayatKursus.map((item) => (
             <div
               key={item.id}
               className="rounded-lg flex-col md:flex-row border w-full border-primary-color p-6 flex md:justify-start md:items-start justify-center space-x-5 items-center"
@@ -28,7 +44,7 @@ export default function RiwayatKursus() {
               </div>
               <div className="w-full md:mt-0 mt-4">
                 <Heading as="h2">{item.name}</Heading>
-                <Paragraph className="my-2">{toRupiah(item.harga)}</Paragraph>
+                <Paragraph className="my-2">{toRupiah(item.price)}</Paragraph>
                 <Paragraph>{item.description}</Paragraph>
                 <div className="flex space-x-2 mt-2 mb-4 justify-center items-center w-fit">
                   <Image src="/images/star-icon.svg" alt="star" />

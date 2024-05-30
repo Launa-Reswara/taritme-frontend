@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
 
 const tokenSlice = createSlice({
   name: "token",
   initialState: {
-    isTokenUserAvailable: localStorage.getItem("token") ? true : false,
-    isTokenAdminAvailable: localStorage.getItem("token-admin") ? true : false,
+    isTokenUserAvailable: Cookies.get("token") ? true : false,
+    isTokenAdminAvailable: Cookies.get("token-admin") ? true : false,
   },
   reducers: {
     setIsTokenUserAvailable: (state, action) => {

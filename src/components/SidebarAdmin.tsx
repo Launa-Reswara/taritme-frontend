@@ -7,6 +7,7 @@ import { Button } from "./ui/button";
 import Image from "./ui/image";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { Heading, Paragraph } from "./ui/typography";
+import Cookies from "js-cookie";
 
 export default function SidebarAdmin() {
   const location = useLocation();
@@ -15,7 +16,7 @@ export default function SidebarAdmin() {
   useTitle("Dashboard | Taritme");
 
   function logout() {
-    localStorage.removeItem("token-admin");
+    Cookies.remove("token-admin");
     navigate("/auth/login/admin");
   }
 

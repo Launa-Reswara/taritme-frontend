@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CustomLink, Heading, Paragraph } from "@/components/ui/typography";
+import { useToast } from "@/components/ui/use-toast";
 import { useTitle } from "@/hooks";
 import {
   CONDITION,
@@ -8,21 +9,18 @@ import {
   PRODUCTION_API_URL,
 } from "@/lib/utils/constants";
 import { loginSchema } from "@/lib/utils/schemas";
-import { setIsLoggedIn } from "@/store/slices/login.slice";
-import { LoginSliceProps } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { m } from "framer-motion";
+import Cookies from "js-cookie";
 import { ofetch } from "ofetch";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [isWrongLoginData, setIsWrongLoginData] = useState<boolean>(false);
 
-  const { isLoggedIn } = useSelector((state: LoginSliceProps) => state.login);
-  const dispatch = useDispatch();
+  const { toast } = useToast();
 
   const navigate = useNavigate();
 
@@ -60,10 +58,13 @@ export default function Login() {
         );
 
         if (response.statusCode === 200) {
-          localStorage.setItem("token", response.token);
+          Cookies.set("token", response.token);
           setIsWrongLoginData(false);
 
-          dispatch(setIsLoggedIn(true));
+          toast({
+            title: "Success!",
+            description: response.message,
+          });
 
           setTimeout(() => {
             window.location.replace("/");
@@ -183,13 +184,6 @@ export default function Login() {
           </div>
         </div>
       </m.div>
-      {isLoggedIn ? (
-        <div className="flex justify-center backdrop-blur-lg fixed inset-0 items-center min-h-svh">
-          <div className="bg-white rounded-xl p-4">
-            <Paragraph className="font-medium">Login berhasil!</Paragraph>
-          </div>
-        </div>
-      ) : null}
     </>
   );
 }

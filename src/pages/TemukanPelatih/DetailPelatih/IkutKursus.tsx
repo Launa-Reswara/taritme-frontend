@@ -1,8 +1,12 @@
+import IsError from "@/components/IsError";
+import IsPending from "@/components/IsPending";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import Image from "@/components/ui/image";
 import { Input } from "@/components/ui/input";
 import { Heading, Paragraph } from "@/components/ui/typography";
+import { useToast } from "@/components/ui/use-toast";
+import { getDetailPelatihTari } from "@/features";
 import { useTitle } from "@/hooks";
 import { toRupiah } from "@/lib/helpers";
 import {
@@ -11,7 +15,6 @@ import {
   PRODUCTION_API_URL,
 } from "@/lib/utils/constants";
 import { ikutiKursusSchema } from "@/lib/utils/schemas";
-import { InstrukturProps } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { nanoid } from "@reduxjs/toolkit";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
@@ -22,6 +25,8 @@ import { useLocation } from "react-router-dom";
 
 export default function IkutiKursus() {
   const location = useLocation();
+
+  const { toast } = useToast();
 
   const pelatihName = location.pathname
     .split("/")[2]
@@ -44,44 +49,34 @@ export default function IkutiKursus() {
       no_hp: "",
       email: "",
       daerah: "",
+      lama_sewa: "1",
     },
     resolver: zodResolver(ikutiKursusSchema),
   });
 
-  async function getAllPelatih() {
-    try {
-      const response = await ofetch(
-        `${
-          CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-        }/api/pelatih-tari`,
-        {
-          method: "GET",
-          parseResponse: JSON.parse,
-          responseType: "json",
-        }
-      );
-
-      return response;
-    } catch (err) {
-      throw new Error("Failed to fetch data!");
-    }
-  }
-
   const { data, isPending, isError } = useQuery({
     queryKey: ["ikut-kursus"],
-    queryFn: () => getAllPelatih(),
+    queryFn: () => getDetailPelatihTari(pelatihName),
     placeholderData: keepPreviousData,
     refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
   });
 
-  if (isPending) return <p>Loading...</p>;
-  if (isError) return <p>IsError</p>;
+  if (isPending) return <IsPending />;
+  if (isError) return <IsError />;
 
-  const filteredData: InstrukturProps[] = data.data.filter(
-    (item: InstrukturProps) => item.name === pelatihName
-  );
+  const pelatihTari = data[0];
 
   function onSubmit() {
+    // change lama sewa from string to number
+    const lamaSewa = Number(getValues("lama_sewa"));
+
+    // calculation price
+    const priceAfterDiskon =
+      lamaSewa % 5 === 0
+        ? pelatihTari.price * lamaSewa - 50000 * (lamaSewa / 5)
+        : pelatihTari.price * lamaSewa;
+
     async function submitDataTransaction() {
       try {
         const response = await ofetch(
@@ -89,7 +84,7 @@ export default function IkutiKursus() {
             CONDITION === "development"
               ? DEVELOPMENT_API_URL
               : PRODUCTION_API_URL
-          }/api/pelatih-tari/transactions`,
+          }/api/pelatih-tari/${pelatihName}/transactions`,
           {
             method: "POST",
             responseType: "json",
@@ -100,21 +95,25 @@ export default function IkutiKursus() {
                 email: getValues("email"),
                 phone: getValues("no_hp"),
                 city: getValues("daerah"),
-                gross_amount: 50000,
+                gross_amount: priceAfterDiskon,
               },
               item_details: [
                 {
                   id: nanoid(10),
-                  price: 50000,
-                  quantity: 2,
-                  name: "Apel",
-                  brand: "Fuji Apple",
-                  category: "Fruit",
-                  merchant_name: "Fruit-store",
+                  price: priceAfterDiskon,
+                  quantity: 1,
+                  name: `Jasa sewa instruktur tari Kak ${pelatihTari.name}`,
+                  brand: "Taritme",
+                  category: "Sewa instruktur tari",
+                  merchant_name: "Launa Reswara",
                   tenor: "12",
                   code_plan: "000",
                   mid: "123456",
-                  url: "http://localhost:3000/temukan-pelatih/luna-maya/ikuti-kursus",
+                  url: `${
+                    CONDITION === "development"
+                      ? DEVELOPMENT_API_URL
+                      : PRODUCTION_API_URL
+                  }/temukan-pelatih/${pelatihName}/ikuti-kursus`,
                 },
               ],
             },
@@ -123,11 +122,11 @@ export default function IkutiKursus() {
 
         if (response.statusCode === 200 || response.statusCode === 201) {
           window.location.href = response.redirect_url;
+        } else {
+          toast({ title: "Error!", description: response.message });
         }
-
-        return response;
-      } catch (err) {
-        throw new Error("Failed to submit your data!");
+      } catch (err: any) {
+        throw new Error(err.message);
       }
     }
 
@@ -139,40 +138,41 @@ export default function IkutiKursus() {
       <div className="flex w-full flex-col md:flex-row md:space-x-8 justify-center items-center md:justify-start md:items-start">
         <div>
           {/* Render kartu instruktur */}
-          {filteredData.slice(0, 1).map((item) => (
-            <div className="bg-primary-color p-5 h-[352px] flex justify-center items-center w-full relative rounded-xl shadow-lg mt-10">
-              <Image
-                src={item.image}
-                alt={item.name}
-                className="absolute -top-20"
-              />
-              <div className="mt-36">
-                <Heading as="h2" className="text-white font-medium">
-                  {item.name}
-                </Heading>
-                <Paragraph className="text-white mt-1 mb-2 text-xs">
-                  {item.description}
-                </Paragraph>
-                <div className="mb-6">
-                  <div className="flex w-fit justify-center items-center space-x-2">
-                    <Image src="/images/star-icon.svg" alt="star" />
-                    <span className="text-base text-white">
-                      {item.rating}{" "}
-                      <span className="text-white/50 text-xs">
-                        ({item.total_review} ulasan)
-                      </span>
+          <div
+            key={pelatihTari.id}
+            className="bg-primary-color p-5 h-[352px] flex justify-center items-center w-full relative rounded-xl shadow-lg mt-10"
+          >
+            <Image
+              src={pelatihTari.image}
+              alt={pelatihTari.name}
+              className="absolute -top-20"
+            />
+            <div className="mt-36">
+              <Heading as="h2" className="text-white font-medium">
+                {pelatihTari.name}
+              </Heading>
+              <Paragraph className="text-white mt-1 mb-2 text-xs">
+                {pelatihTari.description}
+              </Paragraph>
+              <div className="mb-6">
+                <div className="flex w-fit justify-center items-center space-x-2">
+                  <Image src="/images/star-icon.svg" alt="star" />
+                  <span className="text-base text-white">
+                    {pelatihTari.rating}{" "}
+                    <span className="text-white/50 text-xs">
+                      ({pelatihTari.total_review} ulasan)
                     </span>
-                  </div>
-                </div>
-                <div className="w-full flex justify-between items-center">
-                  <Paragraph className="text-white">
-                    {toRupiah(item.price)}
-                  </Paragraph>
-                  <ChevronRight className="text-white" />
+                  </span>
                 </div>
               </div>
+              <div className="w-full flex justify-between items-center">
+                <Paragraph className="text-white">
+                  {toRupiah(pelatihTari.price)}
+                </Paragraph>
+                <ChevronRight className="text-white" />
+              </div>
             </div>
-          ))}
+          </div>
         </div>
 
         {/* Form ikut kursus */}
@@ -271,9 +271,26 @@ export default function IkutiKursus() {
                     Kota/Kabupaten
                   </label>
                   <Input
-                    {...register("daerah")}
+                    {...register("daerah", { required: true })}
                     type="text"
                     placeholder="Daerah anda"
+                    className="mt-1 w-full border border-spanish-gray rounded-full p-2"
+                  />
+                  <Paragraph className="text-xs font-medium mt-2">
+                    {errors.daerah?.message}
+                  </Paragraph>
+                </div>
+                <div className="w-full">
+                  <label
+                    htmlFor="city"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Lama sewa (dalam jam)
+                  </label>
+                  <Input
+                    {...register("lama_sewa", { required: true })}
+                    type="number"
+                    placeholder="Satuan jam"
                     className="mt-1 w-full border border-spanish-gray rounded-full p-2"
                   />
                   <Paragraph className="text-xs font-medium mt-2">

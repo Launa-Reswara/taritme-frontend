@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CustomLink, Heading, Paragraph } from "@/components/ui/typography";
+import { useToast } from "@/components/ui/use-toast";
 import { useTitle } from "@/hooks";
 import {
   CONDITION,
@@ -10,16 +11,16 @@ import {
 import { loginAdminSchema } from "@/lib/utils/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { m } from "framer-motion";
+import Cookies from "js-cookie";
 import { ofetch } from "ofetch";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 
 export default function LoginAdmin() {
   const [isWrongAdminData, setIsWrongAdminData] = useState<boolean>(false);
   const [, setIsAdmin] = useState<boolean>(false);
 
-  const navigate = useNavigate();
+  const { toast } = useToast();
 
   useTitle("Login Admin | Taritme");
 
@@ -55,13 +56,18 @@ export default function LoginAdmin() {
         );
 
         if (response.statusCode === 200) {
-          localStorage.setItem("token-admin", response.token);
+          Cookies.set("token-admin", response.token);
           setIsWrongAdminData(false);
 
           setIsAdmin(true);
 
+          toast({
+            title: "Success!",
+            description: response.message,
+          });
+
           setTimeout(() => {
-            navigate("/");
+            window.location.replace("/admin");
           }, 2000);
         } else {
           setIsWrongAdminData(true);

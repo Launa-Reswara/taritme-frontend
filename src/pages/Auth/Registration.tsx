@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CustomLink, Heading, Paragraph } from "@/components/ui/typography";
+import { useToast } from "@/components/ui/use-toast";
 import { useTitle } from "@/hooks";
 import {
   CONDITION,
@@ -21,6 +22,8 @@ export default function Registration() {
     useState<boolean>(false);
   const [errMessage, setErrMessage] = useState<string>("");
 
+  const { toast } = useToast();
+
   const navigate = useNavigate();
 
   useTitle("Registration | Taritme");
@@ -35,7 +38,7 @@ export default function Registration() {
     resolver: zodResolver(registrationSchema),
   });
 
-  // WIP: register account
+  // register account onSubmit form
   function onSubmit() {
     async function registAccount() {
       try {
@@ -59,8 +62,13 @@ export default function Registration() {
         if (response.statusCode === 200 || response.statusCode === 201) {
           setIsRegister(true);
 
+          toast({
+            title: "Registrasi akun berhasil!",
+            description: "Kamu berhasil registrasi akun!",
+          });
+
           setTimeout(() => {
-            navigate("/auth/login");
+            window.location.replace("/auth/login");
           }, 2000);
         } else {
           setErrMessage(response.message);

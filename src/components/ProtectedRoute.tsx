@@ -1,12 +1,9 @@
 import { ChildrenProps, TokenSliceProps } from "@/types";
 import { useSelector } from "react-redux";
-import { Link, Navigate, Outlet } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { Heading, Paragraph } from "./ui/typography";
 
-// package JWT
-// flow: decode token JWT di FE
-// sesuain role ama flow Website
 function User({ children }: ChildrenProps) {
   const { isTokenUserAvailable, isTokenAdminAvailable } = useSelector(
     (state: TokenSliceProps) => state.token
@@ -55,7 +52,7 @@ function Admin({ children }: ChildrenProps) {
     (state: TokenSliceProps) => state.token
   );
 
-  return isTokenAdminAvailable ? children : <Navigate to="/" />;
+  return isTokenAdminAvailable ? children : <Navigate to="/auth/login/admin" />;
 }
 
 function AdminAuth({ children }: ChildrenProps) {
@@ -63,7 +60,7 @@ function AdminAuth({ children }: ChildrenProps) {
     (state: TokenSliceProps) => state.token
   );
 
-  return isTokenAdminAvailable ? <Outlet /> : children;
+  return isTokenAdminAvailable ? <Navigate to="/auth/admin" /> : children;
 }
 
 const ProtectedRoute = {

@@ -1,11 +1,9 @@
 import { cn } from "@/lib/utils/cn";
-import Navbar from "./Navbar";
 import { Heading } from "./ui/typography";
 
 export default function IsPending() {
   return (
     <>
-      <Navbar />
       <main
         className={cn("flex justify-center min-h-svh mt-10 items-start w-full")}
       >

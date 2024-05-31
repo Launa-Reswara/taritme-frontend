@@ -18,10 +18,12 @@ import { ikutiKursusSchema } from "@/lib/utils/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { nanoid } from "@reduxjs/toolkit";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import Cookies from "js-cookie";
 import { ChevronRight } from "lucide-react";
 import { ofetch } from "ofetch";
 import { useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
+import slugify from "slugify";
 
 export default function IkutiKursus() {
   const location = useLocation();
@@ -84,11 +86,16 @@ export default function IkutiKursus() {
             CONDITION === "development"
               ? DEVELOPMENT_API_URL
               : PRODUCTION_API_URL
-          }/api/pelatih-tari/${pelatihName}/transactions`,
+          }/api/pelatih-tari/${slugify(pelatihName, {
+            lower: true,
+          })}/transactions`,
           {
             method: "POST",
             responseType: "json",
             parseResponse: JSON.parse,
+            headers: {
+              Authorization: `Bearer ${Cookies.get("token")}`,
+            },
             body: {
               customer_details: {
                 name: getValues("nama"),

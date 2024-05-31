@@ -43,7 +43,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className="bg-secondary-color h-full md:col-span-2 rounded-xl px-7 py-5"
+              className="bg-secondary-color hover:cursor-pointer h-full md:col-span-2 rounded-xl px-7 py-5"
               onClick={() => navigate("/komunitas")}
             >
               <Heading as="h1" className="font-medium text-primary-black">
@@ -84,7 +84,7 @@ export default function Home() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0 }}
               onClick={() => navigate("/temukan-pelatih")}
-              className="w-full xl:col-span-1 md:col-span-2"
+              className="w-full xl:col-span-1 md:col-span-2 hover:cursor-pointer"
             >
               <Image
                 src="/images/pelatih-tari-home.png"

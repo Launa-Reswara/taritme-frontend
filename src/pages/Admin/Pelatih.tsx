@@ -1,3 +1,5 @@
+import IsError from "@/components/IsError";
+import IsPending from "@/components/IsPending";
 import SidebarAdmin from "@/components/SidebarAdmin";
 import { Button } from "@/components/ui/button";
 import Image from "@/components/ui/image";
@@ -11,17 +13,20 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Heading, Paragraph } from "@/components/ui/typography";
+import { getPelatihTari } from "@/features";
 import { useTitle } from "@/hooks";
-import { pelatihList } from "@/lib/utils/data";
 import {
   setIsEditPelatih,
   setIsTambahPelatih,
 } from "@/store/slices/pelatih.slice";
-import { PelatihSliceProps } from "@/types";
+import { DataPelatihProps, PelatihProps, PelatihSliceProps } from "@/types";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { m } from "framer-motion";
 import { Pencil, Trash, X } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+
+type JoinPelatihProps = PelatihProps & DataPelatihProps;
 
 export default function Pelatih() {
   const dispatch = useDispatch();
@@ -30,6 +35,16 @@ export default function Pelatih() {
   );
 
   useTitle("Pelatih | Taritme");
+
+  const { data, isPending, isError } = useQuery({
+    queryKey: ["ikut-kursus"],
+    queryFn: () => getPelatihTari(),
+    placeholderData: keepPreviousData,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+  });
+
+  const pelatih = data as unknown as JoinPelatihProps[];
 
   return (
     <>
@@ -42,65 +57,83 @@ export default function Pelatih() {
         className="lg:ml-[358px] min-h-svh flex justify-start p-4 lg:p-10 items-center flex-col"
       >
         <section className="flex w-full justify-center items-center">
-          <div className="w-full">
-            <button
-              className="text-primary-black text-2xl"
-              type="button"
-              aria-label="tambah pelatih"
-              onClick={() => dispatch(setIsTambahPelatih(true))}
-            >
-              + Tambah Pelatih
-            </button>
-            <Table className="w-full mt-10">
-              <TableHeader>
-                <TableRow className="bg-primary-color hover:bg-primary-color">
-                  <TableHead className="text-center text-white">Foto</TableHead>
-                  <TableHead className="text-center text-white">Nama</TableHead>
-                  <TableHead className="text-center text-white">
-                    No HP
-                  </TableHead>
-                  <TableHead className="text-center text-white">
-                    Email
-                  </TableHead>
-                  <TableHead className="text-center text-white">
-                    Status
-                  </TableHead>
-                  <TableHead className="text-center text-white">Aksi</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {pelatihList.map((item) => (
-                  <TableRow
-                    key={item.id}
-                    className="bg-secondary-color hover:bg-secondary-color hover:odd:bg-light-silver odd:bg-light-silver"
-                  >
-                    <TableCell className="text-center flex justify-center items-center">
-                      <Image
-                        src={item.foto}
-                        alt={item.nama}
-                        className="w-10 h-10"
-                      />
-                    </TableCell>
-                    <TableCell className="text-center">{item.nama}</TableCell>
-                    <TableCell className="text-center">{item.nohp}</TableCell>
-                    <TableCell className="text-center">{item.email}</TableCell>
-                    <TableCell className="text-center">{item.status}</TableCell>
-                    <TableCell className="flex justify-center items-center space-x-4">
-                      <Button
-                        variant="outline"
-                        onClick={() => dispatch(setIsEditPelatih(true))}
-                      >
-                        <Pencil />
-                      </Button>
-                      <Button variant="outline">
-                        <Trash />
-                      </Button>
-                    </TableCell>
+          {isPending ? (
+            <IsPending />
+          ) : isError ? (
+            <IsError />
+          ) : (
+            <div className="w-full">
+              <button
+                className="text-primary-black text-2xl"
+                type="button"
+                aria-label="tambah pelatih"
+                onClick={() => dispatch(setIsTambahPelatih(true))}
+              >
+                + Tambah Pelatih
+              </button>
+              <Table className="w-full mt-10">
+                <TableHeader>
+                  <TableRow className="bg-primary-color hover:bg-primary-color">
+                    <TableHead className="text-center text-white">
+                      Foto
+                    </TableHead>
+                    <TableHead className="text-center text-white">
+                      Nama
+                    </TableHead>
+                    <TableHead className="text-center text-white">
+                      No HP
+                    </TableHead>
+                    <TableHead className="text-center text-white">
+                      Email
+                    </TableHead>
+                    <TableHead className="text-center text-white">
+                      Status
+                    </TableHead>
+                    <TableHead className="text-center text-white">
+                      Aksi
+                    </TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
+                </TableHeader>
+                <TableBody>
+                  {pelatih.map((item) => (
+                    <TableRow
+                      key={item.id}
+                      className="bg-secondary-color hover:bg-secondary-color hover:odd:bg-light-silver odd:bg-light-silver"
+                    >
+                      <TableCell className="text-center flex justify-center items-center">
+                        <Image
+                          src={item.image}
+                          alt={item.name}
+                          className="w-10 h-10"
+                        />
+                      </TableCell>
+                      <TableCell className="text-center">{item.name}</TableCell>
+                      <TableCell className="text-center">
+                        {item.no_hp}
+                      </TableCell>
+                      <TableCell className="text-center">
+                        {item.email}
+                      </TableCell>
+                      <TableCell className="text-center">
+                        {item.status}
+                      </TableCell>
+                      <TableCell className="flex justify-center items-center space-x-4">
+                        <Button
+                          variant="outline"
+                          onClick={() => dispatch(setIsEditPelatih(true))}
+                        >
+                          <Pencil />
+                        </Button>
+                        <Button variant="outline">
+                          <Trash />
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          )}
         </section>
       </m.main>
       {isTambahPelatih ? <FormTambahPelatih /> : null}

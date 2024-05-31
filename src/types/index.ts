@@ -43,6 +43,14 @@ export type PelatihProps = {
   price: number;
 };
 
+export type DataPelatihProps = {
+  id: string;
+  pelatih_tari_id: number;
+  no_hp: number;
+  email: string;
+  status: "Aktif" | "Tidak Aktif";
+};
+
 export type DetailPelatihProps = {
   id: number;
   pelatih_tari_id: number;
@@ -52,8 +60,6 @@ export type DetailPelatihProps = {
   image_3: string;
   price_per_paket: number;
 };
-
-export type JoinPelatihProps = PelatihProps & DetailPelatihProps;
 
 export type ModalKomunitasSliceProps = {
   modalKomunitas: {

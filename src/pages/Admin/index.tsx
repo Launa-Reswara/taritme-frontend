@@ -1,12 +1,56 @@
 import ChartTotalUser from "@/components/ChartTotalUser";
+import IsError from "@/components/IsError";
+import IsPending from "@/components/IsPending";
 import SidebarAdmin from "@/components/SidebarAdmin";
 import { Calendar } from "@/components/ui/calendar";
 import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
+import { useToast } from "@/components/ui/use-toast";
+import {
+  CONDITION,
+  DEVELOPMENT_API_URL,
+  PRODUCTION_API_URL,
+} from "@/lib/utils/constants";
+import { useQuery } from "@tanstack/react-query";
 import { m } from "framer-motion";
 import { UserRound } from "lucide-react";
+import { ofetch } from "ofetch";
 
 export default function Admin() {
+  const { toast } = useToast();
+
+  async function getStatistics() {
+    try {
+      const response = await ofetch(
+        `${
+          CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
+        }/api/admin/statistics`,
+        {
+          method: "GET",
+          parseResponse: JSON.parse,
+          responseType: "json",
+        }
+      );
+
+      return response.data;
+    } catch (err: any) {
+      toast({ title: "Error!" });
+      throw new Error(err.message);
+    }
+  }
+
+  const { data, isPending, isError } = useQuery({
+    queryKey: ["get-statistics-data"],
+    queryFn: () => getStatistics(),
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+  });
+
+  if (isPending) return <IsPending />;
+  if (isError) return <IsError />;
+
+  console.log(data);
+
   return (
     <>
       <SidebarAdmin />

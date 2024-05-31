@@ -3,7 +3,12 @@ import {
   DEVELOPMENT_API_URL,
   PRODUCTION_API_URL,
 } from "@/lib/utils/constants";
-import { ArsipKesenianProps, JoinPelatihProps, PelatihProps } from "@/types";
+import {
+  ArsipKesenianProps,
+  DataPelatihProps,
+  DetailPelatihProps,
+  PelatihProps,
+} from "@/types";
 import { ofetch } from "ofetch";
 
 // komunitas
@@ -46,18 +51,15 @@ export async function getArsipKesenian(): Promise<ArsipKesenianProps[]> {
   }
 }
 
-export async function getDetailArsipKesenian(
-  params: string
-): Promise<ArsipKesenianProps> {
+export async function deleteArsipKesenian(params: string) {
   try {
-    const response = await ofetch(
+    await ofetch(
       `${
         CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-      }/api/arsip-kesenian/${params}`
+      }/api/arsip-kesenian/${params}`,
+      { method: "DELETE" }
     );
-
-    return response.data as ArsipKesenianProps;
-  } catch (err) {
+  } catch (err: any) {
     throw new Error("Failed to fetch data!");
   }
 }
@@ -81,6 +83,8 @@ export async function getPelatihTari() {
     throw new Error("Failed to fetch data!");
   }
 }
+
+type JoinPelatihProps = PelatihProps & DetailPelatihProps & DataPelatihProps;
 
 export async function getDetailPelatihTari(
   name: string
@@ -116,9 +120,9 @@ export async function getRiwayatKursus() {
         responseType: "json",
       }
     );
+
+    return response;
   } catch (err) {
     throw new Error("Failed to get data!");
   }
 }
-
-export async function postRiwayatKursus() {}

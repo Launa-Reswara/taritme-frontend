@@ -1,3 +1,6 @@
+import ProtectedRoute from "@/components/ProtectedRoute";
+import { Toaster } from "@/components/ui/toaster";
+import { useScrollToTop } from "@/hooks";
 import Admin from "@/pages/Admin";
 import Arsip from "@/pages/Admin/Arsip";
 import Pelatih from "@/pages/Admin/Pelatih";
@@ -9,19 +12,17 @@ import Registration from "@/pages/Auth/Registration";
 import Home from "@/pages/Home";
 import Komunitas from "@/pages/Komunitas";
 import NotFound from "@/pages/NotFound";
+import Profile from "@/pages/Profile";
 import RiwayatKursus from "@/pages/RiwayatKursus";
 import TemukanPelatih from "@/pages/TemukanPelatih";
 import DetailPelatih from "@/pages/TemukanPelatih/DetailPelatih";
 import IkutiKursus from "@/pages/TemukanPelatih/DetailPelatih/IkutKursus";
 import Penilaian from "@/pages/TemukanPelatih/DetailPelatih/Penilaian";
+import store from "@/store";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AnimatePresence, LazyMotion, domAnimation } from "framer-motion";
 import { Provider } from "react-redux";
 import { Route, Routes, useLocation } from "react-router-dom";
-import ProtectedRoute from "./components/ProtectedRoute";
-import { Toaster } from "./components/ui/toaster";
-import { useScrollToTop } from "./hooks";
-import store from "./store";
 
 export default function App() {
   const location = useLocation();
@@ -31,8 +32,8 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <LazyMotion features={domAnimation}>
+      <LazyMotion features={domAnimation}>
+        <QueryClientProvider client={queryClient}>
           <AnimatePresence mode="wait">
             <Toaster />
             <Routes location={location} key={location.pathname}>
@@ -64,7 +65,7 @@ export default function App() {
               <Route path="/komunitas" element={<Komunitas />} />
               <Route path="/arsip-kesenian" element={<ArsipKesenian />} />
               <Route
-                path="/arsip-kesenian/:detail"
+                path="/arsip-kesenian/:id"
                 element={<DetailArsipKesenian />}
               />
               <Route path="/temukan-pelatih" element={<TemukanPelatih />} />
@@ -85,6 +86,14 @@ export default function App() {
                 element={
                   <ProtectedRoute.User>
                     <Penilaian />
+                  </ProtectedRoute.User>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute.User>
+                    <Profile />
                   </ProtectedRoute.User>
                 }
               />
@@ -123,8 +132,8 @@ export default function App() {
               <Route path="*" element={<NotFound />} />
             </Routes>
           </AnimatePresence>
-        </LazyMotion>
-      </QueryClientProvider>
+        </QueryClientProvider>
+      </LazyMotion>
     </Provider>
   );
 }

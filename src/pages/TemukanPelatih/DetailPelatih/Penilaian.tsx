@@ -1,17 +1,28 @@
+import IsError from "@/components/IsError";
+import IsPending from "@/components/IsPending";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import Image from "@/components/ui/image";
 import { Textarea } from "@/components/ui/textarea";
 import { Heading, Paragraph } from "@/components/ui/typography";
+import { useToast } from "@/components/ui/use-toast";
 import { useTitle } from "@/hooks";
 import { toRupiah } from "@/lib/helpers";
+import {
+  CONDITION,
+  DEVELOPMENT_API_URL,
+  PRODUCTION_API_URL,
+} from "@/lib/utils/constants";
 import { penilaianSchema } from "@/lib/utils/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery } from "@tanstack/react-query";
+import { ofetch } from "ofetch";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 export default function Penilaian() {
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   useTitle(`Penilaian pelatih | Taritme`);
 
@@ -22,6 +33,38 @@ export default function Penilaian() {
     defaultValues: { ulasan: "" },
     resolver: zodResolver(penilaianSchema),
   });
+
+  async function getPenilaian() {
+    try {
+      const response = await ofetch(
+        `${
+          CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
+        }/api/user-payment-pelatih-tari `,
+        {
+          method: "GET",
+          parseResponse: JSON.parse,
+          responseType: "json",
+        }
+      );
+
+      if (response.statusCode !== 200) {
+        toast({ title: "Error!" });
+      }
+    } catch (err: any) {
+      toast({ title: "Error!" });
+      throw new Error(err.message);
+    }
+  }
+
+  const { isPending, isError } = useQuery({
+    queryKey: ["penilaian"],
+    queryFn: () => getPenilaian(),
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+  });
+
+  if (isPending) return <IsPending />;
+  if (isError) return <IsError />;
 
   function onSubmit() {}
 

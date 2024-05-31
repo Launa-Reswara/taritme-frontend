@@ -1,11 +1,9 @@
 import { cn } from "@/lib/utils/cn";
-import Navbar from "./Navbar";
 import { Heading } from "./ui/typography";
 
 export default function IsError() {
   return (
     <>
-      <Navbar />
       <main
         className={cn(
           "flex justify-center min-h-svh mt-10 items-center w-full"
@@ -13,7 +11,7 @@ export default function IsError() {
       >
         <section
           className={cn(
-            "w-full flex justify-center items-start px-4 pb-6 flex-col max-w-[1440px]"
+            "w-full flex justify-center items-center px-4 pb-6 flex-col max-w-[1440px]"
           )}
         >
           <Heading as="h2" className="font-semibold">

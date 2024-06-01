@@ -79,7 +79,7 @@ export default function IkutiKursus() {
         ? pelatihTari.price * lamaSewa - 50000 * (lamaSewa / 5)
         : pelatihTari.price * lamaSewa;
 
-    async function submitDataTransaction() {
+    async function submitDataTransaction(): Promise<void> {
       try {
         const response = await ofetch(
           `${
@@ -97,6 +97,7 @@ export default function IkutiKursus() {
               Authorization: `Bearer ${Cookies.get("token")}`,
             },
             body: {
+              pelatih_tari_name: slugify(pelatihName, { lower: true }),
               customer_details: {
                 name: getValues("nama"),
                 email: getValues("email"),
@@ -120,7 +121,7 @@ export default function IkutiKursus() {
                     CONDITION === "development"
                       ? DEVELOPMENT_API_URL
                       : PRODUCTION_API_URL
-                  }/temukan-pelatih/${pelatihName}/ikuti-kursus`,
+                  }/temukan-pelatih/${pelatihName}/ikuti-kursus/penilaian`,
                 },
               ],
             },
@@ -133,7 +134,7 @@ export default function IkutiKursus() {
           toast({ title: "Error!", description: response.message });
         }
       } catch (err: any) {
-        throw new Error(err.message);
+        toast({ title: "Error!", description: err.message });
       }
     }
 

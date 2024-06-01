@@ -19,7 +19,7 @@ import { ofetch } from "ofetch";
 export default function Admin() {
   const { toast } = useToast();
 
-  async function getStatistics() {
+  /*async function getStatistics() {
     try {
       const response = await ofetch(
         `${
@@ -50,7 +50,7 @@ export default function Admin() {
   if (isError) return <IsError />;
 
   console.log(data);
-
+*/
   return (
     <>
       <SidebarAdmin />

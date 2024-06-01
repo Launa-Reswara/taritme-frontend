@@ -109,3 +109,8 @@ export type TokenSliceProps = {
 };
 
 export type RiwayatKursusProps = PelatihProps;
+
+export type BaseResponseApiProps = {
+  statusCode: number;
+  message: string;
+};

@@ -9,6 +9,7 @@ import {
   PRODUCTION_API_URL,
 } from "@/lib/utils/constants";
 import { loginSchema } from "@/lib/utils/schemas";
+import { BaseResponseApiProps } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { m } from "framer-motion";
 import Cookies from "js-cookie";
@@ -38,9 +39,9 @@ export default function Login() {
 
   // Auth logic
   function onSubmit() {
-    async function login() {
+    async function login(): Promise<void> {
       try {
-        const response = await ofetch(
+        const response: BaseResponseApiProps & { token: string } = await ofetch(
           `${
             CONDITION === "development"
               ? DEVELOPMENT_API_URL
@@ -72,8 +73,8 @@ export default function Login() {
         } else {
           setIsWrongLoginData(true);
         }
-      } catch (err) {
-        throw new Error("Failed to fetch data!");
+      } catch (err: any) {
+        toast({ title: "Error!", description: err.message });
       }
     }
 

@@ -13,16 +13,29 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Heading, Paragraph } from "@/components/ui/typography";
+import { useToast } from "@/components/ui/use-toast";
 import { getPelatihTari } from "@/features";
 import { useTitle } from "@/hooks";
+import {
+  CONDITION,
+  DEVELOPMENT_API_URL,
+  PRODUCTION_API_URL,
+} from "@/lib/utils/constants";
 import {
   setIsEditPelatih,
   setIsTambahPelatih,
 } from "@/store/slices/pelatih.slice";
-import { DataPelatihProps, PelatihProps, PelatihSliceProps } from "@/types";
+import {
+  BaseResponseApiProps,
+  DataPelatihProps,
+  PelatihProps,
+  PelatihSliceProps,
+} from "@/types";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { m } from "framer-motion";
+import Cookies from "js-cookie";
 import { Pencil, Trash, X } from "lucide-react";
+import { ofetch } from "ofetch";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -33,6 +46,8 @@ export default function Pelatih() {
   const { isEditPelatih, isTambahPelatih } = useSelector(
     (state: PelatihSliceProps) => state.pelatih
   );
+
+  const { toast } = useToast();
 
   useTitle("Pelatih | Taritme");
 
@@ -45,6 +60,38 @@ export default function Pelatih() {
   });
 
   const pelatih = data as unknown as JoinPelatihProps[];
+
+  function handleDelete(email: string, name: string) {
+    async function deletePelatihTari(): Promise<void> {
+      try {
+        const response: BaseResponseApiProps = await ofetch(
+          `${
+            CONDITION === "development"
+              ? DEVELOPMENT_API_URL
+              : PRODUCTION_API_URL
+          }/api/pelatih-tari`,
+          {
+            method: "DELETE",
+            body: {
+              email: email,
+              name: name,
+            },
+            headers: {
+              Authorization: `Bearer ${Cookies.get("token-admin")}`,
+            },
+          }
+        );
+
+        if (response.statusCode === 200 || response.statusCode === 202) {
+          toast({ title: "Success", description: response.message });
+        }
+      } catch (err: any) {
+        toast({ title: "Error!", description: err.message });
+      }
+    }
+
+    deletePelatihTari();
+  }
 
   return (
     <>
@@ -124,7 +171,10 @@ export default function Pelatih() {
                         >
                           <Pencil />
                         </Button>
-                        <Button variant="outline">
+                        <Button
+                          variant="outline"
+                          onClick={() => handleDelete(item.email, item.name)}
+                        >
                           <Trash />
                         </Button>
                       </TableCell>

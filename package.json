@@ -47,7 +47,6 @@
     "react-router-dom": "^6.23.0",
     "reading-time": "^1.5.0",
     "recharts": "^2.12.7",
-    "slate-react": "^0.104.0",
     "slugify": "^1.6.6",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",

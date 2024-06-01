@@ -25,9 +25,10 @@ export default function DetailArsipKesenian() {
       const response = await client
         .getEntry(id as string)
         .then((entries) => entries);
+
       return response;
     } catch (err) {
-      throw new Error("Failed to get blog!");
+      throw new Error("Failed to get arsip kesenian!");
     }
   }
 

@@ -9,6 +9,7 @@ import {
   PRODUCTION_API_URL,
 } from "@/lib/utils/constants";
 import { registrationSchema } from "@/lib/utils/schemas";
+import { BaseResponseApiProps } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { m } from "framer-motion";
 import { ofetch } from "ofetch";
@@ -42,7 +43,7 @@ export default function Registration() {
   function onSubmit() {
     async function registAccount() {
       try {
-        const response = await ofetch(
+        const response: BaseResponseApiProps = await ofetch(
           `${
             CONDITION === "development"
               ? DEVELOPMENT_API_URL
@@ -74,8 +75,8 @@ export default function Registration() {
           setErrMessage(response.message);
           setIsRegisteredAccount(true);
         }
-      } catch (err) {
-        throw new Error("Failed to POST data!");
+      } catch (err: any) {
+        toast({ title: "Error!", description: err.message });
       }
     }
 

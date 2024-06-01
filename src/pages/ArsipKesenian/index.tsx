@@ -4,6 +4,7 @@ import Layout from "@/components/Layout";
 import Newsletter from "@/components/Newsletter";
 import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
+import { useToast } from "@/components/ui/use-toast";
 import { useTitle } from "@/hooks";
 import { cn } from "@/lib/utils/cn";
 import { client } from "@/lib/utils/contentfulClient";
@@ -11,18 +12,18 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { MessageCircle, Share, ThumbsUp } from "lucide-react";
 import { Link } from "react-router-dom";
-import slugify from "slugify";
 
 export default function ArsipKesenian() {
   useTitle("Arsip Kesenian | Taritme");
 
+  const { toast } = useToast();
+
   async function getArsipKesenian() {
     try {
       const response = await client.getEntries().then((entries) => entries);
-
       return response;
     } catch (err) {
-      throw new Error("Failed to get data!");
+      toast({ title: "Error!", description: "Failed to get arsip kesenian!" });
     }
   }
 

@@ -34,7 +34,7 @@ export default function Penilaian() {
     resolver: zodResolver(penilaianSchema),
   });
 
-  async function getPenilaian() {
+  /*async function getPenilaian() {
     try {
       const response = await ofetch(
         `${
@@ -54,9 +54,9 @@ export default function Penilaian() {
       toast({ title: "Error!" });
       throw new Error(err.message);
     }
-  }
+  }*/
 
-  const { isPending, isError } = useQuery({
+  /*const { isPending, isError } = useQuery({
     queryKey: ["penilaian"],
     queryFn: () => getPenilaian(),
     refetchOnWindowFocus: false,
@@ -65,6 +65,7 @@ export default function Penilaian() {
 
   if (isPending) return <IsPending />;
   if (isError) return <IsError />;
+*/
 
   function onSubmit() {}
 

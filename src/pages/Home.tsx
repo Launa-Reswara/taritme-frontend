@@ -185,7 +185,7 @@ export default function Home() {
                                   draggable={false}
                                 />
                                 <Paragraph className="text-xs">
-                                  {item.reading_time}
+                                  10 Min
                                 </Paragraph>
                               </div>
                               <Paragraph className="font-medium mt-1">

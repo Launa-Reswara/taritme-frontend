@@ -14,7 +14,7 @@ export default function IsError() {
             "w-full flex justify-center items-center px-4 pb-6 flex-col max-w-[1440px]"
           )}
         >
-          <Heading as="h2" className="font-semibold">
+          <Heading as="h2" className="font-semibold text-center">
             Error! There is something wrong
           </Heading>
         </section>

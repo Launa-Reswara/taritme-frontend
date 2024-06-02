@@ -38,17 +38,10 @@ export type PelatihProps = {
   name: string;
   description: string;
   image: string;
-  rating: number;
-  total_review: number;
   price: number;
-};
-
-export type DataPelatihProps = {
-  id: string;
-  pelatih_tari_id: number;
-  no_hp: number;
-  email: string;
+  no_hp: string;
   status: "Aktif" | "Tidak Aktif";
+  email: string;
 };
 
 export type DetailPelatihProps = {
@@ -74,8 +67,12 @@ export type PelatihSliceProps = {
   pelatih: {
     isTambahPelatih: boolean;
     setIsTambahPelatih: (isTambahPelatih: boolean) => void;
+    id: number;
+    setId: (id: number) => void;
     isEditPelatih: boolean;
     setIsEditPelatih: (isEditPelatih: boolean) => void;
+    initialData: PelatihProps;
+    setInitialData: (initialData: PelatihProps) => void;
   };
 };
 

@@ -1,3 +1,4 @@
+// TODO: pecah-pecah jadi bagian kecil
 import IsError from "@/components/IsError";
 import IsPending from "@/components/IsPending";
 import SidebarAdmin from "@/components/SidebarAdmin";
@@ -29,7 +30,12 @@ import {
   setIsTambahPelatih,
 } from "@/store/slices/pelatih.slice";
 import { BaseResponseApiProps, PelatihProps, PelatihSliceProps } from "@/types";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import axios from "axios";
 import { m } from "framer-motion";
 import Cookies from "js-cookie";
@@ -37,15 +43,15 @@ import { Pencil, Trash, X } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 
 export default function Pelatih() {
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
+
+  const { toast } = useToast();
   const { id, isEditPelatih, isTambahPelatih } = useSelector(
     (state: PelatihSliceProps) => state.pelatih
   );
-
-  const { toast } = useToast();
 
   useTitle("Pelatih | Taritme");
 
@@ -57,40 +63,39 @@ export default function Pelatih() {
     refetchOnReconnect: false,
   });
 
+  async function deletePelatihTari(): Promise<void> {
+    try {
+      const response: { data: BaseResponseApiProps } = await axios.delete(
+        `${
+          CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
+        }/api/pelatih-tari/delete/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token-admin")}`,
+          },
+        }
+      );
+
+      if (
+        response.data.statusCode === 200 ||
+        response.data.statusCode === 202
+      ) {
+        toast({ title: "Success", description: response.data.message });
+      }
+    } catch (err: any) {
+      toast({ title: "Error!", description: err.message });
+    }
+  }
+
   const pelatih = data as unknown as PelatihProps[];
 
+  const deleteMutation = useMutation({
+    mutationFn: deletePelatihTari,
+    onSuccess: () => queryClient.invalidateQueries(),
+  });
+
   function handleDelete() {
-    async function deletePelatihTari(): Promise<void> {
-      try {
-        const response: { data: BaseResponseApiProps } = await axios.delete(
-          `${
-            CONDITION === "development"
-              ? DEVELOPMENT_API_URL
-              : PRODUCTION_API_URL
-          }/api/pelatih-tari/delete/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${Cookies.get("token-admin")}`,
-            },
-          }
-        );
-
-        if (
-          response.data.statusCode === 200 ||
-          response.data.statusCode === 202
-        ) {
-          toast({ title: "Success", description: response.data.message });
-
-          setTimeout(() => {
-            window.location.reload();
-          }, 2000);
-        }
-      } catch (err: any) {
-        toast({ title: "Error!", description: err.message });
-      }
-    }
-
-    deletePelatihTari();
+    deleteMutation.mutate();
   }
 
   return (
@@ -201,6 +206,7 @@ export default function Pelatih() {
 function FormEditpelatih() {
   const [photo, setPhoto] = useState<any>(null);
 
+  const queryClient = useQueryClient();
   const dispatch = useDispatch();
 
   const { toast } = useToast();
@@ -226,7 +232,7 @@ function FormEditpelatih() {
     },
   });
 
-  async function uploadImage() {
+  async function uploadImage(): Promise<string | undefined> {
     try {
       const formData = new FormData();
       formData.append("my_file", photo[0]);
@@ -245,52 +251,55 @@ function FormEditpelatih() {
 
       return response.data.data;
     } catch (err: any) {
-      throw new Error(err.message);
+      toast({ title: "Error!", description: err.message });
     }
   }
 
-  function onSubmit() {
-    async function editPelatihTari() {
-      try {
-        const cloudinaryImage = await uploadImage();
+  async function editPelatihTari(): Promise<void> {
+    try {
+      const cloudinaryImage = await uploadImage();
 
-        const response: { data: BaseResponseApiProps } = await axios.patch(
-          `${
-            CONDITION === "development"
-              ? DEVELOPMENT_API_URL
-              : PRODUCTION_API_URL
-          }/api/pelatih-tari/edit/${id}`,
-          {
-            email: getValues("email"),
-            name: getValues("nama"),
-            image: cloudinaryImage,
-            price: getValues("tarif_per_jam"),
-            no_hp: getValues("no_hp"),
-            status: getValues("status"),
-            description: getValues("deskripsi"),
+      const response: { data: BaseResponseApiProps } = await axios.patch(
+        `${
+          CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
+        }/api/pelatih-tari/edit/${id}`,
+        {
+          email: getValues("email"),
+          name: getValues("nama"),
+          image: cloudinaryImage,
+          price: getValues("tarif_per_jam"),
+          no_hp: getValues("no_hp"),
+          status: getValues("status"),
+          description: getValues("deskripsi"),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token-admin")}`,
           },
-          {
-            headers: {
-              Authorization: `Bearer ${Cookies.get("token-admin")}`,
-            },
-          }
-        );
-
-        if (
-          response.data.statusCode === 200 ||
-          response.data.statusCode === 204
-        ) {
-          toast({ title: "Success!", description: response.data.message });
-          // dispatch(setIsEditPelatih(false));
-        } else {
-          toast({ title: "Failed!", description: response.data.message });
         }
-      } catch (err: any) {
-        toast({ title: "Error!", description: err.message });
-      }
-    }
+      );
 
-    editPelatihTari();
+      if (
+        response.data.statusCode === 200 ||
+        response.data.statusCode === 204
+      ) {
+        toast({ title: "Success!", description: response.data.message });
+        dispatch(setIsEditPelatih(false));
+      } else {
+        toast({ title: "Failed!", description: response.data.message });
+      }
+    } catch (err: any) {
+      toast({ title: "Error!", description: err.message });
+    }
+  }
+
+  const editPelatihTariMutation = useMutation({
+    mutationFn: editPelatihTari,
+    onSuccess: () => queryClient.invalidateQueries(),
+  });
+
+  function onSubmit() {
+    editPelatihTariMutation.mutate();
   }
 
   return (
@@ -462,6 +471,7 @@ function FormEditpelatih() {
 function FormTambahPelatih() {
   const [photo, setPhoto] = useState<any>(null);
 
+  const queryClient = useQueryClient();
   const dispatch = useDispatch();
 
   const { toast } = useToast();
@@ -476,10 +486,13 @@ function FormTambahPelatih() {
       nama: "",
       no_hp: "",
       email: "",
+      status: "Aktif",
+      deskripsi: "",
+      tarif_per_jam: "",
     },
   });
 
-  async function uploadImage() {
+  async function uploadImage(): Promise<string | undefined> {
     try {
       const formData = new FormData();
       formData.append("my_file", photo[0]);
@@ -498,49 +511,55 @@ function FormTambahPelatih() {
 
       return response.data.data;
     } catch (err: any) {
-      throw new Error(err.message);
+      toast({ title: "Error!", description: err.message });
     }
   }
 
-  function onSubmit() {
-    async function editPelatihTari() {
-      try {
-        const cloudinaryImage = await uploadImage();
+  async function addPelatihTari(): Promise<void> {
+    try {
+      const cloudinaryImage = await uploadImage();
 
-        const response: { data: BaseResponseApiProps } = await axios.post(
-          `${
-            CONDITION === "development"
-              ? DEVELOPMENT_API_URL
-              : PRODUCTION_API_URL
-          }/api/pelatih-tari/add`,
-          {
-            name: getValues("nama"),
-            email: getValues("email"),
-            no_hp: getValues("no_hp"),
-            image: cloudinaryImage,
+      const response: { data: BaseResponseApiProps } = await axios.post(
+        `${
+          CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
+        }/api/pelatih-tari/add`,
+        {
+          name: getValues("nama"),
+          email: getValues("email"),
+          no_hp: getValues("no_hp"),
+          description: getValues("deskripsi"),
+          status: getValues("status"),
+          price: getValues("tarif_per_jam"),
+          image: cloudinaryImage,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token-admin")}`,
           },
-          {
-            headers: {
-              Authorization: `Bearer ${Cookies.get("token-admin")}`,
-            },
-          }
-        );
-
-        if (
-          response.data.statusCode === 200 ||
-          response.data.statusCode === 204
-        ) {
-          toast({ title: "Success!", description: response.data.message });
-          // dispatch(setIsEditPelatih(false));
-        } else {
-          toast({ title: "Failed!", description: response.data.message });
         }
-      } catch (err: any) {
-        toast({ title: "Error!", description: err.message });
-      }
-    }
+      );
 
-    editPelatihTari();
+      if (
+        response.data.statusCode === 200 ||
+        response.data.statusCode === 204
+      ) {
+        toast({ title: "Success!", description: response.data.message });
+        dispatch(setIsTambahPelatih(false));
+      } else {
+        toast({ title: "Failed!", description: response.data.message });
+      }
+    } catch (err: any) {
+      toast({ title: "Error!", description: err.message });
+    }
+  }
+
+  const addPelatihTariMutation = useMutation({
+    mutationFn: addPelatihTari,
+    onSuccess: () => queryClient.invalidateQueries(),
+  });
+
+  function onSubmit() {
+    addPelatihTariMutation.mutate();
   }
 
   return (
@@ -574,12 +593,14 @@ function FormTambahPelatih() {
                     placeholder="Unggah foto"
                     type="file"
                     name="foto"
+                    multiple={false}
                     required
-                    className="mt-2 border-spanish-gray w-full max-w-fit rounded-full p-2"
+                    onChange={(e) => setPhoto(e.target.files)}
+                    className="mt-2 border-spanish-gray w-full sm:max-w-[250px] rounded-full p-2"
                   />
                 </div>
 
-                <div className="w-full ">
+                <div className="w-full">
                   <label
                     htmlFor="nama"
                     className="block font-normal text-primary-black"
@@ -587,29 +608,15 @@ function FormTambahPelatih() {
                     Nama
                   </label>
                   <Input
-                    type="text"
                     {...register("nama", { required: true })}
+                    type="text"
                     placeholder="Nama anda"
                     name="nama"
                     className="mt-2 border-spanish-gray w-full rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
                   />
-                </div>
-
-                <div className="w-full ">
-                  <label
-                    htmlFor="hp"
-                    className="block font-normal text-primary-black"
-                  >
-                    No Hp
-                  </label>
-                  <Input
-                    type="tel"
-                    {...register("no_hp", { required: true })}
-                    placeholder="No HP anda"
-                    name="hp"
-                    className="mt-2 border-spanish-gray w-full rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
-                    required
-                  />
+                  <Paragraph className="text-xs font-medium mt-2">
+                    {errors.nama?.message}
+                  </Paragraph>
                 </div>
 
                 <div className="w-full ">
@@ -620,22 +627,99 @@ function FormTambahPelatih() {
                     Email
                   </label>
                   <Input
-                    type="email"
+                    type="text"
                     {...register("email", { required: true })}
                     placeholder="Email anda"
                     name="email"
                     className="mt-2 border-spanish-gray w-full rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
-                    required
                   />
+                  <Paragraph className="text-xs font-medium mt-2">
+                    {errors.email?.message}
+                  </Paragraph>
+                </div>
+
+                <div className="w-full ">
+                  <label
+                    htmlFor="no_hp"
+                    className="block font-normal text-primary-black"
+                  >
+                    No Hp
+                  </label>
+                  <Input
+                    type="tel"
+                    {...register("no_hp", { required: true })}
+                    placeholder="No HP anda"
+                    name="no_hp"
+                    className="mt-2 border-spanish-gray w-full rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
+                  />
+                  <Paragraph className="text-xs font-medium mt-2">
+                    {errors.no_hp?.message}
+                  </Paragraph>
+                </div>
+
+                <div className="w-full ">
+                  <label
+                    htmlFor="status"
+                    className="block font-normal text-primary-black"
+                  >
+                    Status
+                  </label>
+                  <Input
+                    type="text"
+                    {...register("status", { required: true })}
+                    placeholder="Status anda"
+                    name="status"
+                    className="mt-2 border-spanish-gray w-full rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
+                  />
+                  <Paragraph className="text-xs font-medium mt-2">
+                    {errors.status?.message}
+                  </Paragraph>
+                </div>
+                <div className="w-full ">
+                  <label
+                    htmlFor="tarif_per_jam"
+                    className="block font-normal text-primary-black"
+                  >
+                    Tarif per jam
+                  </label>
+                  <Input
+                    type="number"
+                    {...register("tarif_per_jam", { required: true })}
+                    placeholder="Tarif anda"
+                    name="tarif_per_jam"
+                    className="mt-2 border-spanish-gray w-full rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
+                  />
+                  <Paragraph className="text-xs font-medium mt-2">
+                    {errors.tarif_per_jam?.message}
+                  </Paragraph>
+                </div>
+
+                <div className="w-full ">
+                  <label
+                    htmlFor="deskripsi"
+                    className="block font-normal text-primary-black"
+                  >
+                    Deskripsi
+                  </label>
+                  <Textarea
+                    {...register("deskripsi", { required: true })}
+                    placeholder="Deskripsi anda"
+                    name="deskripsi"
+                    className="mt-2 h-full min-h-[125px] border-spanish-gray w-full rounded-md p-4 placeholder-pink-500 placeholder-opacity-75"
+                  />
+                  <Paragraph className="text-xs font-medium mt-2">
+                    {errors.deskripsi?.message}
+                  </Paragraph>
                 </div>
               </div>
             </div>
-            <div className="flex mt-5 flex-col justify-center items-center w-full">
-              <Link to={"/temukan-pelatih/:detail/ikuti-kursus"}>
-                <Button className="text-black bg-secondary-color hover:bg-secondary-color/90 rounded-3xl w-72 px-4 py-6">
-                  <Paragraph>Tambahkan</Paragraph>
-                </Button>
-              </Link>
+            <div className="flex flex-col justify-center mt-5 items-center w-full">
+              <Button
+                type="submit"
+                className="text-black bg-secondary-color hover:bg-secondary-color/90 rounded-3xl w-72 px-4 py-6"
+              >
+                <Paragraph>Tambah</Paragraph>
+              </Button>
             </div>
           </div>
         </form>

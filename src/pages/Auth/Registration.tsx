@@ -11,8 +11,8 @@ import {
 import { registrationSchema } from "@/lib/utils/schemas";
 import { BaseResponseApiProps } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import { m } from "framer-motion";
-import { ofetch } from "ofetch";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -43,36 +43,34 @@ export default function Registration() {
   function onSubmit() {
     async function registAccount() {
       try {
-        const response: BaseResponseApiProps = await ofetch(
+        const response: { data: BaseResponseApiProps } = await axios.post(
           `${
             CONDITION === "development"
               ? DEVELOPMENT_API_URL
               : PRODUCTION_API_URL
           }/api/auth/registration`,
           {
-            method: "POST",
-            parseResponse: JSON.parse,
-            responseType: "json",
-            body: {
-              name: getValues("name"),
-              email: getValues("email"),
-              password: getValues("password"),
-            },
+            name: getValues("name"),
+            email: getValues("email"),
+            password: getValues("password"),
           }
         );
-        if (response.statusCode === 200 || response.statusCode === 201) {
+        if (
+          response.data.statusCode === 200 ||
+          response.data.statusCode === 201
+        ) {
           setIsRegister(true);
 
           toast({
             title: "Registrasi akun berhasil!",
-            description: "Kamu berhasil registrasi akun!",
+            description: response.data.message,
           });
 
           setTimeout(() => {
             window.location.replace("/auth/login");
           }, 2000);
         } else {
-          setErrMessage(response.message);
+          setErrMessage(response.data.message);
           setIsRegisteredAccount(true);
         }
       } catch (err: any) {

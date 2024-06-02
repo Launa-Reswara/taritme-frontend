@@ -12,6 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Textarea } from "@/components/ui/textarea";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { useToast } from "@/components/ui/use-toast";
 import { getPelatihTari } from "@/features";
@@ -32,10 +33,12 @@ import {
   PelatihSliceProps,
 } from "@/types";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import { m } from "framer-motion";
 import Cookies from "js-cookie";
 import { Pencil, Trash, X } from "lucide-react";
-import { ofetch } from "ofetch";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -64,26 +67,28 @@ export default function Pelatih() {
   function handleDelete(email: string, name: string) {
     async function deletePelatihTari(): Promise<void> {
       try {
-        const response: BaseResponseApiProps = await ofetch(
+        const response: { data: BaseResponseApiProps } = await axios.delete(
           `${
             CONDITION === "development"
               ? DEVELOPMENT_API_URL
               : PRODUCTION_API_URL
-          }/api/pelatih-tari`,
+          }/api/pelatih-tari/delete`,
           {
-            method: "DELETE",
-            body: {
-              email: email,
-              name: name,
-            },
             headers: {
               Authorization: `Bearer ${Cookies.get("token-admin")}`,
             },
           }
         );
 
-        if (response.statusCode === 200 || response.statusCode === 202) {
-          toast({ title: "Success", description: response.message });
+        if (
+          response.data.statusCode === 200 ||
+          response.data.statusCode === 202
+        ) {
+          toast({ title: "Success", description: response.data.message });
+
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
         }
       } catch (err: any) {
         toast({ title: "Error!", description: err.message });
@@ -195,10 +200,87 @@ export default function Pelatih() {
 function FormEditpelatih() {
   const dispatch = useDispatch();
 
+  const {
+    getValues,
+    formState: { errors },
+    handleSubmit,
+    register,
+  } = useForm({
+    defaultValues: {
+      nama: "",
+      email: "",
+      no_hp: 0,
+      deskripsi: "",
+      tarif_per_jam: 0,
+      status: "Aktif",
+    },
+  });
+
+  const [photo, setPhoto] = useState<any>(null);
+
+  async function uploadImage() {
+    try {
+      const formData = new FormData();
+      formData.append("my_file", photo[0]);
+
+      const response: { data: { data: string } } = await axios.post(
+        `${
+          CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
+        }/api/pelatih-tari/upload-image`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token-admin")}`,
+          },
+        }
+      );
+
+      return response.data.data;
+    } catch (err: any) {
+      throw new Error(err.message);
+    }
+  }
+
+  function onSubmit() {
+    async function editPelatihTari() {
+      try {
+        const cloudinaryImage = await uploadImage();
+
+        const response: { data: BaseResponseApiProps } = await axios.patch(
+          `${
+            CONDITION === "development"
+              ? DEVELOPMENT_API_URL
+              : PRODUCTION_API_URL
+          }/api/pelatih-tari/edit`,
+          {
+            email: getValues("email"),
+            name: getValues("nama"),
+            image: cloudinaryImage,
+            price: getValues("tarif_per_jam"),
+            no_hp: getValues("no_hp"),
+            status: getValues("status"),
+            description: getValues("deskripsi"),
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${Cookies.get("token-admin")}`,
+            },
+          }
+        );
+
+        console.log(response.data);
+      } catch (err: any) {
+        throw new Error(err.message);
+      }
+    }
+
+    editPelatihTari();
+  }
+
   return (
     <div className="flex justify-center items-center p-4 fixed inset-0 z-50 backdrop-blur-lg min-h-svh">
-      <div className="w-full sm:w-[800px] sm:h-[800px] max-w-[600px] overflow-hidden rounded-lg bg-white drop-shadow-lg p-6 sm:p-8">
-        <form className="mt-5 w-full">
+      <div className="w-full sm:w-[800px] max-w-[600px] overflow-hidden rounded-lg bg-white drop-shadow-lg p-6 sm:p-8">
+        <form className="mt-5 w-full" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex justify-between items-center">
             <Heading as="h1" className="text-primary-color sm:mx-12">
               Edit Pelatih
@@ -212,7 +294,7 @@ function FormEditpelatih() {
               <X />
             </Button>
           </div>
-          <div className="mt-12 flex justify-center items-center flex-col">
+          <div className="flex justify-center items-center flex-col">
             <div className="flex justify-start items-center space-y-6 flex-col w-full">
               <div className="w-full space-y-5 mt-5">
                 <div className="w-full sm:mx-12">
@@ -226,6 +308,8 @@ function FormEditpelatih() {
                     placeholder="Unggah foto"
                     type="file"
                     name="foto"
+                    multiple={false}
+                    onChange={(e) => setPhoto(e.target.files)}
                     className="mt-2 border-spanish-gray w-full sm:max-w-[250px] rounded-full p-2"
                   />
                 </div>
@@ -238,28 +322,15 @@ function FormEditpelatih() {
                     Nama
                   </label>
                   <Input
+                    {...register("nama", { required: true })}
                     type="text"
                     placeholder="Nama anda"
                     name="nama"
                     className="mt-2 border-spanish-gray w-full sm:w-[420px] rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
-                    required
                   />
-                </div>
-
-                <div className="w-full sm:mx-12">
-                  <label
-                    htmlFor="hp"
-                    className="block font-normal text-primary-black"
-                  >
-                    No Hp
-                  </label>
-                  <Input
-                    type="tel"
-                    placeholder="No HP anda"
-                    name="hp"
-                    className="mt-2 border-spanish-gray w-full sm:w-[420px] rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
-                    required
-                  />
+                  <Paragraph className="text-xs font-medium mt-2">
+                    {errors.nama?.message}
+                  </Paragraph>
                 </div>
 
                 <div className="w-full sm:mx-12">
@@ -270,14 +341,53 @@ function FormEditpelatih() {
                     Email
                   </label>
                   <Input
-                    type="email"
+                    type="text"
+                    {...register("email", { required: true })}
                     placeholder="Email anda"
                     name="email"
                     className="mt-2 border-spanish-gray w-full sm:w-[420px] rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
-                    required
                   />
+                  <Paragraph className="text-xs font-medium mt-2">
+                    {errors.email?.message}
+                  </Paragraph>
                 </div>
 
+                <div className="w-full sm:mx-12">
+                  <label
+                    htmlFor="no_hp"
+                    className="block font-normal text-primary-black"
+                  >
+                    No Hp
+                  </label>
+                  <Input
+                    type="tel"
+                    {...register("no_hp", { required: true })}
+                    placeholder="No HP anda"
+                    name="no_hp"
+                    className="mt-2 border-spanish-gray w-full sm:w-[420px] rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
+                  />
+                  <Paragraph className="text-xs font-medium mt-2">
+                    {errors.no_hp.message}
+                  </Paragraph>
+                </div>
+
+                <div className="w-full sm:mx-12">
+                  <label
+                    htmlFor="deskripsi"
+                    className="block font-normal text-primary-black"
+                  >
+                    Deskripsi
+                  </label>
+                  <Textarea
+                    {...register("deskripsi", { required: true })}
+                    placeholder="Deskripsi anda"
+                    name="deskripsi"
+                    className="mt-2 border-spanish-gray w-full sm:w-[420px] rounded-md p-4 placeholder-pink-500 placeholder-opacity-75"
+                  />
+                  <Paragraph className="text-xs font-medium mt-2">
+                    {errors.deskripsi?.message}
+                  </Paragraph>
+                </div>
                 <div className="w-full sm:mx-12">
                   <label
                     htmlFor="status"
@@ -285,25 +395,44 @@ function FormEditpelatih() {
                   >
                     Status
                   </label>
-                  <select
-                    className="mt-1 w-full border sm:w-[420px] border-spanish-gray rounded-full p-2 focus:ring-indigo-500 focus:border-indigo-500"
-                    defaultValue=""
+                  <Input
+                    type="text"
+                    {...register("status", { required: true })}
+                    placeholder="Status anda"
+                    name="status"
+                    className="mt-2 border-spanish-gray w-full sm:w-[420px] rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
+                  />
+                  <Paragraph className="text-xs font-medium mt-2">
+                    {errors.status?.message}
+                  </Paragraph>
+                </div>
+                <div className="w-full sm:mx-12">
+                  <label
+                    htmlFor="tarif_per_jam"
+                    className="block font-normal text-primary-black"
                   >
-                    <option value="" disabled hidden>
-                      Pilih Status
-                    </option>
-                    <option value="pekerja-lepas">Pekerja Lepas</option>
-                    <option value="...">......</option>
-                  </select>
+                    Tarif per jam
+                  </label>
+                  <Input
+                    type="number"
+                    {...register("tarif_per_jam", { required: true })}
+                    placeholder="Tarif anda"
+                    name="tarif_per_jam"
+                    className="mt-2 border-spanish-gray w-full sm:w-[420px] rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
+                  />
+                  <Paragraph className="text-xs font-medium mt-2">
+                    {errors.tarif_per_jam?.message}
+                  </Paragraph>
                 </div>
               </div>
             </div>
             <div className="flex mt-20 my-10 flex-col justify-center items-center w-full">
-              <Link to={"/temukan-pelatih/:detail/ikuti-kursus"}>
-                <Button className="text-black bg-secondary-color hover:bg-secondary-color/90 rounded-3xl w-72 px-4 py-6">
-                  <Paragraph>Edit</Paragraph>
-                </Button>
-              </Link>
+              <Button
+                type="submit"
+                className="text-black bg-secondary-color hover:bg-secondary-color/90 rounded-3xl w-72 px-4 py-6"
+              >
+                <Paragraph>Edit</Paragraph>
+              </Button>
             </div>
           </div>
         </form>
@@ -396,25 +525,6 @@ function FormTambahPelatih() {
                     className="mt-2 border-spanish-gray w-full sm:w-[420px] rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
                     required
                   />
-                </div>
-
-                <div className="w-full sm:mx-12">
-                  <label
-                    htmlFor="status"
-                    className="block font-normal text-primary-black"
-                  >
-                    Status
-                  </label>
-                  <select
-                    className="mt-1 w-full border sm:w-[420px] border-spanish-gray rounded-full p-2 focus:ring-indigo-500 focus:border-indigo-500"
-                    defaultValue=""
-                  >
-                    <option value="" disabled hidden>
-                      Pilih Status
-                    </option>
-                    <option value="pekerja-lepas">Pekerja Lepas</option>
-                    <option value="...">......</option>
-                  </select>
                 </div>
               </div>
             </div>

@@ -7,25 +7,21 @@ import {
   ArsipKesenianProps,
   DataPelatihProps,
   DetailPelatihProps,
+  KomunitasProps,
   PelatihProps,
 } from "@/types";
-import { ofetch } from "ofetch";
+import axios from "axios";
 
 // komunitas
-export async function getKomunitas() {
+export async function getKomunitas(): Promise<KomunitasProps[]> {
   try {
-    const response = await ofetch(
+    const response = await axios.get(
       `${
         CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-      }/api/komunitas`,
-      {
-        method: "GET",
-        parseResponse: JSON.parse,
-        responseType: "json",
-      }
+      }/api/komunitas`
     );
 
-    return response;
+    return response.data.data as KomunitasProps[];
   } catch (err) {
     throw new Error("Failed to fetch data!");
   }
@@ -34,18 +30,13 @@ export async function getKomunitas() {
 // arsip kesenian
 export async function getArsipKesenian(): Promise<ArsipKesenianProps[]> {
   try {
-    const response = await ofetch(
+    const response = await axios.get(
       `${
         CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-      }/api/arsip-kesenian`,
-      {
-        method: "GET",
-        parseResponse: JSON.parse,
-        responseType: "json",
-      }
+      }/api/arsip-kesenian`
     );
 
-    return response.data as ArsipKesenianProps[];
+    return response.data.data as ArsipKesenianProps[];
   } catch (err: any) {
     throw new Error(err.message);
   }
@@ -53,11 +44,10 @@ export async function getArsipKesenian(): Promise<ArsipKesenianProps[]> {
 
 export async function deleteArsipKesenian(params: string) {
   try {
-    await ofetch(
+    await axios.delete(
       `${
         CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-      }/api/arsip-kesenian/${params}`,
-      { method: "DELETE" }
+      }/api/arsip-kesenian/${params}`
     );
   } catch (err: any) {
     throw new Error("Failed to fetch data!");
@@ -65,20 +55,15 @@ export async function deleteArsipKesenian(params: string) {
 }
 
 // pelatih tari
-export async function getPelatihTari() {
+export async function getPelatihTari(): Promise<PelatihProps[]> {
   try {
-    const response = await ofetch(
+    const response = await axios.get(
       `${
         CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-      }/api/pelatih-tari`,
-      {
-        method: "GET",
-        parseResponse: JSON.parse,
-        responseType: "json",
-      }
+      }/api/pelatih-tari`
     );
 
-    return response.data as PelatihProps[];
+    return response.data.data as PelatihProps[];
   } catch (err: any) {
     throw new Error("Failed to fetch data!");
   }
@@ -90,18 +75,13 @@ export async function getDetailPelatihTari(
   name: string
 ): Promise<JoinPelatihProps[]> {
   try {
-    const response = await ofetch(
+    const response = await axios.get(
       `${
         CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-      }/api/pelatih-tari/${name}`,
-      {
-        method: "GET",
-        parseResponse: JSON.parse,
-        responseType: "json",
-      }
+      }/api/pelatih-tari/${name}`
     );
 
-    return response.data as JoinPelatihProps[];
+    return response.data.data as JoinPelatihProps[];
   } catch (err: any) {
     throw new Error("Failed to get data!");
   }
@@ -110,15 +90,10 @@ export async function getDetailPelatihTari(
 // riwayat kursus
 export async function getRiwayatKursus() {
   try {
-    const response = await ofetch(
+    const response = await axios.get(
       `${
         CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-      }/api/riwayat-kursus`,
-      {
-        method: "GET",
-        parseResponse: JSON.parse,
-        responseType: "json",
-      }
+      }/api/riwayat-kursus`
     );
 
     return response;

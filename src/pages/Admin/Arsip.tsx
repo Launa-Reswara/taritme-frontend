@@ -1,28 +1,17 @@
 import SidebarAdmin from "@/components/SidebarAdmin";
 import { Button } from "@/components/ui/button";
-import Image from "@/components/ui/image";
 import { Input } from "@/components/ui/input";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { useTitle } from "@/hooks";
-import { arsipList } from "@/lib/utils/data";
 import { setIsEditArsip, setIsTambahArsip } from "@/store/slices/arsip.slice";
 import { ArsipSliceProps } from "@/types";
 import { m } from "framer-motion";
-import { Pencil, Trash, X } from "lucide-react";
+import { X } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 export default function Arsip() {
-  const dispatch = useDispatch();
   const { isEditArsip, isTambahArsip } = useSelector(
     (state: ArsipSliceProps) => state.arsip
   );

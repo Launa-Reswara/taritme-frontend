@@ -11,9 +11,9 @@ import {
 import { loginSchema } from "@/lib/utils/schemas";
 import { BaseResponseApiProps } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import { m } from "framer-motion";
 import Cookies from "js-cookie";
-import { ofetch } from "ofetch";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -41,30 +41,26 @@ export default function Login() {
   function onSubmit() {
     async function login(): Promise<void> {
       try {
-        const response: BaseResponseApiProps & { token: string } = await ofetch(
-          `${
-            CONDITION === "development"
-              ? DEVELOPMENT_API_URL
-              : PRODUCTION_API_URL
-          }/api/auth/login`,
-          {
-            method: "POST",
-            parseResponse: JSON.parse,
-            responseType: "json",
-            body: {
+        const response: { data: BaseResponseApiProps & { token: string } } =
+          await axios.post(
+            `${
+              CONDITION === "development"
+                ? DEVELOPMENT_API_URL
+                : PRODUCTION_API_URL
+            }/api/auth/login`,
+            {
               email: getValues("email"),
               password: getValues("password"),
-            },
-          }
-        );
+            }
+          );
 
-        if (response.statusCode === 200) {
-          Cookies.set("token", response.token);
+        if (response.data.statusCode === 200) {
+          Cookies.set("token", response.data.token);
           setIsWrongLoginData(false);
 
           toast({
             title: "Success!",
-            description: response.message,
+            description: response.data.message,
           });
 
           setTimeout(() => {

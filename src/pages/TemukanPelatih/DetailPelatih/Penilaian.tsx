@@ -16,7 +16,7 @@ import {
 import { penilaianSchema } from "@/lib/utils/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
-import { ofetch } from "ofetch";
+import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
@@ -36,7 +36,7 @@ export default function Penilaian() {
 
   /*async function getPenilaian() {
     try {
-      const response = await ofetch(
+      const response = await axios(
         `${
           CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
         }/api/user-payment-pelatih-tari `,

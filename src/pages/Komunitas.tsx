@@ -12,7 +12,7 @@ import {
   setIdModal,
   setModalKomunitas,
 } from "@/store/slices/modalKomunitas.slice";
-import { KomunitasProps, ModalKomunitasSliceProps } from "@/types";
+import { ModalKomunitasSliceProps } from "@/types";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { ArrowRightIcon } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,7 +34,7 @@ export default function Komunitas() {
     refetchOnReconnect: false,
   });
 
-  const listKomunitas = data.data as KomunitasProps[];
+  const listKomunitas = data;
 
   return (
     <>

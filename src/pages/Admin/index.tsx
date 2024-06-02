@@ -14,14 +14,14 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { m } from "framer-motion";
 import { UserRound } from "lucide-react";
-import { ofetch } from "ofetch";
+import axios from "axios";
 
 export default function Admin() {
   const { toast } = useToast();
 
   /*async function getStatistics() {
     try {
-      const response = await ofetch(
+      const response = await axios(
         `${
           CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
         }/api/admin/statistics`,

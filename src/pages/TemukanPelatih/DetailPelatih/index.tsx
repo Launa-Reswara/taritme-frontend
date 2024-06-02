@@ -209,7 +209,9 @@ export default function DetailPelatih() {
                 <Heading as="h2" className="font-medium mb-1.5">
                   Tarif Paket
                 </Heading>
-                <Paragraph>{toRupiah(pelatih.price_per_paket)}/5 jam</Paragraph>
+                <Paragraph>
+                  {toRupiah(pelatih.price * 5 - 50000)}/5 jam
+                </Paragraph>
               </div>
             </div>
           </div>

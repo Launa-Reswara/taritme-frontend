@@ -5,11 +5,11 @@ import { Button } from "./ui/button";
 import { Heading, Paragraph } from "./ui/typography";
 
 function User({ children }: ChildrenProps) {
-  const { isTokenUserAvailable, isTokenAdminAvailable } = useSelector(
+  const { isTokenUserAvailable } = useSelector(
     (state: TokenSliceProps) => state.token
   );
 
-  return !isTokenUserAvailable && !isTokenAdminAvailable ? (
+  return !isTokenUserAvailable ? (
     <div className="flex fixed w-full justify-center bg-white items-center min-h-svh">
       <div className="p-4">
         <div className="bg-white p-4 rounded-xl drop-shadow-lg sm:p-10">

@@ -18,9 +18,9 @@ import { ikutiKursusSchema } from "@/lib/utils/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { nanoid } from "@reduxjs/toolkit";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import Cookies from "js-cookie";
 import { ChevronRight } from "lucide-react";
-import { ofetch } from "ofetch";
 import { useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 import slugify from "slugify";
@@ -81,7 +81,7 @@ export default function IkutiKursus() {
 
     async function submitDataTransaction(): Promise<void> {
       try {
-        const response = await ofetch(
+        const response = await axios.post(
           `${
             CONDITION === "development"
               ? DEVELOPMENT_API_URL
@@ -90,48 +90,48 @@ export default function IkutiKursus() {
             lower: true,
           })}/transactions`,
           {
-            method: "POST",
-            responseType: "json",
-            parseResponse: JSON.parse,
+            pelatih_tari_name: slugify(pelatihName, { lower: true }),
+            customer_details: {
+              name: getValues("nama"),
+              email: getValues("email"),
+              phone: getValues("no_hp"),
+              city: getValues("daerah"),
+              gross_amount: priceAfterDiskon,
+            },
+            item_details: [
+              {
+                id: nanoid(10),
+                price: priceAfterDiskon,
+                quantity: 1,
+                name: `Jasa sewa instruktur tari Kak ${pelatihTari.name}`,
+                brand: "Taritme",
+                category: "Sewa instruktur tari",
+                merchant_name: "Launa Reswara",
+                tenor: "12",
+                code_plan: "000",
+                mid: "123456",
+                url: `${
+                  CONDITION === "development"
+                    ? DEVELOPMENT_API_URL
+                    : PRODUCTION_API_URL
+                }/temukan-pelatih/${pelatihName}/ikuti-kursus/penilaian`,
+              },
+            ],
+          },
+          {
             headers: {
               Authorization: `Bearer ${Cookies.get("token")}`,
-            },
-            body: {
-              pelatih_tari_name: slugify(pelatihName, { lower: true }),
-              customer_details: {
-                name: getValues("nama"),
-                email: getValues("email"),
-                phone: getValues("no_hp"),
-                city: getValues("daerah"),
-                gross_amount: priceAfterDiskon,
-              },
-              item_details: [
-                {
-                  id: nanoid(10),
-                  price: priceAfterDiskon,
-                  quantity: 1,
-                  name: `Jasa sewa instruktur tari Kak ${pelatihTari.name}`,
-                  brand: "Taritme",
-                  category: "Sewa instruktur tari",
-                  merchant_name: "Launa Reswara",
-                  tenor: "12",
-                  code_plan: "000",
-                  mid: "123456",
-                  url: `${
-                    CONDITION === "development"
-                      ? DEVELOPMENT_API_URL
-                      : PRODUCTION_API_URL
-                  }/temukan-pelatih/${pelatihName}/ikuti-kursus/penilaian`,
-                },
-              ],
             },
           }
         );
 
-        if (response.statusCode === 200 || response.statusCode === 201) {
-          window.location.href = response.redirect_url;
+        if (
+          response.data.statusCode === 200 ||
+          response.data.statusCode === 201
+        ) {
+          window.location.href = response.data.redirect_url;
         } else {
-          toast({ title: "Error!", description: response.message });
+          toast({ title: "Error!", description: response.data.message });
         }
       } catch (err: any) {
         toast({ title: "Error!", description: err.message });

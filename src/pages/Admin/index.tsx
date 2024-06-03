@@ -6,33 +6,20 @@ import { Calendar } from "@/components/ui/calendar";
 import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { useToast } from "@/components/ui/use-toast";
-import {
-  CONDITION,
-  DEVELOPMENT_API_URL,
-  PRODUCTION_API_URL,
-} from "@/lib/utils/constants";
+import { getPelatihTari, getUsers } from "@/features";
 import { useQuery } from "@tanstack/react-query";
 import { m } from "framer-motion";
 import { UserRound } from "lucide-react";
-import axios from "axios";
 
 export default function Admin() {
   const { toast } = useToast();
 
-  /*async function getStatistics() {
+  async function getStatistics() {
     try {
-      const response = await axios(
-        `${
-          CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-        }/api/admin/statistics`,
-        {
-          method: "GET",
-          parseResponse: JSON.parse,
-          responseType: "json",
-        }
-      );
+      const pelatihTari = await getPelatihTari();
+      const users = await getUsers();
 
-      return response.data;
+      return { pelatihTari, users };
     } catch (err: any) {
       toast({ title: "Error!" });
       throw new Error(err.message);
@@ -49,8 +36,8 @@ export default function Admin() {
   if (isPending) return <IsPending />;
   if (isError) return <IsError />;
 
-  console.log(data);
-*/
+  const { pelatihTari, users } = data;
+
   return (
     <>
       <SidebarAdmin />
@@ -65,7 +52,9 @@ export default function Admin() {
           <div className="flex justify-between flex-col 2xl:flex-row w-full space-y-7 2xl:space-y-0 2xl:space-x-7 items-center">
             <div className="bg-primary-color rounded-xl px-8 py-6 flex justify-between items-center w-full 2xl:w-[350px]">
               <div>
-                <span className="text-white font-bold text-2xl">10</span>
+                <span className="text-white font-bold text-2xl">
+                  {users.length}
+                </span>
                 <Paragraph className="text-white">Pengguna</Paragraph>
               </div>
               <div className="bg-white p-3 rounded-xl w-fit">
@@ -74,7 +63,9 @@ export default function Admin() {
             </div>
             <div className="bg-primary-color rounded-xl px-8 py-6 flex justify-between items-center w-full 2xl:w-[350px]">
               <div>
-                <span className="text-white font-bold text-2xl">10</span>
+                <span className="text-white font-bold text-2xl">
+                  {pelatihTari.length}
+                </span>
                 <Paragraph className="text-white">Instruktur</Paragraph>
               </div>
               <div className="bg-white p-3 rounded-xl w-fit">
@@ -103,17 +94,14 @@ export default function Admin() {
                     Customer
                   </Heading>
                   <div className="flex sm:flex-col mt-4 flex-wrap gap-4 justify-start items-start flex-row">
-                    {Array(4)
-                      .fill(null)
-                      .map((_, index) => (
-                        <div className="flex space-x-3" key={index + 1}>
-                          <Image src="/images/ryu-user.svg" alt="user" />
-                          <div>
-                            <Paragraph className="text-sm">Ryu</Paragraph>
-                            <Paragraph className="text-xs">Perempuan</Paragraph>
-                          </div>
+                    {users.map((item, index) => (
+                      <div className="flex space-x-3" key={index + 1}>
+                        <Image src="/images/ryu-user.svg" alt="user" />
+                        <div>
+                          <Paragraph className="text-sm">{item.name}</Paragraph>
                         </div>
-                      ))}
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -124,17 +112,14 @@ export default function Admin() {
                   Pengguna
                 </Heading>
                 <div className="flex 2xl:flex-col mt-4 flex-wrap gap-4 justify-start items-start flex-row">
-                  {Array(4)
-                    .fill(null)
-                    .map((_, index) => (
-                      <div className="flex space-x-3" key={index + 1}>
-                        <Image src="/images/ryu-user.svg" alt="user" />
-                        <div>
-                          <Paragraph className="text-sm">Ryu</Paragraph>
-                          <Paragraph className="text-xs">Perempuan</Paragraph>
-                        </div>
+                  {users.map((item, index) => (
+                    <div className="flex space-x-3" key={index + 1}>
+                      <Image src="/images/ryu-user.svg" alt={item.name} />
+                      <div>
+                        <Paragraph className="text-sm">{item.name}</Paragraph>
                       </div>
-                    ))}
+                    </div>
+                  ))}
                 </div>
               </div>
               <div className="2xl:w-full w-0.5 h-full 2xl:h-0.5 bg-primary-black"></div>
@@ -143,17 +128,18 @@ export default function Admin() {
                   Pelatih
                 </Heading>
                 <div className="flex 2xl:flex-col mt-4 flex-wrap gap-4 justify-start items-start flex-row">
-                  {Array(4)
-                    .fill(null)
-                    .map((_, index) => (
-                      <div className="flex space-x-3" key={index + 1}>
-                        <Image src="/images/ryu-user.svg" alt="user" />
-                        <div>
-                          <Paragraph className="text-sm">Ryu</Paragraph>
-                          <Paragraph className="text-xs">Perempuan</Paragraph>
-                        </div>
+                  {pelatihTari.map((item, index) => (
+                    <div className="flex space-x-3" key={index + 1}>
+                      <Image
+                        className="w-10 h-10"
+                        src={item.image}
+                        alt={item.name}
+                      />
+                      <div>
+                        <Paragraph className="text-sm">{item.name}</Paragraph>
                       </div>
-                    ))}
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

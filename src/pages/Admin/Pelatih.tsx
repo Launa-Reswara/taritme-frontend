@@ -563,7 +563,7 @@ function FormTambahPelatih() {
   }
 
   return (
-    <div className="flex justify-center items-center p-4 fixed inset-0 z-50 backdrop-blur-lg min-h-svh">
+    <div className="flex justify-center items-center fixed inset-0 z-50 backdrop-blur-lg min-h-svh">
       <div className="w-full sm:w-[800px] max-w-[600px] overflow-hidden rounded-lg bg-white drop-shadow-lg p-8">
         <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex justify-between items-center">

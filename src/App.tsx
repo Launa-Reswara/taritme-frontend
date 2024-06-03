@@ -70,11 +70,11 @@ export default function App() {
               />
               <Route path="/temukan-pelatih" element={<TemukanPelatih />} />
               <Route
-                path="/temukan-pelatih/:detail"
+                path="/temukan-pelatih/:name"
                 element={<DetailPelatih />}
               />
               <Route
-                path="/temukan-pelatih/:detail/ikuti-kursus"
+                path="/temukan-pelatih/:name/ikuti-kursus"
                 element={
                   <ProtectedRoute.User>
                     <IkutiKursus />
@@ -82,7 +82,7 @@ export default function App() {
                 }
               />
               <Route
-                path="/temukan-pelatih/:detail/ikuti-kursus/penilaian"
+                path="/temukan-pelatih/:name/ikuti-kursus/penilaian"
                 element={
                   <ProtectedRoute.User>
                     <Penilaian />

@@ -6,7 +6,7 @@ import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { getDetailPelatihTari } from "@/features";
 import { useTitle } from "@/hooks";
-import { getLastPathname, toRupiah } from "@/lib/helpers";
+import { toRupiah } from "@/lib/helpers";
 import { cn } from "@/lib/utils/cn";
 import { ulasanList } from "@/lib/utils/data";
 import { TokenSliceProps } from "@/types";
@@ -14,7 +14,7 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { Heart } from "lucide-react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 export default function DetailPelatih() {
   const [tabs, setTabs] = useState<"Tentang" | "Ulasan">("Tentang");
@@ -24,9 +24,9 @@ export default function DetailPelatih() {
   );
 
   const navigate = useNavigate();
-  const location = useLocation();
+  const { name } = useParams();
 
-  const pelatihName = getLastPathname(location.pathname);
+  const pelatihName = name as string;
 
   useTitle(`Pelatih ${pelatihName} | Taritme`);
 

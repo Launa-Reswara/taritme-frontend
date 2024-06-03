@@ -1,5 +1,12 @@
 import { ReactNode } from "react";
 
+export type UserProps = {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+};
+
 export type KomunitasProps = {
   id: number;
   name: string;
@@ -42,6 +49,8 @@ export type PelatihProps = {
   no_hp: string;
   status: "Aktif" | "Tidak Aktif";
   email: string;
+  rating: number;
+  total_review: number;
 };
 
 export type DetailPelatihProps = {

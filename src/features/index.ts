@@ -5,10 +5,9 @@ import {
 } from "@/lib/utils/constants";
 import {
   ArsipKesenianProps,
-  DataPelatihProps,
-  DetailPelatihProps,
   KomunitasProps,
   PelatihProps,
+  UserProps,
 } from "@/types";
 import axios from "axios";
 
@@ -69,11 +68,22 @@ export async function getPelatihTari(): Promise<PelatihProps[]> {
   }
 }
 
-type JoinPelatihProps = PelatihProps & DetailPelatihProps & DataPelatihProps;
+// users
+export async function getUsers(): Promise<UserProps[]> {
+  try {
+    const response = await axios.get(
+      `${
+        CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
+      }/api/users`
+    );
 
-export async function getDetailPelatihTari(
-  name: string
-): Promise<JoinPelatihProps[]> {
+    return response.data.data as UserProps[];
+  } catch (err: any) {
+    throw new Error("Failed to fetch data!");
+  }
+}
+
+export async function getDetailPelatihTari(name: string) {
   try {
     const response = await axios.get(
       `${
@@ -81,7 +91,7 @@ export async function getDetailPelatihTari(
       }/api/pelatih-tari/${name}`
     );
 
-    return response.data.data as JoinPelatihProps[];
+    return response.data.data;
   } catch (err: any) {
     throw new Error("Failed to get data!");
   }

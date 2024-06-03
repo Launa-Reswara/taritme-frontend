@@ -1,13 +1,13 @@
 import { useTitle } from "@/hooks";
 import { cn } from "@/lib/utils/cn";
 import { sidebarLinksList } from "@/lib/utils/data";
+import Cookies from "js-cookie";
 import { LogOut, Menu } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import Image from "./ui/image";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { Heading, Paragraph } from "./ui/typography";
-import Cookies from "js-cookie";
 
 export default function SidebarAdmin() {
   const location = useLocation();
@@ -17,7 +17,7 @@ export default function SidebarAdmin() {
 
   function logout() {
     Cookies.remove("token-admin");
-    navigate("/auth/login/admin");
+    window.location.replace("/auth/login/admin");
   }
 
   return (

@@ -1,4 +1,4 @@
-import { ArsipKesenianProps, PelatihProps } from "@/types";
+import { ArsipKesenianProps } from "@/types";
 
 export const listArsipKesenian: ArsipKesenianProps[] = [
   {
@@ -9,7 +9,6 @@ export const listArsipKesenian: ArsipKesenianProps[] = [
     preview_writing:
       "Tari Piriang atau Tari Piring merupakan salah satu tarian tradisional di Indonesia yang berasal dari Suku Minangkabau. Secara tradisional, Tari Piring berasal dari Kota Solok, Provinsi Sumatera barat. Saat ini...",
     preview_image: "/images/tari-piring-arsipkesenian.png",
-    reading_time: "5 mins read",
     total_like: 999,
     total_comments: 12,
   },
@@ -21,7 +20,6 @@ export const listArsipKesenian: ArsipKesenianProps[] = [
     preview_writing:
       "Tari Dindin Badindin ini merupakan salah satu tari tradisional yang berasal dari Pariaman, Provinsi Sumatera Barat. Indang sendiri berarti gendang kecil, tarian ini mirip dengan Tari Saman yang...",
     preview_image: "/images/tari-piring-arsipkesenian.png",
-    reading_time: "5 mins read",
     total_like: 999,
     total_comments: 12,
   },
@@ -33,7 +31,6 @@ export const listArsipKesenian: ArsipKesenianProps[] = [
     preview_writing:
       "Tari Payung merupakan tarian tradisional dari Minangkabau, Sumatra Barat dengan perlengkapan utama berupa payung. Tarian daerah yang dikenal oleh masyarakat bersamaan dengan Tari Piring, Tari...",
     preview_image: "/images/tari-piring-arsipkesenian.png",
-    reading_time: "5 mins read",
     total_like: 999,
     total_comments: 12,
   },
@@ -45,7 +42,6 @@ export const listArsipKesenian: ArsipKesenianProps[] = [
     preview_writing:
       "Tari Ambek-ambek Koto adalah salah satu tarian tradisional darii Kota Anau Kabupaten Solok Provinsi Sumatera Barat. Tari Ambek-ambek Koto sangat berbeda dari tari pada umumnya...",
     preview_image: "/images/tari-piring-arsipkesenian.png",
-    reading_time: "5 mins read",
     total_like: 999,
     total_comments: 12,
   },
@@ -57,82 +53,8 @@ export const listArsipKesenian: ArsipKesenianProps[] = [
     preview_writing:
       "Tari randai merupakan tarian asal Sumatera Barat dan menjadi salah satu seni tari tradisional kebanggaan masyarakat Minangkabau. Uniknya, tari randai ini mengkombinasikan seni gerak...",
     preview_image: "/images/tari-piring-arsipkesenian.png",
-    reading_time: "5 mins read",
     total_like: 999,
     total_comments: 12,
-  },
-];
-
-export const listInstruktur: PelatihProps[] = [
-  {
-    id: 1,
-    name: "Luna Maya",
-    description:
-      "Instruktur tari Sumatra Barat yang memberikan ilmu nya melalui kursus tari.",
-    image: "/images/lunamaya-instruktur-tari.png",
-    rating: 4.9,
-    total_review: 10,
-    price: 100000,
-  },
-  {
-    id: 2,
-    name: "Retno Maruti",
-    description:
-      "Instruktur tari Sumatra Barat yang memberikan ilmu nya melalui kursus tari.",
-    image: "/images/retnomaruti-instruktur-tari.png",
-    rating: 4.9,
-    total_review: 10,
-    price: 100000,
-  },
-  {
-    id: 3,
-    name: "Ayu Bulantrisna",
-    description:
-      "Instruktur tari Sumatra Barat yang memberikan ilmu nya melalui kursus tari.",
-    image: "/images/ayubulantrisna-instruktur-tari.png",
-    rating: 4.9,
-    total_review: 10,
-    price: 100000,
-  },
-  {
-    id: 4,
-    name: "Sandrina",
-    description:
-      "Instruktur tari Sumatra Barat yang memberikan ilmu nya melalui kursus tari.",
-    image: "/images/sandrina-instruktur-tari.png",
-    rating: 4.9,
-    total_review: 10,
-    price: 100000,
-  },
-  {
-    id: 5,
-    name: "Soimah",
-    description:
-      "Instruktur tari Sumatra Barat yang memberikan ilmu nya melalui kursus tari.",
-    image: "/images/soimah-instruktur-tari.png",
-    rating: 4.9,
-    total_review: 10,
-    price: 100000,
-  },
-  {
-    id: 6,
-    name: "Lena Guslina",
-    description:
-      "Instruktur tari Sumatra Barat yang memberikan ilmu nya melalui kursus tari.",
-    image: "/images/lenaguslina-instruktur-tari.png",
-    rating: 4.9,
-    total_review: 10,
-    price: 100000,
-  },
-  {
-    id: 7,
-    name: "Agnez Mo",
-    description:
-      "Instruktur tari Sumatra Barat yang memberikan ilmu nya melalui kursus tari.",
-    image: "/images/agnezmo-instruktur-tari.png",
-    rating: 4.9,
-    total_review: 10,
-    price: 100000,
   },
 ];
 

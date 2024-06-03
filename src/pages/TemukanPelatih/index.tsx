@@ -63,7 +63,7 @@ export default function TemukanPelatih() {
                       <Heading as="h2" className="text-white">
                         {item.name}
                       </Heading>
-                      <Paragraph className="text-white mt-1 mb-2 text-xs">
+                      <Paragraph className="text-white line-clamp-3 mt-1 mb-2 text-xs">
                         {item.description}
                       </Paragraph>
                       <div className="mb-6">
@@ -106,7 +106,7 @@ export default function TemukanPelatih() {
                       <Heading as="h2" className="text-white">
                         {item.name}
                       </Heading>
-                      <Paragraph className="text-white mt-1 mb-2 text-xs">
+                      <Paragraph className="text-white line-clamp-3 mt-1 mb-2 text-xs">
                         {item.description}
                       </Paragraph>
                       <div className="mb-6">

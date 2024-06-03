@@ -1,12 +1,10 @@
 import IsError from "@/components/IsError";
 import IsPending from "@/components/IsPending";
 import Layout from "@/components/Layout";
-import { Card } from "@/components/ui/card";
 import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { useTitle } from "@/hooks";
 import { client } from "@/lib/utils/contentfulClient";
-import { listArsipKesenian } from "@/lib/utils/data";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { BLOCKS } from "@contentful/rich-text-types";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
@@ -26,7 +24,7 @@ export default function DetailArsipKesenian() {
         .getEntry(id as string)
         .then((entries) => entries);
 
-      return response;
+      return response as any;
     } catch (err) {
       throw new Error("Failed to get arsip kesenian!");
     }
@@ -116,7 +114,7 @@ export default function DetailArsipKesenian() {
           </Heading>
           <div className="flex justify-center w-full mt-10">
             <div className="grid grid-cols-1 w-full sm:grid-cols-2 md:grid-cols-3 grid-rows-1 gap-6">
-              {listArsipKesenian.slice(0, 3).map((item, i) => (
+              {/*listArsipKesenian.slice(0, 3).map((item, i) => (
                 <Card key={i} className="p-4 rounded-xl w-full bg-white">
                   <div className="aspect-w-16 aspect-h-9 mb-4 overflow-hidden rounded-xl">
                     <Image
@@ -126,7 +124,7 @@ export default function DetailArsipKesenian() {
                     />
                   </div>
                   <div>
-                    {/*<ReadingTime content={} />*/}
+                    // {<ReadingTime content={} />}
                     <Heading as="h2">{item.title}</Heading>
                     <div className="flex items-center space-x-3 my-3">
                       <Image
@@ -138,7 +136,7 @@ export default function DetailArsipKesenian() {
                     </div>
                   </div>
                 </Card>
-              ))}
+              ))*/}
             </div>
           </div>
         </>

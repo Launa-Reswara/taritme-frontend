@@ -41,7 +41,7 @@ export default function DetailPelatih() {
   if (isPending) return <IsPending />;
   if (isError) return <IsError />;
 
-  const pelatih = data[0];
+  const pelatih = data.data.data[0];
 
   return (
     <Layout className="md:flex-row flex-col-reverse justify-between items-start">

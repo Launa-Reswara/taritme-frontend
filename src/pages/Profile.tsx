@@ -1,29 +1,30 @@
 import IsError from "@/components/IsError";
 import IsPending from "@/components/IsPending";
+import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import Image from "@/components/ui/image";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Heading, Paragraph } from "@/components/ui/typography";
-import { getUserById } from "@/features";
+import { getUserProfile } from "@/features";
 import { cn } from "@/lib/utils/cn";
 import { setIsEditProfile } from "@/store/slices/user.slice";
-import { UserSliceProps } from "@/types";
+import { UserProfileProps, UserProps, UserSliceProps } from "@/types";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+
+type JoinProps = Pick<UserProps, "id" | "name" | "email"> & UserProfileProps;
 
 export default function Profile() {
-  const { id } = useParams();
   const { isEditProfile } = useSelector((state: UserSliceProps) => state.user);
 
   const dispatch = useDispatch();
 
   const { data, isPending, isError } = useQuery({
     queryKey: ["get-user-profile"],
-    queryFn: () => getUserById(id as string),
+    queryFn: () => getUserProfile(),
     placeholderData: keepPreviousData,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
@@ -32,29 +33,34 @@ export default function Profile() {
   if (isPending) return <IsPending />;
   if (isError) return <IsError />;
 
+  const profile = data.data.data as JoinProps;
+
+  console.log(profile);
+
   return (
     <>
-      <main className="w-full">
-        <section className="w-full">
-          <div></div>
-          <div>
-            <Image src={``} alt={``} className="rounded-full" />
-            <Button onClick={() => dispatch(setIsEditProfile(true))}>
-              Edit Profile
-            </Button>
-          </div>
-          <div className="w-full max-w-[1440px]">
-            <Heading as="h1"></Heading>
-            <Paragraph>fsdf</Paragraph>
-          </div>
-        </section>
-      </main>
-      {isEditProfile ? <FormEditProfile /> : null}
+      <Layout>
+        <div>
+          <Image
+            src={profile.image}
+            alt={profile.name}
+            className="rounded-full"
+          />
+          <Button onClick={() => dispatch(setIsEditProfile(true))}>
+            Edit Profile
+          </Button>
+        </div>
+        <div className="w-full ">
+          <Heading as="h1"></Heading>
+          <Paragraph>fsdf</Paragraph>
+        </div>
+        {isEditProfile ? <FormEditProfile profile={profile} /> : null}
+      </Layout>
     </>
   );
 }
 
-function FormEditProfile() {
+function FormEditProfile({ profile }: { profile: JoinProps }) {
   const dispatch = useDispatch();
 
   const {
@@ -64,12 +70,12 @@ function FormEditProfile() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      nama: "",
-      email: "",
-      no_hp: "",
-      jenis_kelamin: "",
-      umur: "",
-      bio: "",
+      nama: profile.name,
+      email: profile.email,
+      no_hp: profile.no_hp,
+      jenis_kelamin: profile.jenis_kelamin,
+      umur: profile.age,
+      bio: profile.bio,
     },
   });
 

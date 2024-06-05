@@ -127,3 +127,13 @@ export type UserSliceProps = {
     setIsEditProfile: (isEditProfile: boolean) => void;
   };
 };
+
+export type UserProfileProps = {
+  id: number;
+  users_id: number;
+  jenis_kelamin: "Laki-laki" | "Perempuan";
+  bio: string;
+  no_hp: string;
+  age: number;
+  image: string;
+};

@@ -62,7 +62,7 @@ export default function Komunitas() {
             </div>
             {/* Looping Kartu */}
             <div className="relative mx-auto w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-              {data.map((item) => (
+              {data.data.data.map((item) => (
                 <Card key={item.id} className="p-5 rounded-xl bg-white">
                   <div className="overflow-hidden rounded-xl">
                     <Image

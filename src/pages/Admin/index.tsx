@@ -53,7 +53,7 @@ export default function Admin() {
             <div className="bg-primary-color rounded-xl px-8 py-6 flex justify-between items-center w-full 2xl:w-[350px]">
               <div>
                 <span className="text-white font-bold text-2xl">
-                  {users.length}
+                  {users.data.data.length}
                 </span>
                 <Paragraph className="text-white">Pengguna</Paragraph>
               </div>
@@ -64,7 +64,7 @@ export default function Admin() {
             <div className="bg-primary-color rounded-xl px-8 py-6 flex justify-between items-center w-full 2xl:w-[350px]">
               <div>
                 <span className="text-white font-bold text-2xl">
-                  {pelatihTari.length}
+                  {pelatihTari.data.data.length}
                 </span>
                 <Paragraph className="text-white">Instruktur</Paragraph>
               </div>
@@ -94,7 +94,7 @@ export default function Admin() {
                     Customer
                   </Heading>
                   <div className="flex sm:flex-col mt-4 flex-wrap gap-4 justify-start items-start flex-row">
-                    {users.map((item, index) => (
+                    {users.data.data.map((item, index) => (
                       <div className="flex space-x-3" key={index + 1}>
                         <Image src="/images/ryu-user.svg" alt="user" />
                         <div>
@@ -112,7 +112,7 @@ export default function Admin() {
                   Pengguna
                 </Heading>
                 <div className="flex 2xl:flex-col mt-4 flex-wrap gap-4 justify-start items-start flex-row">
-                  {users.map((item) => (
+                  {users.data.data.map((item) => (
                     <div className="flex space-x-3" key={item.id}>
                       <Image src="/images/ryu-user.svg" alt={item.name} />
                       <div>
@@ -128,7 +128,7 @@ export default function Admin() {
                   Pelatih
                 </Heading>
                 <div className="flex 2xl:flex-col mt-4 flex-wrap gap-4 justify-start items-start flex-row">
-                  {pelatihTari.map((item) => (
+                  {pelatihTari.data.data.map((item) => (
                     <div className="flex space-x-3" key={item.id}>
                       <Image
                         className="w-10 h-10"

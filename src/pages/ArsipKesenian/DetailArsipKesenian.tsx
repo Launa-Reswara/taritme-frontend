@@ -17,8 +17,6 @@ export default function DetailArsipKesenian() {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  useTitle(`Artikel | Taritme`);
-
   const { data, isPending, isError } = useQuery({
     queryKey: [id as string],
     queryFn: () => getArsipKesenianById(id as string),
@@ -26,6 +24,8 @@ export default function DetailArsipKesenian() {
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
   });
+
+  useTitle(`Artikel | Taritme`);
 
   return (
     <Layout>

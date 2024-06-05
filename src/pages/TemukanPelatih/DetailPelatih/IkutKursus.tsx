@@ -67,7 +67,7 @@ export default function IkutiKursus() {
   if (isPending) return <IsPending />;
   if (isError) return <IsError />;
 
-  const pelatihTari = data[0];
+  const pelatihTari = data.data.data[0];
 
   function onSubmit() {
     // change lama sewa from string to number

@@ -36,7 +36,7 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { m } from "framer-motion";
 import Cookies from "js-cookie";
 import { Pencil, Trash, X } from "lucide-react";
@@ -65,22 +65,22 @@ export default function Pelatih() {
 
   async function deletePelatihTari(): Promise<void> {
     try {
-      const response: { data: BaseResponseApiProps } = await axios.delete(
-        `${
-          CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-        }/api/pelatih-tari/delete/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("token-admin")}`,
-          },
-        }
-      );
+      const response: AxiosResponse<{ data: BaseResponseApiProps }> =
+        await axios.delete(
+          `${
+            CONDITION === "development"
+              ? DEVELOPMENT_API_URL
+              : PRODUCTION_API_URL
+          }/api/pelatih-tari/delete/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${Cookies.get("token-admin")}`,
+            },
+          }
+        );
 
-      if (
-        response.data.statusCode === 200 ||
-        response.data.statusCode === 202
-      ) {
-        toast({ title: "Success", description: response.data.message });
+      if (response.status === 200 || response.status === 202) {
+        toast({ title: "Success", description: response.data.data.message });
       }
     } catch (err: any) {
       toast({ title: "Error!", description: err.message });
@@ -259,34 +259,34 @@ function FormEditpelatih() {
     try {
       const cloudinaryImage = await uploadImage();
 
-      const response: { data: BaseResponseApiProps } = await axios.patch(
-        `${
-          CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-        }/api/pelatih-tari/edit/${id}`,
-        {
-          email: getValues("email"),
-          name: getValues("nama"),
-          image: cloudinaryImage,
-          price: getValues("tarif_per_jam"),
-          no_hp: getValues("no_hp"),
-          status: getValues("status"),
-          description: getValues("deskripsi"),
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("token-admin")}`,
+      const response: AxiosResponse<{ data: BaseResponseApiProps }> =
+        await axios.patch(
+          `${
+            CONDITION === "development"
+              ? DEVELOPMENT_API_URL
+              : PRODUCTION_API_URL
+          }/api/pelatih-tari/edit/${id}`,
+          {
+            email: getValues("email"),
+            name: getValues("nama"),
+            image: cloudinaryImage,
+            price: getValues("tarif_per_jam"),
+            no_hp: getValues("no_hp"),
+            status: getValues("status"),
+            description: getValues("deskripsi"),
           },
-        }
-      );
+          {
+            headers: {
+              Authorization: `Bearer ${Cookies.get("token-admin")}`,
+            },
+          }
+        );
 
-      if (
-        response.data.statusCode === 200 ||
-        response.data.statusCode === 204
-      ) {
-        toast({ title: "Success!", description: response.data.message });
+      if (response.status === 200 || response.status === 204) {
+        toast({ title: "Success!", description: response.data.data.message });
         dispatch(setIsEditPelatih(false));
       } else {
-        toast({ title: "Failed!", description: response.data.message });
+        toast({ title: "Failed!", description: response.data.data.message });
       }
     } catch (err: any) {
       toast({ title: "Error!", description: err.message });
@@ -519,34 +519,34 @@ function FormTambahPelatih() {
     try {
       const cloudinaryImage = await uploadImage();
 
-      const response: { data: BaseResponseApiProps } = await axios.post(
-        `${
-          CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-        }/api/pelatih-tari/add`,
-        {
-          name: getValues("nama"),
-          email: getValues("email"),
-          no_hp: getValues("no_hp"),
-          description: getValues("deskripsi"),
-          status: getValues("status"),
-          price: getValues("tarif_per_jam"),
-          image: cloudinaryImage,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("token-admin")}`,
+      const response: AxiosResponse<{ data: BaseResponseApiProps }> =
+        await axios.post(
+          `${
+            CONDITION === "development"
+              ? DEVELOPMENT_API_URL
+              : PRODUCTION_API_URL
+          }/api/pelatih-tari/add`,
+          {
+            name: getValues("nama"),
+            email: getValues("email"),
+            no_hp: getValues("no_hp"),
+            description: getValues("deskripsi"),
+            status: getValues("status"),
+            price: getValues("tarif_per_jam"),
+            image: cloudinaryImage,
           },
-        }
-      );
+          {
+            headers: {
+              Authorization: `Bearer ${Cookies.get("token-admin")}`,
+            },
+          }
+        );
 
-      if (
-        response.data.statusCode === 200 ||
-        response.data.statusCode === 204
-      ) {
-        toast({ title: "Success!", description: response.data.message });
+      if (response.status === 200 || response.status === 204) {
+        toast({ title: "Success!", description: response.data.data.message });
         dispatch(setIsTambahPelatih(false));
       } else {
-        toast({ title: "Failed!", description: response.data.message });
+        toast({ title: "Failed!", description: response.data.data.message });
       }
     } catch (err: any) {
       toast({ title: "Error!", description: err.message });

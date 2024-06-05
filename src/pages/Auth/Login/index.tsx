@@ -67,6 +67,10 @@ export default function Login() {
             window.location.replace("/");
           }, 2000);
         } else {
+          toast({
+            title: "Failed!",
+            description: response.data.message,
+          });
           setIsWrongLoginData(true);
         }
       } catch (err: any) {

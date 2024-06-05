@@ -120,3 +120,10 @@ export type BaseResponseApiProps = {
   statusCode: number;
   message: string;
 };
+
+export type UserSliceProps = {
+  user: {
+    isEditProfile: boolean;
+    setIsEditProfile: (isEditProfile: boolean) => void;
+  };
+};

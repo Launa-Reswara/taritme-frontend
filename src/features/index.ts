@@ -3,12 +3,8 @@ import {
   DEVELOPMENT_API_URL,
   PRODUCTION_API_URL,
 } from "@/lib/utils/constants";
-import {
-  ArsipKesenianProps,
-  KomunitasProps,
-  PelatihProps,
-  UserProps,
-} from "@/types";
+import { client } from "@/lib/utils/contentfulClient";
+import { KomunitasProps, PelatihProps, UserProps } from "@/types";
 import axios from "axios";
 
 // komunitas
@@ -21,35 +17,8 @@ export async function getKomunitas(): Promise<KomunitasProps[]> {
     );
 
     return response.data.data as KomunitasProps[];
-  } catch (err) {
-    throw new Error("Failed to fetch data!");
-  }
-}
-
-// arsip kesenian
-export async function getArsipKesenian(): Promise<ArsipKesenianProps[]> {
-  try {
-    const response = await axios.get(
-      `${
-        CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-      }/api/arsip-kesenian`
-    );
-
-    return response.data.data as ArsipKesenianProps[];
   } catch (err: any) {
     throw new Error(err.message);
-  }
-}
-
-export async function deleteArsipKesenian(params: string) {
-  try {
-    await axios.delete(
-      `${
-        CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-      }/api/arsip-kesenian/${params}`
-    );
-  } catch (err: any) {
-    throw new Error("Failed to fetch data!");
   }
 }
 
@@ -79,7 +48,21 @@ export async function getUsers(): Promise<UserProps[]> {
 
     return response.data.data as UserProps[];
   } catch (err: any) {
-    throw new Error("Failed to fetch data!");
+    throw new Error(err.message);
+  }
+}
+
+export async function getUserById(id: string) {
+  try {
+    const response = await axios.get(
+      `${
+        CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
+      }/api/users/${id}`
+    );
+
+    return response.data.data;
+  } catch (err: any) {
+    throw new Error(err.message);
   }
 }
 
@@ -93,7 +76,7 @@ export async function getDetailPelatihTari(name: string) {
 
     return response.data.data;
   } catch (err: any) {
-    throw new Error("Failed to get data!");
+    throw new Error(err.message);
   }
 }
 
@@ -106,8 +89,26 @@ export async function getRiwayatKursus() {
       }/api/riwayat-kursus`
     );
 
-    return response;
+    return response.data.data;
+  } catch (err: any) {
+    throw new Error(err.message);
+  }
+}
+
+export async function getArsipKesenian() {
+  try {
+    const response = await client.getEntries().then((entries) => entries);
+    return response as any;
+  } catch (err: any) {
+    throw new Error(err.message);
+  }
+}
+
+export async function getArsipKesenianById(id: string) {
+  try {
+    const response = await client.getEntry(id).then((entries) => entries);
+    return response as any;
   } catch (err) {
-    throw new Error("Failed to get data!");
+    throw new Error("Failed to get arsip kesenian!");
   }
 }

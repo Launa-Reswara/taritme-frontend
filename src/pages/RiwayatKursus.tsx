@@ -25,8 +25,6 @@ export default function RiwayatKursus() {
   if (isPending) return <IsPending />;
   if (isError) return <IsError />;
 
-  const riwayatKursus = data.data;
-
   return (
     <Layout>
       <div className="w-full">
@@ -34,7 +32,7 @@ export default function RiwayatKursus() {
           Riwayat Kursus
         </Heading>
         <div className="flex justify-start mt-10 space-y-10 items-center w-full flex-col">
-          {riwayatKursus.map((item) => (
+          {data.map((item: any) => (
             <div
               key={item.id}
               className="rounded-lg flex-col md:flex-row border w-full border-primary-color p-6 flex md:justify-start md:items-start justify-center space-x-5 items-center"

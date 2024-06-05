@@ -18,7 +18,6 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 export default function Registration() {
-  const [isRegister, setIsRegister] = useState<boolean>(false);
   const [isRegisteredAccount, setIsRegisteredAccount] =
     useState<boolean>(false);
   const [errMessage, setErrMessage] = useState<string>("");
@@ -59,10 +58,8 @@ export default function Registration() {
           response.data.statusCode === 200 ||
           response.data.statusCode === 201
         ) {
-          setIsRegister(true);
-
           toast({
-            title: "Registrasi akun berhasil!",
+            title: "Success!",
             description: response.data.message,
           });
 
@@ -70,6 +67,10 @@ export default function Registration() {
             window.location.replace("/auth/login");
           }, 2000);
         } else {
+          toast({
+            title: "Failed!",
+            description: response.data.message,
+          });
           setErrMessage(response.data.message);
           setIsRegisteredAccount(true);
         }
@@ -197,15 +198,6 @@ export default function Registration() {
         </div>
         <div className="hidden md:block fixed right-0 top-0 md:w-1/2 min-h-svh bg-cover bg-center bg-no-repeat bg-registration-side-image" />
       </m.div>
-      {isRegister ? (
-        <div className="flex justify-center backdrop-blur-lg fixed inset-0 items-center min-h-svh">
-          <div className="bg-white rounded-xl p-4">
-            <Paragraph className="font-medium">
-              Registrasi akun berhasil!
-            </Paragraph>
-          </div>
-        </div>
-      ) : null}
     </>
   );
 }

@@ -112,8 +112,8 @@ export default function Admin() {
                   Pengguna
                 </Heading>
                 <div className="flex 2xl:flex-col mt-4 flex-wrap gap-4 justify-start items-start flex-row">
-                  {users.map((item, index) => (
-                    <div className="flex space-x-3" key={index + 1}>
+                  {users.map((item) => (
+                    <div className="flex space-x-3" key={item.id}>
                       <Image src="/images/ryu-user.svg" alt={item.name} />
                       <div>
                         <Paragraph className="text-sm">{item.name}</Paragraph>
@@ -128,8 +128,8 @@ export default function Admin() {
                   Pelatih
                 </Heading>
                 <div className="flex 2xl:flex-col mt-4 flex-wrap gap-4 justify-start items-start flex-row">
-                  {pelatihTari.map((item, index) => (
-                    <div className="flex space-x-3" key={index + 1}>
+                  {pelatihTari.map((item) => (
+                    <div className="flex space-x-3" key={item.id}>
                       <Image
                         className="w-10 h-10"
                         src={item.image}

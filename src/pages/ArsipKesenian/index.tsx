@@ -2,12 +2,13 @@ import IsError from "@/components/IsError";
 import IsPending from "@/components/IsPending";
 import Layout from "@/components/Layout";
 import Newsletter from "@/components/Newsletter";
+import ReadingTime from "@/components/ReadingTime";
 import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
-import { useToast } from "@/components/ui/use-toast";
+import { getArsipKesenian } from "@/features";
 import { useTitle } from "@/hooks";
 import { cn } from "@/lib/utils/cn";
-import { client } from "@/lib/utils/contentfulClient";
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { MessageCircle, Share, ThumbsUp } from "lucide-react";
@@ -15,17 +16,6 @@ import { Link } from "react-router-dom";
 
 export default function ArsipKesenian() {
   useTitle("Arsip Kesenian | Taritme");
-
-  const { toast } = useToast();
-
-  async function getArsipKesenian() {
-    try {
-      const response = await client.getEntries().then((entries) => entries);
-      return response;
-    } catch (err) {
-      toast({ title: "Error!", description: "Failed to get arsip kesenian!" });
-    }
-  }
 
   const { data, isPending, isError } = useQuery({
     queryKey: ["arsip-kesenian"],
@@ -46,7 +36,7 @@ export default function ArsipKesenian() {
           <div className="xl:mr-28 md:mr-14">
             <Heading as="h1">Arsip Kesenian</Heading>
             <div className="flex flex-col space-y-14 my-10 justify-start items-start">
-              {data.items.map((item) => (
+              {data.items.map((item: any) => (
                 <div key={item.sys.id} className="xl:w-[821px]">
                   <div className="flex justify-start items-center w-fit space-x-4">
                     <Image
@@ -70,7 +60,7 @@ export default function ArsipKesenian() {
                     <div className="w-full">
                       <Link to={item.sys.id} className="w-full">
                         <Heading as="h3">{item.fields.title}</Heading>
-                        <Paragraph className="mt-2">
+                        <Paragraph className="mt-2 line-clamp-3">
                           {item.fields.description}
                         </Paragraph>
                       </Link>
@@ -80,15 +70,11 @@ export default function ArsipKesenian() {
                           "w-full justify-start items-start md:items-center"
                         )}
                       >
-                        <div className="flex justify-start items-center space-x-1">
-                          <Image
-                            src="/images/electric-icon.svg"
-                            alt="electric icon"
-                          />
-                          <span className="text-primary-black text-xs md:text-base">
-                            5 mins read
-                          </span>
-                        </div>
+                        <ReadingTime
+                          content={documentToHtmlString(
+                            item.fields.content
+                          ).toString()}
+                        />
                         <div className="flex justify-start items-center space-x-4 md:space-x-8 mt-2 md:mt-0">
                           <button className="flex justify-start items-center space-x-2">
                             <ThumbsUp size={20} />

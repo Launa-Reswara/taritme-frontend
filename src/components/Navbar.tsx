@@ -168,14 +168,6 @@ export default function Navbar() {
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <CustomLink
-                    to="/settings"
-                    className="font-medium text-primary-black text-base"
-                  >
-                    Settings
-                  </CustomLink>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <CustomLink
                     to="/riwayat-kursus"
                     className="font-medium text-primary-black text-base"
                   >

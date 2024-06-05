@@ -1,10 +1,13 @@
 import { useMemo } from "react";
-import word from "reading-time";
+import { readingTime } from "reading-time-estimator";
 import Image from "./ui/image";
 import { Paragraph } from "./ui/typography";
 
 export default function ReadingTime({ content }: { content: string }) {
-  const memoizedReadingTime = useMemo(() => word(content).text, [content]);
+  const memoizedReadingTime = useMemo(
+    () => readingTime(content).text,
+    [content]
+  );
 
   return (
     <div className="flex items-center space-x-2 mb-2">
@@ -12,9 +15,9 @@ export default function ReadingTime({ content }: { content: string }) {
         src="/images/electric-icon.svg"
         alt="electric icon"
         draggable={false}
-        className="w-4 h-4"
+        className="w-6 h-6"
       />
-      <Paragraph className="text-xs">{memoizedReadingTime}</Paragraph>
+      <Paragraph className="text-sm">{memoizedReadingTime}</Paragraph>
     </div>
   );
 }

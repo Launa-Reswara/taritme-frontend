@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils/cn";
 import { sidebarLinksList } from "@/lib/utils/data";
 import Cookies from "js-cookie";
 import { LogOut, Menu } from "lucide-react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import Image from "./ui/image";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
@@ -11,7 +11,6 @@ import { Heading, Paragraph } from "./ui/typography";
 
 export default function SidebarAdmin() {
   const location = useLocation();
-  const navigate = useNavigate();
 
   useTitle("Dashboard | Taritme");
 

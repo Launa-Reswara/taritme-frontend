@@ -1,10 +1,11 @@
+import BacaJugaList from "@/components/BacaJugaList";
 import IsError from "@/components/IsError";
 import IsPending from "@/components/IsPending";
 import Layout from "@/components/Layout";
 import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
+import { getArsipKesenianById } from "@/features";
 import { useTitle } from "@/hooks";
-import { client } from "@/lib/utils/contentfulClient";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { BLOCKS } from "@contentful/rich-text-types";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
@@ -18,21 +19,9 @@ export default function DetailArsipKesenian() {
 
   useTitle(`Artikel | Taritme`);
 
-  async function getArsipKesenianByTitle() {
-    try {
-      const response = await client
-        .getEntry(id as string)
-        .then((entries) => entries);
-
-      return response as any;
-    } catch (err) {
-      throw new Error("Failed to get arsip kesenian!");
-    }
-  }
-
   const { data, isPending, isError } = useQuery({
-    queryKey: ["detail-arsip-kesenian"],
-    queryFn: () => getArsipKesenianByTitle(),
+    queryKey: [id as string],
+    queryFn: () => getArsipKesenianById(id as string),
     placeholderData: keepPreviousData,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
@@ -114,29 +103,7 @@ export default function DetailArsipKesenian() {
           </Heading>
           <div className="flex justify-center w-full mt-10">
             <div className="grid grid-cols-1 w-full sm:grid-cols-2 md:grid-cols-3 grid-rows-1 gap-6">
-              {/*listArsipKesenian.slice(0, 3).map((item, i) => (
-                <Card key={i} className="p-4 rounded-xl w-full bg-white">
-                  <div className="aspect-w-16 aspect-h-9 mb-4 overflow-hidden rounded-xl">
-                    <Image
-                      src="/images/tari-piring-home.png"
-                      alt="thumbnail"
-                      className="object-cover w-full h-full"
-                    />
-                  </div>
-                  <div>
-                    // {<ReadingTime content={} />}
-                    <Heading as="h2">{item.title}</Heading>
-                    <div className="flex items-center space-x-3 my-3">
-                      <Image
-                        src="/images/leonardo-da-vince.svg"
-                        alt="author"
-                        className="w-6 h-6 rounded-full"
-                      />
-                      <Paragraph className="text-sm">{item.author}</Paragraph>
-                    </div>
-                  </div>
-                </Card>
-              ))*/}
+              <BacaJugaList />
             </div>
           </div>
         </>

@@ -34,6 +34,8 @@ export default function TemukanPelatih() {
     placeholderData: keepPreviousData,
   });
 
+  const pelatih = data?.data.data as PelatihProps[];
+
   return (
     <>
       <Layout>
@@ -63,7 +65,7 @@ export default function TemukanPelatih() {
                 Rekomendasi untukmu
               </Heading>
               <div className="grid grid-cols-1 sm:grid-cols-2 w-full gap-x-9 gap-y-24 lg:grid-cols-3 xl:grid-cols-4 grid-rows-1">
-                {data.data.data.slice(0, 3).map((item) => (
+                {pelatih.slice(0, 3).map((item) => (
                   <Link to={slugify(item.name, { lower: true })} key={item.id}>
                     <div className="bg-primary-color p-5 h-[352px] flex justify-center items-center w-full relative rounded-xl">
                       <Image
@@ -106,7 +108,7 @@ export default function TemukanPelatih() {
                 Pelatih lainnya
               </Heading>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-9 gap-y-24 lg:grid-cols-3 xl:grid-cols-4 grid-rows-1">
-                {data.data.data.slice(3, 8).map((item) => (
+                {pelatih.slice(3, 8).map((item) => (
                   <Link to={slugify(item.name, { lower: true })} key={item.id}>
                     <div className="bg-primary-color p-5 h-[352px] flex justify-center items-center w-full relative rounded-xl">
                       <Image

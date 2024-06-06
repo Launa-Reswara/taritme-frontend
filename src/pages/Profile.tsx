@@ -2,11 +2,12 @@ import IsError from "@/components/IsError";
 import IsPending from "@/components/IsPending";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
-import Image from "@/components/ui/image";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { getUserProfile } from "@/features";
+import { useTitle } from "@/hooks";
+import { getLastPathname } from "@/lib/helpers";
 import { cn } from "@/lib/utils/cn";
 import { setIsEditProfile } from "@/store/slices/user.slice";
 import { UserProfileProps, UserProps, UserSliceProps } from "@/types";
@@ -14,15 +15,19 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 
 type JoinProps = Pick<UserProps, "id" | "name" | "email"> & UserProfileProps;
 
 export default function Profile() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useTitle(`${getLastPathname(location.pathname)} | Taritme`);
+
   const { isEditProfile } = useSelector((state: UserSliceProps) => state.user);
 
-  const dispatch = useDispatch();
-
-  const { data, isPending, isError } = useQuery({
+  /*const { data, isPending, isError } = useQuery({
     queryKey: ["get-user-profile"],
     queryFn: () => getUserProfile(),
     placeholderData: keepPreviousData,
@@ -33,30 +38,149 @@ export default function Profile() {
   if (isPending) return <IsPending />;
   if (isError) return <IsError />;
 
-  const profile = data.data.data as JoinProps;
+  const profile = data?.data.data as JoinProps;
 
-  console.log(profile);
-
+  const {
+    getValues,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      nama: profile.name,
+      email: profile.email,
+      no_hp: profile.no_hp,
+      jenis_kelamin: profile.jenis_kelamin,
+      umur: profile.age,
+      bio: profile.bio,
+    },
+  });
+*/
   return (
-    <>
-      <Layout>
-        <div>
-          <Image
-            src={profile.image}
-            alt={profile.name}
-            className="rounded-full"
+    <Layout>
+      <div className="flex justify-between items-center mb-8">
+        <button
+          type="button"
+          aria-label="kembali"
+          className="flex justify-center items-center space-x-2"
+          onClick={() => navigate(-1)}
+        >
+          <img src="/images/arrow-back-icon.svg" alt="arrow back" />
+          <span className="xl:text-2xl">Kembali</span>
+        </button>
+      </div>
+      <div className="mt-5">
+        <Heading
+          as="h2"
+          className="font-normal mb-2 text-primary-color"
+          style={{ fontSize: "1.5rem" }}
+        >
+          Profile
+        </Heading>
+      </div>
+      <header
+        className="mt-5 relative bg-primary-color rounded-t-lg h-36 w-full"
+        style={{
+          borderTopLeftRadius: "1.3rem",
+          borderTopRightRadius: "1.3rem",
+        }}
+      >
+        <div className="absolute bottom-[-3rem] left-6">
+          <img
+            className="h-20 w-20 rounded-full border-4 border-white"
+            src="https://via.placeholder.com/150"
+            alt="User avatar"
           />
-          <Button onClick={() => dispatch(setIsEditProfile(true))}>
-            Edit Profile
-          </Button>
         </div>
-        <div className="w-full ">
-          <Heading as="h1"></Heading>
-          <Paragraph>fsdf</Paragraph>
-        </div>
-        {isEditProfile ? <FormEditProfile profile={profile} /> : null}
-      </Layout>
-    </>
+      </header>
+      <div className="ml-28 p-2">
+        <Paragraph className="text-lg font-medium">Yujin anh</Paragraph>
+      </div>
+
+      <div className="mt-5 relative  w-full">
+        <form className="grid grid-cols-1 gap-6" style={{ padding: "0 2rem" }}>
+          <div className="flex items-center w-full justify-end ">
+            {" "}
+            <label
+              htmlFor="nama"
+              className="block text-lg font-medium text-black w-1/3"
+            >
+              Nama
+            </label>
+            <Input
+              type="text"
+              placeholder="Nama Anda"
+              className="mt-1 w-2/3 border border-spanish-gray rounded-full p-6"
+            />
+          </div>
+          <div className="flex items-center w-full justify-end">
+            {" "}
+            <label
+              htmlFor="alamat"
+              className="block text-lg font-medium text-black w-1/3"
+            >
+              Email
+            </label>
+            <Input
+              type="text"
+              placeholder="Email Anda"
+              className="mt-1 w-2/3 border border-spanish-gray rounded-full p-6"
+            />
+          </div>
+          <div className="flex items-center w-full justify-end">
+            {" "}
+            <label
+              htmlFor="email"
+              className="block text-lg font-medium text-black w-1/3"
+            >
+              Nomor Telepon
+            </label>
+            <Input
+              type="tel"
+              placeholder="Nomor Telepon Anda"
+              className="mt-1 w-2/3 border border-spanish-gray rounded-full p-6"
+            />
+          </div>
+          <div className="flex items-center w-full justify-end">
+            {" "}
+            <label
+              htmlFor="telepon"
+              className="block text-lg font-medium text-black w-1/3"
+            >
+              Jenis Kelamin
+            </label>
+            <Input
+              type="text"
+              placeholder="Jenis Kelamin Anda"
+              className="mt-1 w-2/3 border border-spanish-gray rounded-full p-6"
+            />
+          </div>
+          <div className="flex items-center w-full justify-end">
+            {" "}
+            <label
+              htmlFor="pekerjaan"
+              className="block text-lg font-medium text-black w-1/3"
+            >
+              Umur
+            </label>
+            <Input
+              type="number"
+              placeholder="Umur anda"
+              className="mt-1 w-2/3 border border-spanish-gray rounded-full p-6"
+            />
+          </div>
+        </form>
+      </div>
+
+      <div className="mt-10 flex my-10 flex-col justify-center items-center w-full">
+        <Button
+          type="submit"
+          className="text-black bg-secondary-color hover:bg-secondary-color/90 rounded-3xl w-72 px-4 py-7"
+        >
+          <Paragraph>Simpan</Paragraph>
+        </Button>
+      </div>
+    </Layout>
   );
 }
 
@@ -147,7 +271,7 @@ function FormEditProfile({ profile }: { profile: JoinProps }) {
                     No Hp
                   </label>
                   <Input
-                    type="tel"
+                    type="number"
                     {...register("no_hp", { required: true })}
                     placeholder="No HP anda"
                     name="no_hp"
@@ -168,7 +292,7 @@ function FormEditProfile({ profile }: { profile: JoinProps }) {
                   <select
                     defaultValue="Pilih Jenis Kelamin"
                     className={cn(
-                      "mt-1 w-full bg-white border border-spanish-gray p-2 rounded-full text-spanish-gray"
+                      "mt-1 w-full bg-white border border-spanish-gray p-2 rounded-full text-spanish-gray placeholder-pink-500 placeholder-opacity-75"
                     )}
                   >
                     <option>Pilih Jenis Kelamin</option>
@@ -189,7 +313,7 @@ function FormEditProfile({ profile }: { profile: JoinProps }) {
                   <Input
                     type="number"
                     {...register("umur", { required: true })}
-                    placeholder="Tarif anda"
+                    placeholder="Umur anda"
                     name="tarif_per_jam"
                     className="mt-2 border-spanish-gray w-full rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
                   />

@@ -36,7 +36,7 @@ export default function Admin() {
   if (isPending) return <IsPending />;
   if (isError) return <IsError />;
 
-  const { pelatihTari, users } = data;
+  const { users, pelatihTari } = data;
 
   return (
     <>

@@ -9,7 +9,6 @@ import {
   PRODUCTION_API_URL,
 } from "@/lib/utils/constants";
 import { loginSchema } from "@/lib/utils/schemas";
-import { BaseResponseApiProps } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { AxiosResponse } from "axios";
 import { m } from "framer-motion";
@@ -41,9 +40,7 @@ export default function Login() {
   function onSubmit() {
     async function login(): Promise<void> {
       try {
-        const response: AxiosResponse<{
-          data: BaseResponseApiProps & { token: string };
-        }> = await axios.post(
+        const response: AxiosResponse = await axios.post(
           `${
             CONDITION === "development"
               ? DEVELOPMENT_API_URL
@@ -55,13 +52,15 @@ export default function Login() {
           }
         );
 
+        console.log(response);
+
         if (response.status === 200) {
           Cookies.set("token", response.data.data.token);
           setIsWrongLoginData(false);
 
           toast({
             title: "Success!",
-            description: response.data.data.message,
+            description: response.data.message,
           });
 
           setTimeout(() => {
@@ -70,12 +69,12 @@ export default function Login() {
         } else {
           toast({
             title: "Failed!",
-            description: response.data.data.message,
+            description: response.data.message,
           });
           setIsWrongLoginData(true);
         }
       } catch (err: any) {
-        toast({ title: "Error!", description: err.message });
+        toast({ title: "Error!", description: err.response.data.message });
       }
     }
 

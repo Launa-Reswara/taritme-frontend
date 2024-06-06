@@ -16,6 +16,7 @@ export const pelatihSlice = createSlice({
       price: "",
       status: "",
     },
+    isUploadLoading: false,
   },
   reducers: {
     setIsEditPelatih: (state, action) => {
@@ -30,10 +31,18 @@ export const pelatihSlice = createSlice({
     setInitialData: (state, action) => {
       state.initialData = action.payload;
     },
+    setIsUploadLoading: (state, action) => {
+      state.isUploadLoading = action.payload;
+    },
   },
 });
 
-export const { setIsEditPelatih, setIsTambahPelatih, setId, setInitialData } =
-  pelatihSlice.actions;
+export const {
+  setIsEditPelatih,
+  setIsTambahPelatih,
+  setId,
+  setInitialData,
+  setIsUploadLoading,
+} = pelatihSlice.actions;
 
 export default pelatihSlice.reducer;

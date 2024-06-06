@@ -15,6 +15,7 @@ import {
   PRODUCTION_API_URL,
 } from "@/lib/utils/constants";
 import { ikutiKursusSchema } from "@/lib/utils/schemas";
+import { PelatihProps } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { nanoid } from "@reduxjs/toolkit";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
@@ -67,7 +68,7 @@ export default function IkutiKursus() {
   if (isPending) return <IsPending />;
   if (isError) return <IsError />;
 
-  const pelatihTari = data.data.data[0];
+  const pelatihTari = data.data.data[0] as PelatihProps;
 
   function onSubmit() {
     // change lama sewa from string to number

@@ -4,11 +4,19 @@ import {
   PRODUCTION_API_URL,
 } from "@/lib/utils/constants";
 import { client } from "@/lib/utils/contentfulClient";
-import { KomunitasProps, PelatihProps, UserProfileProps } from "@/types";
+import {
+  BaseResponseApiProps,
+  KomunitasProps,
+  PelatihProps,
+  UserProfileProps,
+  UserProps,
+} from "@/types";
 import axios, { AxiosResponse } from "axios";
 import Cookies from "js-cookie";
 
-type ResponseGetKomunitasProps = AxiosResponse<{ data: KomunitasProps[] }>;
+type ResponseGetKomunitasProps = Omit<AxiosResponse, "data"> & {
+  data: BaseResponseApiProps & { data: KomunitasProps[] };
+};
 
 // komunitas
 export async function getKomunitas(): Promise<ResponseGetKomunitasProps> {
@@ -21,11 +29,13 @@ export async function getKomunitas(): Promise<ResponseGetKomunitasProps> {
 
     return response as ResponseGetKomunitasProps;
   } catch (err: any) {
-    throw new Error(err.message);
+    throw new Error(err.response.data.message);
   }
 }
 
-type ResponseGetPelatihProps = AxiosResponse<{ data: PelatihProps[] }>;
+type ResponseGetPelatihProps = Omit<AxiosResponse, "data"> & {
+  data: BaseResponseApiProps & { data: PelatihProps[] };
+};
 
 // pelatih tari
 export async function getPelatihTari(): Promise<ResponseGetPelatihProps> {
@@ -38,11 +48,13 @@ export async function getPelatihTari(): Promise<ResponseGetPelatihProps> {
 
     return response as ResponseGetPelatihProps;
   } catch (err: any) {
-    throw new Error("Failed to fetch data!");
+    throw new Error(err.response.data.message);
   }
 }
 
-type ResponseGetUsersProps = AxiosResponse<{ data: KomunitasProps[] }>;
+type ResponseGetUsersProps = Omit<AxiosResponse, "data"> & {
+  data: BaseResponseApiProps & { data: UserProps[] };
+};
 
 // users
 export async function getUsers(): Promise<ResponseGetUsersProps> {
@@ -55,11 +67,13 @@ export async function getUsers(): Promise<ResponseGetUsersProps> {
 
     return response as ResponseGetUsersProps;
   } catch (err: any) {
-    throw new Error(err.message);
+    throw new Error(err.response.data.message);
   }
 }
 
-type ResponseGetUserProfileProps = AxiosResponse<{ data: UserProfileProps }>;
+type ResponseGetUserProfileProps = Omit<AxiosResponse, "data"> & {
+  data: BaseResponseApiProps & { data: UserProps & UserProfileProps };
+};
 
 // user profile
 export async function getUserProfile() {
@@ -73,13 +87,9 @@ export async function getUserProfile() {
 
     return response as ResponseGetUserProfileProps;
   } catch (err: any) {
-    throw new Error(err.message);
+    throw new Error(err.response.data.message);
   }
 }
-
-type ResponseGetDetailPelatihTariProps = AxiosResponse<{
-  data: PelatihProps;
-}>;
 
 export async function getDetailPelatihTari(name: string) {
   try {
@@ -91,7 +101,7 @@ export async function getDetailPelatihTari(name: string) {
 
     return response;
   } catch (err: any) {
-    throw new Error(err.message);
+    throw new Error(err.response.data.message);
   }
 }
 
@@ -106,7 +116,7 @@ export async function getRiwayatKursus() {
 
     return response.data.data;
   } catch (err: any) {
-    throw new Error(err.message);
+    throw new Error(err.response.data.message);
   }
 }
 
@@ -115,7 +125,7 @@ export async function getArsipKesenian() {
     const response = await client.getEntries().then((entries) => entries);
     return response as any;
   } catch (err: any) {
-    throw new Error(err.message);
+    throw new Error("Failed to get arsip kesenian!");
   }
 }
 

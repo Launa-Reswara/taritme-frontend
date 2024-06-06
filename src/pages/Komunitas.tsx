@@ -12,7 +12,7 @@ import {
   setIdModal,
   setModalKomunitas,
 } from "@/store/slices/modalKomunitas.slice";
-import { ModalKomunitasSliceProps } from "@/types";
+import { KomunitasProps, ModalKomunitasSliceProps } from "@/types";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { ArrowRightIcon } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,6 +33,8 @@ export default function Komunitas() {
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
   });
+
+  const komunitas = data?.data.data as KomunitasProps[];
 
   return (
     <>
@@ -62,7 +64,7 @@ export default function Komunitas() {
             </div>
             {/* Looping Kartu */}
             <div className="relative mx-auto w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-              {data.data.data.map((item) => (
+              {komunitas.map((item) => (
                 <Card key={item.id} className="p-5 rounded-xl bg-white">
                   <div className="overflow-hidden rounded-xl">
                     <Image

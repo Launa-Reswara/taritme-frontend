@@ -75,10 +75,9 @@ export default function Registration() {
           setIsRegisteredAccount(true);
         }
       } catch (err: any) {
-        toast({ title: "Error!", description: err.message });
+        toast({ title: "Error!", description: err.response.data.message });
       }
     }
-
     registAccount();
   }
 

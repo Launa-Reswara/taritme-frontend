@@ -9,7 +9,6 @@ import {
   PRODUCTION_API_URL,
 } from "@/lib/utils/constants";
 import { loginAdminSchema } from "@/lib/utils/schemas";
-import { BaseResponseApiProps } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { AxiosResponse } from "axios";
 import { m } from "framer-motion";
@@ -39,9 +38,7 @@ export default function LoginAdmin() {
   function onSubmit() {
     async function login(): Promise<void> {
       try {
-        const response: AxiosResponse<{
-          data: BaseResponseApiProps & { token: string };
-        }> = await axios.post(
+        const response: AxiosResponse = await axios.post(
           `${
             CONDITION === "development"
               ? DEVELOPMENT_API_URL
@@ -54,14 +51,14 @@ export default function LoginAdmin() {
         );
 
         if (response.status === 200) {
-          Cookies.set("token-admin", response.data.data.token);
+          Cookies.set("token-admin", response.data.token);
           setIsWrongAdminData(false);
 
           setIsAdmin(true);
 
           toast({
             title: "Success!",
-            description: response.data.data.message,
+            description: response.data.message,
           });
 
           setTimeout(() => {

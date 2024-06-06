@@ -79,9 +79,11 @@ export type PelatihSliceProps = {
     id: number;
     setId: (id: number) => void;
     isEditPelatih: boolean;
+    isUploadLoading: boolean;
     setIsEditPelatih: (isEditPelatih: boolean) => void;
     initialData: PelatihProps;
     setInitialData: (initialData: PelatihProps) => void;
+    setIsUploadLoading: (isUploadLoading: boolean) => void;
   };
 };
 

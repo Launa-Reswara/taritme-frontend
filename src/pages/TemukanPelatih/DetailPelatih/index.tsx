@@ -9,7 +9,7 @@ import { useTitle } from "@/hooks";
 import { toRupiah } from "@/lib/helpers";
 import { cn } from "@/lib/utils/cn";
 import { ulasanList } from "@/lib/utils/data";
-import { TokenSliceProps } from "@/types";
+import { DetailPelatihProps, PelatihProps, TokenSliceProps } from "@/types";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { Heart } from "lucide-react";
 import { useState } from "react";
@@ -41,7 +41,7 @@ export default function DetailPelatih() {
   if (isPending) return <IsPending />;
   if (isError) return <IsError />;
 
-  const pelatih = data.data.data[0];
+  const pelatih = data.data.data[0] as DetailPelatihProps & PelatihProps;
 
   return (
     <Layout className="md:flex-row flex-col-reverse justify-between items-start">

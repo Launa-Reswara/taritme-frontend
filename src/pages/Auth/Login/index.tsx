@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CustomLink, Heading, Paragraph } from "@/components/ui/typography";
+import { useToast } from "@/components/ui/use-toast";
 import { useTitle } from "@/hooks";
 import {
   CONDITION,
@@ -8,21 +9,18 @@ import {
   PRODUCTION_API_URL,
 } from "@/lib/utils/constants";
 import { loginSchema } from "@/lib/utils/schemas";
-import { setIsLoggedIn } from "@/store/slices/login.slice";
-import { LoginSliceProps } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios, { AxiosResponse } from "axios";
 import { m } from "framer-motion";
-import { ofetch } from "ofetch";
+import Cookies from "js-cookie";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [isWrongLoginData, setIsWrongLoginData] = useState<boolean>(false);
 
-  const { isLoggedIn } = useSelector((state: LoginSliceProps) => state.login);
-  const dispatch = useDispatch();
+  const { toast } = useToast();
 
   const navigate = useNavigate();
 
@@ -40,39 +38,43 @@ export default function Login() {
 
   // Auth logic
   function onSubmit() {
-    async function login() {
+    async function login(): Promise<void> {
       try {
-        const response = await ofetch(
+        const response: AxiosResponse = await axios.post(
           `${
             CONDITION === "development"
               ? DEVELOPMENT_API_URL
               : PRODUCTION_API_URL
           }/api/auth/login`,
           {
-            method: "POST",
-            parseResponse: JSON.parse,
-            responseType: "json",
-            body: {
-              email: getValues("email"),
-              password: getValues("password"),
-            },
+            email: getValues("email"),
+            password: getValues("password"),
           }
         );
 
-        if (response.statusCode === 200) {
-          localStorage.setItem("token", response.token);
+        console.log(response);
+
+        if (response.status === 200) {
+          Cookies.set("token", response.data.data.token);
           setIsWrongLoginData(false);
 
-          dispatch(setIsLoggedIn(true));
+          toast({
+            title: "Success!",
+            description: response.data.message,
+          });
 
           setTimeout(() => {
-            navigate("/");
+            window.location.replace("/");
           }, 2000);
         } else {
+          toast({
+            title: "Failed!",
+            description: response.data.message,
+          });
           setIsWrongLoginData(true);
         }
-      } catch (err) {
-        throw new Error("Failed to fetch data!");
+      } catch (err: any) {
+        toast({ title: "Error!", description: err.response.data.message });
       }
     }
 
@@ -183,13 +185,6 @@ export default function Login() {
           </div>
         </div>
       </m.div>
-      {isLoggedIn ? (
-        <div className="flex justify-center backdrop-blur-lg fixed inset-0 items-center min-h-svh">
-          <div className="bg-white rounded-xl p-4">
-            <Paragraph className="font-medium">Login berhasil!</Paragraph>
-          </div>
-        </div>
-      ) : null}
     </>
   );
 }

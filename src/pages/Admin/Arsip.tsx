@@ -1,28 +1,17 @@
 import SidebarAdmin from "@/components/SidebarAdmin";
 import { Button } from "@/components/ui/button";
-import Image from "@/components/ui/image";
 import { Input } from "@/components/ui/input";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { useTitle } from "@/hooks";
-import { arsipList } from "@/lib/utils/data";
 import { setIsEditArsip, setIsTambahArsip } from "@/store/slices/arsip.slice";
 import { ArsipSliceProps } from "@/types";
 import { m } from "framer-motion";
-import { Pencil, Trash, X } from "lucide-react";
+import { X } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 export default function Arsip() {
-  const dispatch = useDispatch();
   const { isEditArsip, isTambahArsip } = useSelector(
     (state: ArsipSliceProps) => state.arsip
   );
@@ -41,63 +30,14 @@ export default function Arsip() {
       >
         <section className="flex w-full justify-center items-center">
           <div className="w-full">
-            <button
-              className="text-primary-black text-2xl"
-              type="button"
-              aria-label="tambah arsip"
-              onClick={() => dispatch(setIsTambahArsip(true))}
+            <Link
+              to="https://contentful.com/"
+              rel="noopener noreferrer"
+              target="_blank"
+              className="text-primary text-lg font-semibold underline underline-offset-2"
             >
-              + Tambah Arsip
-            </button>
-            <Table className="w-full mt-10">
-              <TableHeader>
-                <TableRow className="bg-primary-color hover:bg-primary-color">
-                  <TableHead className="text-center text-white">
-                    Tanggal
-                  </TableHead>
-                  <TableHead className="text-center text-white">
-                    Penulis
-                  </TableHead>
-                  <TableHead className="text-center text-white">
-                    Judul
-                  </TableHead>
-                  <TableHead className="text-center text-white">Isi</TableHead>
-                  <TableHead className="text-center text-white">Foto</TableHead>
-                  <TableHead className="text-center text-white">Aksi</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {arsipList.map((item) => (
-                  <TableRow
-                    key={item.id}
-                    className="bg-secondary-color hover:bg-secondary-color hover:odd:bg-light-silver odd:bg-light-silver"
-                  >
-                    <TableCell className="text-center flex justify-center items-center">
-                      {item.tanggal}
-                    </TableCell>
-                    <TableCell className="text-center">
-                      {item.penulis}
-                    </TableCell>
-                    <TableCell className="text-center">{item.judul}</TableCell>
-                    <TableCell className="text-center">{item.isi}</TableCell>
-                    <TableCell className="text-center">
-                      <Image src={item.foto} alt={item.judul} />
-                    </TableCell>
-                    <TableCell className="flex justify-center items-center space-x-4">
-                      <Button
-                        variant="outline"
-                        onClick={() => dispatch(setIsEditArsip(true))}
-                      >
-                        <Pencil />
-                      </Button>
-                      <Button variant="outline">
-                        <Trash />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+              Go to Contentful to manage Arsip Kesenian content!
+            </Link>
           </div>
         </section>
       </m.main>

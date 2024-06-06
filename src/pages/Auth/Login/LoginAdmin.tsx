@@ -1,30 +1,78 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CustomLink, Heading, Paragraph } from "@/components/ui/typography";
+import { useToast } from "@/components/ui/use-toast";
 import { useTitle } from "@/hooks";
+import {
+  CONDITION,
+  DEVELOPMENT_API_URL,
+  PRODUCTION_API_URL,
+} from "@/lib/utils/constants";
 import { loginAdminSchema } from "@/lib/utils/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios, { AxiosResponse } from "axios";
 import { m } from "framer-motion";
+import Cookies from "js-cookie";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function LoginAdmin() {
+  const [isWrongAdminData, setIsWrongAdminData] = useState<boolean>(false);
+  const [, setIsAdmin] = useState<boolean>(false);
+
+  const { toast } = useToast();
+
   useTitle("Login Admin | Taritme");
 
   const {
     formState: { errors },
     register,
     handleSubmit,
+    getValues,
   } = useForm({
     defaultValues: { email: "", password: "" },
     resolver: zodResolver(loginAdminSchema),
   });
 
-  // WIP: auth
+  // Auth logic
   function onSubmit() {
-    /*navigate("/admin");
+    async function login(): Promise<void> {
+      try {
+        const response: AxiosResponse = await axios.post(
+          `${
+            CONDITION === "development"
+              ? DEVELOPMENT_API_URL
+              : PRODUCTION_API_URL
+          }/api/auth/login/admin`,
+          {
+            email: getValues("email"),
+            password: getValues("password"),
+          }
+        );
 
-    getValues("email");
-    getValues("password");*/
+        if (response.status === 200) {
+          Cookies.set("token-admin", response.data.token);
+          setIsWrongAdminData(false);
+
+          setIsAdmin(true);
+
+          toast({
+            title: "Success!",
+            description: response.data.message,
+          });
+
+          setTimeout(() => {
+            window.location.replace("/admin");
+          }, 2000);
+        } else {
+          setIsWrongAdminData(true);
+        }
+      } catch (err: any) {
+        toast({ title: "Error!", description: err.message });
+      }
+    }
+
+    login();
   }
 
   return (
@@ -50,7 +98,7 @@ export default function LoginAdmin() {
                     <label htmlFor="email">Email*</label>
                     <Input
                       type="email"
-                      {...register("email")}
+                      {...register("email", { required: true })}
                       placeholder="Masukkan email"
                       name="email"
                       className="mt-2 border-spanish-gray rounded-full px-6 py-7"
@@ -90,6 +138,12 @@ export default function LoginAdmin() {
                 <Button className="text-black bg-secondary-color hover:bg-secondary-color/90 rounded-3xl w-72 px-4 py-7">
                   <Paragraph>Masuk</Paragraph>
                 </Button>
+                {isWrongAdminData ? (
+                  <Paragraph className="font-medium text-red-500 text-center mt-5">
+                    Username atau password yang kamu masukkan salah! Silahkan
+                    coba lagi.
+                  </Paragraph>
+                ) : null}
               </div>
             </div>
           </form>

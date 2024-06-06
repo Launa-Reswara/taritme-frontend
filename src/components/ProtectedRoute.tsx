@@ -1,6 +1,6 @@
 import { ChildrenProps, TokenSliceProps } from "@/types";
 import { useSelector } from "react-redux";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { Heading, Paragraph } from "./ui/typography";
 
@@ -44,7 +44,7 @@ function UserAuth({ children }: ChildrenProps) {
     (state: TokenSliceProps) => state.token
   );
 
-  return isTokenUserAvailable ? <Outlet /> : children;
+  return isTokenUserAvailable ? <Navigate to="/" /> : children;
 }
 
 function Admin({ children }: ChildrenProps) {
@@ -52,7 +52,7 @@ function Admin({ children }: ChildrenProps) {
     (state: TokenSliceProps) => state.token
   );
 
-  return isTokenAdminAvailable ? children : <Outlet />;
+  return isTokenAdminAvailable ? children : <Navigate to="/auth/login/admin" />;
 }
 
 function AdminAuth({ children }: ChildrenProps) {
@@ -60,7 +60,7 @@ function AdminAuth({ children }: ChildrenProps) {
     (state: TokenSliceProps) => state.token
   );
 
-  return isTokenAdminAvailable ? <Outlet /> : children;
+  return isTokenAdminAvailable ? <Navigate to="/admin" /> : children;
 }
 
 const ProtectedRoute = {

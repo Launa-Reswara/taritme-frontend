@@ -11,20 +11,20 @@ import { LoginSliceProps } from "@/types";
 import { Menu } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { CustomLink, Paragraph } from "./ui/typography";
+import Cookies from "js-cookie";
 
 export default function Navbar() {
   const { isLoggedIn } = useSelector((state: LoginSliceProps) => state.login);
   const dispatch = useDispatch();
 
-  const navigate = useNavigate();
   const location = useLocation();
 
   function signOut() {
-    localStorage.removeItem("token");
+    Cookies.remove("token");
     dispatch(setIsLoggedIn(false));
-    navigate("/auth/login");
+    window.location.replace("/auth/login");
   }
 
   return (
@@ -164,14 +164,6 @@ export default function Navbar() {
                     className="font-medium text-primary-black text-base"
                   >
                     Profile
-                  </CustomLink>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <CustomLink
-                    to="/settings"
-                    className="font-medium text-primary-black text-base"
-                  >
-                    Settings
                   </CustomLink>
                 </DropdownMenuItem>
                 <DropdownMenuItem>

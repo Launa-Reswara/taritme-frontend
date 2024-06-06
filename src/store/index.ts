@@ -4,6 +4,7 @@ import loginReducer from "./slices/login.slice";
 import modalKomunitasReducer from "./slices/modalKomunitas.slice";
 import pelatihReducer from "./slices/pelatih.slice";
 import tokenReducer from "./slices/token.slice";
+import userReducer from "./slices/user.slice";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     arsip: arsipSliceReducer,
     login: loginReducer,
     token: tokenReducer,
+    user: userReducer,
   },
 });
 

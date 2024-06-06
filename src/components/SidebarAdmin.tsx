@@ -1,8 +1,9 @@
 import { useTitle } from "@/hooks";
 import { cn } from "@/lib/utils/cn";
 import { sidebarLinksList } from "@/lib/utils/data";
+import Cookies from "js-cookie";
 import { LogOut, Menu } from "lucide-react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import Image from "./ui/image";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
@@ -10,9 +11,13 @@ import { Heading, Paragraph } from "./ui/typography";
 
 export default function SidebarAdmin() {
   const location = useLocation();
-  const navigate = useNavigate();
 
   useTitle("Dashboard | Taritme");
+
+  function logout() {
+    Cookies.remove("token-admin");
+    window.location.replace("/auth/login/admin");
+  }
 
   return (
     <nav className="lg:fixed sticky z-50 bg-white w-full lg:max-w-[359px] left-0 lg:min-h-svh flex justify-between flex-col items-start top-0 drop-shadow-lg">
@@ -84,7 +89,7 @@ export default function SidebarAdmin() {
         </div>
       </div>
       <button
-        onClick={() => navigate("/auth/login")}
+        onClick={logout}
         className="bg-secondary-color w-full cursor-pointer hidden lg:flex justify-between items-center p-4"
       >
         <Paragraph className="text-white text-2xl font-medium">

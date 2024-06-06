@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CustomLink, Heading, Paragraph } from "@/components/ui/typography";
+import { useToast } from "@/components/ui/use-toast";
 import { useTitle } from "@/hooks";
 import {
   CONDITION,
@@ -8,18 +9,20 @@ import {
   PRODUCTION_API_URL,
 } from "@/lib/utils/constants";
 import { registrationSchema } from "@/lib/utils/schemas";
+import { BaseResponseApiProps } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import { m } from "framer-motion";
-import { ofetch } from "ofetch";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 export default function Registration() {
-  const [isRegister, setIsRegister] = useState<boolean>(false);
   const [isRegisteredAccount, setIsRegisteredAccount] =
     useState<boolean>(false);
   const [errMessage, setErrMessage] = useState<string>("");
+
+  const { toast } = useToast();
 
   const navigate = useNavigate();
 
@@ -35,42 +38,46 @@ export default function Registration() {
     resolver: zodResolver(registrationSchema),
   });
 
-  // WIP: register account
+  // register account onSubmit form
   function onSubmit() {
     async function registAccount() {
       try {
-        const response = await ofetch(
+        const response: { data: BaseResponseApiProps } = await axios.post(
           `${
             CONDITION === "development"
               ? DEVELOPMENT_API_URL
               : PRODUCTION_API_URL
           }/api/auth/registration`,
           {
-            method: "POST",
-            parseResponse: JSON.parse,
-            responseType: "json",
-            body: {
-              name: getValues("name"),
-              email: getValues("email"),
-              password: getValues("password"),
-            },
+            name: getValues("name"),
+            email: getValues("email"),
+            password: getValues("password"),
           }
         );
-        if (response.statusCode === 200) {
-          setIsRegister(true);
+        if (
+          response.data.statusCode === 200 ||
+          response.data.statusCode === 201
+        ) {
+          toast({
+            title: "Success!",
+            description: response.data.message,
+          });
 
           setTimeout(() => {
-            navigate("/auth/login");
+            window.location.replace("/auth/login");
           }, 2000);
         } else {
-          setErrMessage(response.message);
+          toast({
+            title: "Failed!",
+            description: response.data.message,
+          });
+          setErrMessage(response.data.message);
           setIsRegisteredAccount(true);
         }
-      } catch (err) {
-        throw new Error("Failed to POST data!");
+      } catch (err: any) {
+        toast({ title: "Error!", description: err.response.data.message });
       }
     }
-
     registAccount();
   }
 
@@ -190,15 +197,6 @@ export default function Registration() {
         </div>
         <div className="hidden md:block fixed right-0 top-0 md:w-1/2 min-h-svh bg-cover bg-center bg-no-repeat bg-registration-side-image" />
       </m.div>
-      {isRegister ? (
-        <div className="flex justify-center backdrop-blur-lg fixed inset-0 items-center min-h-svh">
-          <div className="bg-white rounded-xl p-4">
-            <Paragraph className="font-medium">
-              Registrasi akun berhasil!
-            </Paragraph>
-          </div>
-        </div>
-      ) : null}
     </>
   );
 }

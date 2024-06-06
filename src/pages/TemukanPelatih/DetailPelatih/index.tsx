@@ -1,24 +1,47 @@
+import IsError from "@/components/IsError";
+import IsPending from "@/components/IsPending";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
+import { getDetailPelatihTari } from "@/features";
 import { useTitle } from "@/hooks";
-import { getLastPathname, toRupiah } from "@/lib/helpers";
+import { toRupiah } from "@/lib/helpers";
 import { cn } from "@/lib/utils/cn";
 import { ulasanList } from "@/lib/utils/data";
+import { DetailPelatihProps, PelatihProps, TokenSliceProps } from "@/types";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { Heart } from "lucide-react";
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 export default function DetailPelatih() {
   const [tabs, setTabs] = useState<"Tentang" | "Ulasan">("Tentang");
 
-  const navigate = useNavigate();
-  const location = useLocation();
+  const { isTokenAdminAvailable, isTokenUserAvailable } = useSelector(
+    (state: TokenSliceProps) => state.token
+  );
 
-  const pelatihName = getLastPathname(location.pathname);
+  const navigate = useNavigate();
+  const { name } = useParams();
+
+  const pelatihName = name as string;
 
   useTitle(`Pelatih ${pelatihName} | Taritme`);
+
+  const { data, isPending, isError } = useQuery({
+    queryKey: ["detail_pelatih"],
+    queryFn: () => getDetailPelatihTari(pelatihName),
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+    placeholderData: keepPreviousData,
+  });
+
+  if (isPending) return <IsPending />;
+  if (isError) return <IsError />;
+
+  const pelatih = data.data.data[0] as DetailPelatihProps & PelatihProps;
 
   return (
     <Layout className="md:flex-row flex-col-reverse justify-between items-start">
@@ -42,19 +65,19 @@ export default function DetailPelatih() {
             )}
           >
             <Image
-              src="/images/lunamaya-detail-pelatih-1.png"
+              src={pelatih.image_1}
               alt="detail pelatih"
               className="row-span-2 h-full mx-auto w-full col-span-2"
               draggable={false}
             />
             <Image
-              src="/images/lunamaya-detail-pelatih-2.png"
+              src={pelatih.image_2}
               alt="detail pelatih"
               draggable={false}
               className="w-full"
             />
             <Image
-              src="/images/lunamaya-detail-pelatih-3.png"
+              src={pelatih.image_3}
               alt="detail pelatih"
               draggable={false}
               className="w-full"
@@ -88,12 +111,7 @@ export default function DetailPelatih() {
                   <Heading as="h2" className="mb-2">
                     Tentang Pelatih
                   </Heading>
-                  <Paragraph>
-                    Seorang pelatih nari berpengalaman yang telah mengajar seni
-                    tari selama lebih dari lima tahun, memiliki keahlian dalam
-                    menari berbagai jenis tarian, termasuk tarian daerah
-                    Sumatera Barat.
-                  </Paragraph>
+                  <Paragraph>{pelatih.tentang_pelatih}</Paragraph>
                 </div>
                 <div>
                   <Heading as="h2" className="mb-2">
@@ -121,7 +139,7 @@ export default function DetailPelatih() {
                     <div className="w-full justify-between flex items-center">
                       <Paragraph className="font-medium">{item.name}</Paragraph>
                       <div className="flex justify-center items-center w-fit space-x-2">
-                        <span>{item.rate}</span>
+                        <span>{item.rating}</span>
                         <Image
                           src="/images/star-icon.svg"
                           alt="star"
@@ -145,20 +163,22 @@ export default function DetailPelatih() {
             <div className="mb-8">
               <div>
                 <Heading as="h1" className="mb-3">
-                  Luna Maya
+                  {pelatih.name}
                 </Heading>
                 <Paragraph className="text-2xl">{toRupiah(100000)}</Paragraph>
               </div>
               <Paragraph className="text-2xl mt-6">
-                Instruktur tari Sumatra Barat yang memberikan ilmu nya melalui
-                kelas tari.
+                {pelatih.description}
               </Paragraph>
             </div>
             <div>
               <div className="flex space-x-2 mb-4 justify-center items-center w-fit">
                 <Image src="/images/star-icon.svg" alt="star" />
                 <Paragraph>
-                  4.9 <span className="text-primary-black/50">(5 Ulasan)</span>
+                  {pelatih.rating}{" "}
+                  <span className="text-primary-black/50">
+                    ({pelatih.total_review} Ulasan)
+                  </span>
                 </Paragraph>
               </div>
               <div className="flex justify-between space-x-5 drop-shadow-lg items-center">
@@ -183,33 +203,37 @@ export default function DetailPelatih() {
                 <Heading as="h2" className="font-medium mb-1.5">
                   Tarif per jam
                 </Heading>
-                <Paragraph>{toRupiah(100000)}/Jam</Paragraph>
+                <Paragraph>{toRupiah(pelatih.price)}/Jam</Paragraph>
               </div>
               <div>
                 <Heading as="h2" className="font-medium mb-1.5">
                   Tarif Paket
                 </Heading>
-                <Paragraph>{toRupiah(450000)}/5 jam</Paragraph>
+                <Paragraph>
+                  {toRupiah(pelatih.price * 5 - 50000)}/5 jam
+                </Paragraph>
               </div>
             </div>
           </div>
-          <div>
-            <Paragraph>Ratings</Paragraph>
-            <Paragraph className="text-xs mt-2">
-              Apakah kamu menyukai keseluruhan service yang diberikan?
-            </Paragraph>
-            <div className="flex mt-5 justify-center items-center w-fit space-x-4">
-              {Array(5)
-                .fill(null)
-                .map((_, index) => (
-                  <Image
-                    key={index + 1}
-                    src="/images/unstar.svg"
-                    alt="unstar"
-                  />
-                ))}
+          {isTokenUserAvailable || isTokenAdminAvailable ? (
+            <div>
+              <Paragraph>Ratings</Paragraph>
+              <Paragraph className="text-xs mt-2">
+                Apakah kamu menyukai keseluruhan service yang diberikan?
+              </Paragraph>
+              <div className="flex mt-5 justify-center items-center w-fit space-x-4">
+                {Array(5)
+                  .fill(null)
+                  .map((_, index) => (
+                    <Image
+                      key={index + 1}
+                      src="/images/unstar.svg"
+                      alt="unstar"
+                    />
+                  ))}
+              </div>
             </div>
-          </div>
+          ) : null}
         </div>
       </aside>
     </Layout>

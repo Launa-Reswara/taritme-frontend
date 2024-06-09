@@ -15,8 +15,10 @@ import {
   DEVELOPMENT_API_URL,
   PRODUCTION_API_URL,
 } from "@/lib/utils/constants";
+import { profileSchema } from "@/lib/utils/schemas";
 import { setIsUploadLoading } from "@/store/slices/user.slice";
 import { UserProfileProps, UserProps, UserSliceProps } from "@/types";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   keepPreviousData,
   useMutation,
@@ -45,38 +47,41 @@ export default function Profile() {
     refetchOnWindowFocus: false,
   });
 
-  if (isPending) return <IsPending />;
-  if (isError) return <IsError />;
-
   const initialData = data?.data.data as unknown as JoinProps[];
   const profile = initialData[0];
 
   return (
-    <>
-      <Layout>
-        <div className="flex justify-between items-center mb-8">
-          <button
-            type="button"
-            aria-label="kembali"
-            className="flex justify-center items-center space-x-2"
-            onClick={() => navigate(-1)}
-          >
-            <Image src="/images/arrow-back-icon.svg" alt="arrow back" />
-            <span className="xl:text-2xl">Kembali</span>
-          </button>
-        </div>
-        <div className="mt-5">
-          <Heading
-            as="h2"
-            className="font-normal mb-2 text-primary-color"
-            style={{ fontSize: "1.5rem" }}
-          >
-            Profile
-          </Heading>
-        </div>
-        <FormEditProfile profile={profile} />
-      </Layout>
-    </>
+    <Layout>
+      {isPending ? (
+        <IsPending />
+      ) : isError ? (
+        <IsError />
+      ) : (
+        <>
+          <div className="flex justify-between items-center mb-8">
+            <button
+              type="button"
+              aria-label="kembali"
+              className="flex justify-center items-center space-x-2"
+              onClick={() => navigate(-1)}
+            >
+              <Image src="/images/arrow-back-icon.svg" alt="arrow back" />
+              <span className="xl:text-2xl">Kembali</span>
+            </button>
+          </div>
+          <div className="mt-5">
+            <Heading
+              as="h2"
+              className="font-normal mb-2 text-primary-color"
+              style={{ fontSize: "1.5rem" }}
+            >
+              Profile
+            </Heading>
+          </div>
+          <FormEditProfile profile={profile} />
+        </>
+      )}
+    </Layout>
   );
 }
 
@@ -102,6 +107,7 @@ function FormEditProfile({ profile }: { profile: JoinProps }) {
       umur: profile.age,
       bio: profile.bio,
     },
+    resolver: zodResolver(profileSchema),
   });
 
   async function uploadImage(
@@ -125,7 +131,7 @@ function FormEditProfile({ profile }: { profile: JoinProps }) {
 
       return response.data.data;
     } catch (err: any) {
-      toast({ title: "Error!", description: err.message });
+      toast({ title: "Error!", description: err.response.data.message });
     }
   }
 
@@ -142,7 +148,7 @@ function FormEditProfile({ profile }: { profile: JoinProps }) {
           no_hp: getValues("no_hp"),
           jenis_kelamin: getValues("jenis_kelamin"),
           age: getValues("umur"),
-          bio: "sfdfjk",
+          bio: getValues("bio"),
         },
         {
           headers: {
@@ -158,7 +164,7 @@ function FormEditProfile({ profile }: { profile: JoinProps }) {
         toast({ title: "Failed!", description: response.data.message });
       }
     } catch (err: any) {
-      toast({ title: "Error!", description: err.message });
+      toast({ title: "Error!", description: err.response.data.message });
     }
   }
 

@@ -1,4 +1,3 @@
-// TODO: pecah-pecah jadi bagian kecil
 import IsError from "@/components/IsError";
 import IsPending from "@/components/IsPending";
 import SidebarAdmin from "@/components/SidebarAdmin";
@@ -24,6 +23,7 @@ import {
   DEVELOPMENT_API_URL,
   PRODUCTION_API_URL,
 } from "@/lib/utils/constants";
+import { FormPelatihSchema } from "@/lib/utils/schemas";
 import {
   setId,
   setInitialData,
@@ -32,6 +32,7 @@ import {
   setIsUploadLoading,
 } from "@/store/slices/pelatih.slice";
 import { PelatihProps, PelatihSliceProps } from "@/types";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   keepPreviousData,
   useMutation,
@@ -229,6 +230,7 @@ function FormEditpelatih() {
       tarif_per_jam: price,
       status: status,
     },
+    resolver: zodResolver(FormPelatihSchema),
   });
 
   async function uploadImage(): Promise<string | undefined> {
@@ -250,7 +252,7 @@ function FormEditpelatih() {
 
       return response.data.data as string;
     } catch (err: any) {
-      toast({ title: "Error!", description: err.message });
+      toast({ title: "Error!", description: err.response.data.message });
     }
   }
 
@@ -285,7 +287,7 @@ function FormEditpelatih() {
         toast({ title: "Failed!", description: response.data.message });
       }
     } catch (err: any) {
-      toast({ title: "Error!", description: err.message });
+      toast({ title: "Error!", description: err.response.data.message });
     }
   }
 
@@ -508,6 +510,7 @@ function FormTambahPelatih() {
       deskripsi: "",
       tarif_per_jam: "",
     },
+    resolver: zodResolver(FormPelatihSchema),
   });
 
   async function addImage(): Promise<string | undefined> {
@@ -529,7 +532,7 @@ function FormTambahPelatih() {
 
       return response.data.data;
     } catch (err: any) {
-      toast({ title: "Error!", description: err.message });
+      toast({ title: "Error!", description: err.response.data.message });
     }
   }
 

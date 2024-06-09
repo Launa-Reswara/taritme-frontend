@@ -113,7 +113,9 @@ export default function IkutiKursus() {
                   CONDITION === "development"
                     ? DEVELOPMENT_API_URL
                     : PRODUCTION_API_URL
-                }/temukan-pelatih/${pelatihName}/ikuti-kursus/penilaian`,
+                }/temukan-pelatih/${slugify(pelatihName, {
+                  lower: true,
+                })}/ikuti-kursus/penilaian`,
               },
             ],
           },
@@ -130,7 +132,7 @@ export default function IkutiKursus() {
           toast({ title: "Error!", description: response.data.message });
         }
       } catch (err: any) {
-        toast({ title: "Error!", description: err.message });
+        toast({ title: "Error!", description: err.response.data.message });
       }
     }
 

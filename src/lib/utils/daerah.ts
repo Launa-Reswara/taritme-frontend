@@ -1,7 +1,16 @@
+type DaerahProps = {
+  id: string;
+  province_id: string;
+  name: string;
+  alt_name: string;
+  latitude: number;
+  longitude: number;
+};
+
 /**
  * @see https://github.com/yusufsyaifudin/wilayah-indonesia
  */
-export const daerah = [
+export const daerah: DaerahProps[] = [
   {
     id: "1101",
     province_id: "11",

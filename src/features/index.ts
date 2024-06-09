@@ -78,11 +78,15 @@ type ResponseGetUserProfileProps = Omit<AxiosResponse, "data"> & {
 // user profile
 export async function getUserProfile() {
   try {
-    const response = await axios.post(
+    const response = await axios.get(
       `${
         CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
       }/api/users/profile`,
-      { token: Cookies.get("token") }
+      {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      }
     );
 
     return response as ResponseGetUserProfileProps;

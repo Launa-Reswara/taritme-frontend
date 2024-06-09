@@ -127,12 +127,14 @@ export type UserSliceProps = {
   user: {
     isEditProfile: boolean;
     setIsEditProfile: (isEditProfile: boolean) => void;
+    isUploadLoading: boolean;
+    setIsUploadLoading: (isUploadLoading: boolean) => void;
   };
 };
 
 export type UserProfileProps = {
   id: number;
-  users_id: number;
+  name: string;
   jenis_kelamin: "Laki-laki" | "Perempuan";
   bio: string;
   no_hp: string;

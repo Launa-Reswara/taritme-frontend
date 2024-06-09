@@ -239,7 +239,7 @@ function FormEditpelatih() {
       const response = await axios.post(
         `${
           CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-        }/api/pelatih-tari/upload-image`,
+        }/api/pelatih-tari/upload-image/${id}`,
         formData,
         {
           headers: {
@@ -258,8 +258,6 @@ function FormEditpelatih() {
     try {
       dispatch(setIsUploadLoading(true));
 
-      const cloudinaryImage = await uploadImage();
-
       const response: AxiosResponse = await axios.patch(
         `${
           CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
@@ -267,7 +265,6 @@ function FormEditpelatih() {
         {
           email: getValues("email"),
           name: getValues("nama"),
-          image: cloudinaryImage,
           price: getValues("tarif_per_jam"),
           no_hp: getValues("no_hp"),
           status: getValues("status"),
@@ -292,13 +289,19 @@ function FormEditpelatih() {
     }
   }
 
+  const uploadImageMutation = useMutation({
+    mutationFn: uploadImage,
+    onSuccess: () => queryClient.invalidateQueries(),
+  });
+
   const editPelatihTariMutation = useMutation({
     mutationFn: editPelatihTari,
     onSuccess: () => queryClient.invalidateQueries(),
   });
 
   function onSubmit() {
-    editPelatihTariMutation.mutate();
+    uploadImageMutation.mutateAsync();
+    editPelatihTariMutation.mutateAsync();
   }
 
   return (
@@ -406,13 +409,14 @@ function FormEditpelatih() {
                   >
                     Status
                   </label>
-                  <Input
-                    type="text"
+                  <select
+                    defaultValue="Status"
                     {...register("status", { required: true })}
-                    placeholder="Status anda"
-                    name="status"
-                    className="mt-2 border-spanish-gray w-full rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
-                  />
+                    className="mt-1 w-full border border-spanish-gray bg-white rounded-full p-2"
+                  >
+                    <option value="Aktif">Aktif</option>
+                    <option value="Tidak Aktif">Tidak Aktif</option>
+                  </select>
                   <Paragraph className="text-xs font-medium mt-2">
                     {errors.status?.message}
                   </Paragraph>
@@ -506,7 +510,7 @@ function FormTambahPelatih() {
     },
   });
 
-  async function uploadImage(): Promise<string | undefined> {
+  async function addImage(): Promise<string | undefined> {
     try {
       const formData = new FormData();
       formData.append("my_file", photo[0]);
@@ -514,7 +518,7 @@ function FormTambahPelatih() {
       const response = await axios.post(
         `${
           CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-        }/api/pelatih-tari/upload-image`,
+        }/api/pelatih-tari/add-image`,
         formData,
         {
           headers: {
@@ -533,7 +537,7 @@ function FormTambahPelatih() {
     try {
       dispatch(setIsUploadLoading(true));
 
-      const cloudinaryImage = await uploadImage();
+      const cloudinaryImage = await addImage();
 
       const response: AxiosResponse = await axios.post(
         `${
@@ -543,10 +547,10 @@ function FormTambahPelatih() {
           name: getValues("nama"),
           email: getValues("email"),
           no_hp: getValues("no_hp"),
+          image: cloudinaryImage,
           description: getValues("deskripsi"),
           status: getValues("status"),
           price: getValues("tarif_per_jam"),
-          image: cloudinaryImage,
         },
         {
           headers: {
@@ -573,7 +577,7 @@ function FormTambahPelatih() {
   });
 
   function onSubmit() {
-    addPelatihTariMutation.mutate();
+    addPelatihTariMutation.mutateAsync();
   }
 
   return (
@@ -681,13 +685,14 @@ function FormTambahPelatih() {
                   >
                     Status
                   </label>
-                  <Input
-                    type="text"
+                  <select
+                    defaultValue="Status"
                     {...register("status", { required: true })}
-                    placeholder="Status anda"
-                    name="status"
-                    className="mt-2 border-spanish-gray w-full rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
-                  />
+                    className="mt-1 w-full border border-spanish-gray bg-white rounded-full p-2"
+                  >
+                    <option value="Aktif">Aktif</option>
+                    <option value="Tidak Aktif">Tidak Aktif</option>
+                  </select>
                   <Paragraph className="text-xs font-medium mt-2">
                     {errors.status?.message}
                   </Paragraph>

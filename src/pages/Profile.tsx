@@ -47,40 +47,35 @@ export default function Profile() {
     refetchOnWindowFocus: false,
   });
 
-  const initialData = data?.data.data as unknown as JoinProps[];
+  if (isPending) return <IsPending />;
+  if (isError) return <IsError />;
+
+  const initialData = data.data.data as unknown as JoinProps[];
   const profile = initialData[0];
 
   return (
     <Layout>
-      {isPending ? (
-        <IsPending />
-      ) : isError ? (
-        <IsError />
-      ) : (
-        <>
-          <div className="flex justify-between items-center mb-8">
-            <button
-              type="button"
-              aria-label="kembali"
-              className="flex justify-center items-center space-x-2"
-              onClick={() => navigate(-1)}
-            >
-              <Image src="/images/arrow-back-icon.svg" alt="arrow back" />
-              <span className="xl:text-2xl">Kembali</span>
-            </button>
-          </div>
-          <div className="mt-5">
-            <Heading
-              as="h2"
-              className="font-normal mb-2 text-primary-color"
-              style={{ fontSize: "1.5rem" }}
-            >
-              Profile
-            </Heading>
-          </div>
-          <FormEditProfile profile={profile} />
-        </>
-      )}
+      <div className="flex justify-between items-center mb-8">
+        <button
+          type="button"
+          aria-label="kembali"
+          className="flex justify-center items-center space-x-2"
+          onClick={() => navigate(-1)}
+        >
+          <Image src="/images/arrow-back-icon.svg" alt="arrow back" />
+          <span className="xl:text-2xl">Kembali</span>
+        </button>
+      </div>
+      <div className="mt-5">
+        <Heading
+          as="h2"
+          className="font-normal mb-2 text-primary-color"
+          style={{ fontSize: "1.5rem" }}
+        >
+          Profile
+        </Heading>
+      </div>
+      <FormEditProfile profile={profile} />
     </Layout>
   );
 }
@@ -161,6 +156,7 @@ function FormEditProfile({ profile }: { profile: JoinProps }) {
         dispatch(setIsUploadLoading(false));
         toast({ title: "Success!", description: response.data.message });
       } else {
+        dispatch(setIsUploadLoading(false));
         toast({ title: "Failed!", description: response.data.message });
       }
     } catch (err: any) {

@@ -17,6 +17,8 @@ export default function DetailArsipKesenian() {
   const navigate = useNavigate();
   const { id } = useParams();
 
+  useTitle(`Artikel | Taritme`);
+
   const { data, isPending, isError } = useQuery({
     queryKey: [id as string],
     queryFn: () => getArsipKesenianById(id as string),
@@ -25,7 +27,8 @@ export default function DetailArsipKesenian() {
     refetchOnReconnect: false,
   });
 
-  useTitle(`Artikel | Taritme`);
+  if (isPending) return <IsPending />;
+  if (isError) return <IsError />;
 
   return (
     <Layout>
@@ -40,74 +43,65 @@ export default function DetailArsipKesenian() {
           <span className="xl:text-2xl">Kembali</span>
         </button>
       </div>
-      {isPending ? (
-        <IsPending />
-      ) : isError ? (
-        <IsError />
-      ) : (
-        <>
-          <div className="flex w-full flex-col sm:flex-row justify-between">
-            <div className="flex items-center space-x-4">
+
+      <div className="flex w-full flex-col sm:flex-row justify-between">
+        <div className="flex items-center space-x-4">
+          <Image
+            src="/images/leonardo-da-vince.svg"
+            alt="author"
+            className="w-12 h-12"
+          />
+          <div className="flex flex-col">
+            <Paragraph className="font-semibold">{data.fields.title}</Paragraph>
+            <div className="flex items-center space-x-2">
+              <Paragraph className="text-xs">
+                {format(data.fields.date, "LLLL d, yyyy")} | Penulis
+              </Paragraph>
               <Image
-                src="/images/leonardo-da-vince.svg"
-                alt="author"
-                className="w-12 h-12"
+                src="/images/electric-icon.svg"
+                alt="electric icon"
+                className="w-4 h-4"
               />
-              <div className="flex flex-col">
-                <Paragraph className="font-semibold">
-                  {data.fields.title}
-                </Paragraph>
-                <div className="flex items-center space-x-2">
-                  <Paragraph className="text-xs">
-                    {format(data.fields.date, "LLLL d, yyyy")} | Penulis
-                  </Paragraph>
-                  <Image
-                    src="/images/electric-icon.svg"
-                    alt="electric icon"
-                    className="w-4 h-4"
-                  />
-                  <Paragraph className="text-xs">5 mins read</Paragraph>
-                </div>
-              </div>
-            </div>
-            <div className="flex items-center mt-5 space-x-4 sm:space-x-8">
-              <button className="flex items-center space-x-1">
-                <ThumbsUp size={16} />
-                <span className="text-xs md:text-sm">999</span>
-              </button>
-              <button className="flex items-center space-x-1">
-                <MessageCircle size={16} />
-                <span className="text-xs md:text-sm">12</span>
-              </button>
-              <button className="flex items-center space-x-1">
-                <Share size={16} />
-                <span className="text-xs md:text-sm">12</span>
-              </button>
+              <Paragraph className="text-xs">5 mins read</Paragraph>
             </div>
           </div>
-          <div className="prose prose-gray mt-10 prose-lg max-w-full prose-h1:text-[32px] prose-h2:text-2xl prose-h3:text-xl prose-h4:text-lg prose-headings:font-normal w-full">
-            {documentToReactComponents(data.fields.content, {
-              renderNode: {
-                [BLOCKS.EMBEDDED_ASSET]: (node) => (
-                  <Image
-                    className="w-full rounded-lg"
-                    src={`https:${node.data.target.fields.file.url}`}
-                    alt={node.data.target.fields.description}
-                  />
-                ),
-              },
-            })}
-          </div>
-          <Heading as="h2" className="font-bold mb-2 mt-12">
-            Baca Juga
-          </Heading>
-          <div className="flex justify-center w-full mt-10">
-            <div className="grid grid-cols-1 w-full sm:grid-cols-2 md:grid-cols-3 grid-rows-1 gap-6">
-              <BacaJugaList />
-            </div>
-          </div>
-        </>
-      )}
+        </div>
+        <div className="flex items-center mt-5 space-x-4 sm:space-x-8">
+          <button className="flex items-center space-x-1">
+            <ThumbsUp size={16} />
+            <span className="text-xs md:text-sm">999</span>
+          </button>
+          <button className="flex items-center space-x-1">
+            <MessageCircle size={16} />
+            <span className="text-xs md:text-sm">12</span>
+          </button>
+          <button className="flex items-center space-x-1">
+            <Share size={16} />
+            <span className="text-xs md:text-sm">12</span>
+          </button>
+        </div>
+      </div>
+      <div className="prose prose-gray mt-10 prose-lg max-w-full prose-h1:text-[32px] prose-h2:text-2xl prose-h3:text-xl prose-h4:text-lg prose-headings:font-normal w-full">
+        {documentToReactComponents(data.fields.content, {
+          renderNode: {
+            [BLOCKS.EMBEDDED_ASSET]: (node) => (
+              <Image
+                className="w-full rounded-lg"
+                src={`https:${node.data.target.fields.file.url}`}
+                alt={node.data.target.fields.description}
+              />
+            ),
+          },
+        })}
+      </div>
+      <Heading as="h2" className="font-bold mb-2 mt-12">
+        Baca Juga
+      </Heading>
+      <div className="flex justify-center w-full mt-10">
+        <div className="grid grid-cols-1 w-full sm:grid-cols-2 md:grid-cols-3 grid-rows-1 gap-6">
+          <BacaJugaList />
+        </div>
+      </div>
     </Layout>
   );
 }

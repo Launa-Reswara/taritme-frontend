@@ -17,7 +17,7 @@ export const loginAdminSchema = z.object({
 });
 
 export const penilaianSchema = z.object({
-  ulasan: z.string().min(20),
+  ulasan: z.string().min(1),
 });
 
 export const ikutiKursusSchema = z.object({

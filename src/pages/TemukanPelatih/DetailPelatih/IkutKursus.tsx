@@ -1,6 +1,7 @@
 import IsError from "@/components/IsError";
 import IsPending from "@/components/IsPending";
 import Layout from "@/components/Layout";
+import Payment from "@/components/Payment";
 import { Button } from "@/components/ui/button";
 import Image from "@/components/ui/image";
 import { Input } from "@/components/ui/input";
@@ -24,25 +25,25 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { ChevronRight } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import slugify from "slugify";
 
 export default function IkutiKursus() {
-  const location = useLocation();
-
+  const { name } = useParams();
   const { toast } = useToast();
 
-  const pelatihName = location.pathname
-    .split("/")[2]
+  const nameStr = name as string;
+
+  const pelatihName = nameStr
     .split("-")
     .map((item) => item[0].toUpperCase() + item.substring(1))
     .join(" ");
 
-  useTitle(`Ikuti kursus ${pelatihName} | Taritme`);
+  useTitle(`Ikut kursus ${pelatihName} | Taritme`);
 
   const {
-    formState: { errors },
     handleSubmit,
+    formState: { errors },
     register,
     getValues,
   } = useForm({
@@ -69,6 +70,27 @@ export default function IkutiKursus() {
   const pelatihTari = data?.data.data[0] as PelatihProps;
 
   function onSubmit() {
+    async function addRiwayatKursus(orderId: string) {
+      try {
+        const response = await axios.post(
+          `${
+            CONDITION === "development"
+              ? DEVELOPMENT_API_URL
+              : PRODUCTION_API_URL
+          }/api/riwayat-kursus`,
+          {
+            pelatih_tari_name: name,
+            order_id: orderId,
+          },
+          { headers: { Authorization: `Bearer ${Cookies.get("token")}` } }
+        );
+
+        return response.data.data;
+      } catch (err: any) {
+        toast({ title: "Error!", description: err.response.data.message });
+      }
+    }
+
     // change lama sewa from string to number
     const lamaSewa = Number(getValues("lama_sewa"));
 
@@ -127,7 +149,11 @@ export default function IkutiKursus() {
         );
 
         if (response.status === 200 || response.status === 201) {
-          window.location.href = response.data.redirect_url;
+          window.snap.pay(response.data.token, {
+            onSuccess: (res: any) => {
+              addRiwayatKursus(res.order_id);
+            },
+          });
         } else {
           toast({ title: "Error!", description: response.data.message });
         }
@@ -139,13 +165,13 @@ export default function IkutiKursus() {
     submitDataTransaction();
   }
 
+  if (isPending) return <IsPending />;
+  if (isError) return <IsError />;
+
   return (
-    <Layout>
-      {isPending ? (
-        <IsPending />
-      ) : isError ? (
-        <IsError />
-      ) : (
+    <>
+      <Payment />
+      <Layout>
         <div className="flex w-full flex-col md:flex-row md:space-x-8 justify-center items-center md:justify-start md:items-start">
           <div>
             {/* Render kartu instruktur */}
@@ -330,7 +356,7 @@ export default function IkutiKursus() {
             </form>
           </div>
         </div>
-      )}
-    </Layout>
+      </Layout>
+    </>
   );
 }

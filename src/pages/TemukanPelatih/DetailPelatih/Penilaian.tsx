@@ -6,8 +6,10 @@ import Image from "@/components/ui/image";
 import { Textarea } from "@/components/ui/textarea";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { useToast } from "@/components/ui/use-toast";
+import { getDetailPelatihTari, getPaymentStatus } from "@/features";
 import { useTitle } from "@/hooks";
 import { toRupiah } from "@/lib/helpers";
+import { cn } from "@/lib/utils/cn";
 import {
   CONDITION,
   DEVELOPMENT_API_URL,
@@ -15,63 +17,100 @@ import {
 } from "@/lib/utils/constants";
 import { penilaianSchema } from "@/lib/utils/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import Cookies from "js-cookie";
 import { Star } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
+import {
+  Navigate,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 
 export default function Penilaian() {
+  const [star, setStar] = useState<number>(0);
   const [searchParams] = useSearchParams();
 
-  const navigate = useNavigate();
+  const { name } = useParams();
   const { toast } = useToast();
 
+  const navigate = useNavigate();
   const orderId = searchParams.get("order_id");
 
   useTitle(`Penilaian pelatih | Taritme`);
 
   const {
+    getValues,
     formState: { errors },
     handleSubmit,
+    register,
   } = useForm({
     defaultValues: { ulasan: "" },
     resolver: zodResolver(penilaianSchema),
   });
 
-  async function getPaymentStatus() {
-    try {
-      const response = await axios.get(
-        `${
-          CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-        }/api/pelatih-tari/payment/${orderId}`
-      );
-
-      return response.data;
-    } catch (err: any) {
-      toast({ title: "Error!", description: err.response.data.message });
-    }
-  }
-
   const { data, isPending, isError } = useQuery({
     queryKey: [orderId],
-    queryFn: () => getPaymentStatus(),
+    queryFn: () => getPaymentStatus(orderId as string),
     refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    placeholderData: keepPreviousData,
   });
 
-  function onSubmit() {}
+  const { data: pelatihTari } = useQuery({
+    queryKey: ["get-detail-pelatih-tari"],
+    queryFn: () => getDetailPelatihTari(name as string),
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    placeholderData: keepPreviousData,
+  });
+
+  if (isPending) return <IsPending />;
+  if (isError) return <IsError />;
+
+  function onSubmit() {
+    async function submitPenilaian() {
+      try {
+        const response = await axios.post(
+          `${
+            CONDITION === "development"
+              ? DEVELOPMENT_API_URL
+              : PRODUCTION_API_URL
+          }/api/pelatih-tari/${name}/penilaian`,
+          {
+            pelatih_tari_id: pelatihTari.id,
+            pelatih_tari_name: pelatihTari.name,
+            rating: star,
+            comment: getValues("ulasan"),
+            order_id: orderId,
+          },
+          { headers: { Authorization: `Bearer ${Cookies.get("token")}` } }
+        );
+
+        if (response.data.statusCode === 200) {
+          toast({ title: "Success!", description: response.data.message });
+          setTimeout(() => {
+            window.location.replace("/");
+          }, 2000);
+        }
+      } catch (err: any) {
+        toast({ title: "Error!", description: err.response.data.message });
+      }
+    }
+
+    submitPenilaian();
+  }
 
   return (
     <>
       <Layout>
-        {isPending ? (
-          <IsPending />
-        ) : isError ? (
-          <IsError />
-        ) : data.statusCode === 200 &&
-          orderId &&
-          orderId === data.data.order_id &&
-          data.data.transaction_status === "settlement" ? (
+        {data.statusCode === 200 &&
+        orderId &&
+        orderId === data.data.order_id &&
+        data.data.transaction_status === "settlement" ? (
           <div className="flex w-full flex-col md:flex-row md:space-x-8 justify-center items-center md:justify-start md:items-start">
             <div>
               <div>
@@ -90,11 +129,10 @@ export default function Penilaian() {
                   />
                   <div className="mt-36">
                     <Heading as="h2" className="text-white">
-                      Luna Maya
+                      {pelatihTari.name}
                     </Heading>
                     <Paragraph className="text-white mt-1 mb-2 text-xs">
-                      Instruktur tari Sumatra Barat yang memberikan ilmu nya
-                      melalui kursus tari.
+                      {pelatihTari.description}
                     </Paragraph>
                     <div className="mb-6">
                       <div className="flex justify-center items-center w-fit space-x-2">
@@ -109,7 +147,7 @@ export default function Penilaian() {
                     </div>
                     <div className="w-full flex justify-start items-center">
                       <Paragraph className="text-white">
-                        {toRupiah(100000)}
+                        {toRupiah(pelatihTari.price)}
                       </Paragraph>
                     </div>
                   </div>
@@ -132,12 +170,24 @@ export default function Penilaian() {
                     {Array(5)
                       .fill(null)
                       .map((_, index) => (
-                        <Star key={index + 1} />
+                        <button
+                          type="button"
+                          onClick={() => setStar(index + 1)}
+                          key={index + 1}
+                        >
+                          <Star
+                            className={cn(
+                              "text-secondary-color",
+                              star >= index + 1 ? "fill-secondary-color" : ""
+                            )}
+                          />
+                        </button>
                       ))}
                   </div>
                 </div>
                 <div className="w-full">
                   <Textarea
+                    {...register("ulasan", { required: true })}
                     className="border border-spanish-gray rounded-lg h-52 px-3 mt-10"
                     placeholder="Contoh : Kak Luna Maya sangat pandai melatih, sehingga gerakannya mudah di pahami"
                   />

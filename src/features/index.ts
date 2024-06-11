@@ -95,27 +95,14 @@ export async function getUserProfile() {
   }
 }
 
-export async function getDetailPelatihTari(name: string) {
-  try {
-    const response = await axios.get(
-      `${
-        CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-      }/api/pelatih-tari/${name}`
-    );
-
-    return response;
-  } catch (err: any) {
-    throw new Error(err.response.data.message);
-  }
-}
-
 // riwayat kursus
 export async function getRiwayatKursus() {
   try {
     const response = await axios.get(
       `${
         CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-      }/api/riwayat-kursus`
+      }/api/riwayat-kursus`,
+      { headers: { Authorization: `Bearer ${Cookies.get("token")}` } }
     );
 
     return response.data.data;
@@ -139,5 +126,50 @@ export async function getArsipKesenianById(id: string) {
     return response as any;
   } catch (err) {
     throw new Error("Failed to get arsip kesenian!");
+  }
+}
+
+export async function getPenilaianPelatihTari(name: string) {
+  try {
+    const response = await axios.get(
+      `${
+        CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
+      }/api/pelatih-tari/${name}/kumpulan-penilaian`,
+      { headers: { Authorization: `Bearer ${Cookies.get("token")}` } }
+    );
+
+    return response.data.data;
+  } catch (err: any) {
+    throw new Error("Failed to get penilaian pelatih tari!");
+  }
+}
+
+export async function getDetailPelatihTari(name: string) {
+  try {
+    const response = await axios.get(
+      `${
+        CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
+      }/api/pelatih-tari/${name}`,
+      { headers: { Authorization: `Bearer ${Cookies.get("token")}` } }
+    );
+
+    return response.data.data[0];
+  } catch (err: any) {
+    throw new Error(err.response.data.message);
+  }
+}
+
+export async function getPaymentStatus(orderId: string) {
+  try {
+    const response = await axios.get(
+      `${
+        CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
+      }/api/pelatih-tari/payment/${orderId}`,
+      { headers: { Authorization: `Bearer ${Cookies.get("token")}` } }
+    );
+
+    return response.data;
+  } catch (err: any) {
+    throw new Error(err.response.data.message);
   }
 }

@@ -30,9 +30,9 @@ export const ikutiKursusSchema = z.object({
 
 export const profileSchema = z.object({
   nama: z.string().min(1),
-  no_hp: z.number().min(12).max(12),
+  no_hp: z.string().min(12).max(12),
   jenis_kelamin: z.enum(["Laki-laki", "Perempuan"]),
-  umur: z.number().min(1).max(3),
+  umur: z.string().min(1),
   bio: z.string().min(1),
 });
 

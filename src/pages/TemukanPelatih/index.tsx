@@ -19,11 +19,13 @@ import { toRupiah } from "@/lib/helpers";
 import { PelatihProps } from "@/types";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { ChevronRight, Search } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import slugify from "slugify";
 
 export default function TemukanPelatih() {
+  const [open, setOpen] = useState<boolean>(false);
+
   useTitle("Temukan Pelatih | Taritme");
 
   const { data, isPending, isError } = useQuery({
@@ -53,6 +55,7 @@ export default function TemukanPelatih() {
             <Input
               className="bg-white w-fit md:w-[487px] rounded-full relative"
               placeholder="Cari Pelatih"
+              onFocus={() => setOpen((prev) => !prev)}
             />
             <Search className="absolute right-4" />
           </div>
@@ -144,14 +147,22 @@ export default function TemukanPelatih() {
           </div>
         </div>
       </Layout>
-      <SearchCommand data={data?.data.data as PelatihProps[]} />
+      <SearchCommand
+        open={open}
+        setOpen={setOpen}
+        data={data?.data.data as PelatihProps[]}
+      />
     </>
   );
 }
 
-function SearchCommand({ data }: { data: PelatihProps[] }) {
-  const [open, setOpen] = useState<boolean>(false);
+type SearchCommandProps = {
+  data: PelatihProps[];
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+};
 
+function SearchCommand({ data, open, setOpen }: SearchCommandProps) {
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && e.ctrlKey) {

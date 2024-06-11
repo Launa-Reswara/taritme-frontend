@@ -34,7 +34,7 @@ export default function DetailPelatih() {
 
   const { data: penilaian } = useQuery({
     queryKey: ["get-penilaian-pelatih-tari"],
-    queryFn: () => getPenilaianPelatihTari(name as string),
+    queryFn: () => getPenilaianPelatihTari(pelatihName),
     placeholderData: keepPreviousData,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
@@ -43,7 +43,7 @@ export default function DetailPelatih() {
   if (isPending) return <IsPending />;
   if (isError) return <IsError />;
 
-  const pelatih = data.data.data[0] as DetailPelatihProps & PelatihProps;
+  const pelatih = data as DetailPelatihProps & PelatihProps;
 
   return (
     <Layout className="md:flex-row flex-col-reverse justify-between items-start">

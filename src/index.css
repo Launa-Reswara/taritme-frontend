@@ -96,3 +96,19 @@
 .parent-polygon-home {
   filter: url("#polygon-home");
 }
+
+body {
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-light-silver;
+}
+
+::-webkit-scrollbar {
+  @apply bg-light-silver w-2.5;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary-color;
+}

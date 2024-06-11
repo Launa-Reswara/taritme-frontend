@@ -17,6 +17,7 @@ export const pelatihSlice = createSlice({
       status: "",
     },
     isUploadLoading: false,
+    isOpenSearchCommand: false,
   },
   reducers: {
     setIsEditPelatih: (state, action) => {
@@ -34,6 +35,9 @@ export const pelatihSlice = createSlice({
     setIsUploadLoading: (state, action) => {
       state.isUploadLoading = action.payload;
     },
+    setIsOpenSearchCommand: (state, action) => {
+      state.isOpenSearchCommand = action.payload;
+    },
   },
 });
 
@@ -42,6 +46,7 @@ export const {
   setIsTambahPelatih,
   setId,
   setInitialData,
+  setIsOpenSearchCommand,
   setIsUploadLoading,
 } = pelatihSlice.actions;
 

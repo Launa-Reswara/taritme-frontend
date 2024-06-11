@@ -160,6 +160,7 @@ function FormEditProfile({ profile }: { profile: JoinProps }) {
         toast({ title: "Failed!", description: response.data.message });
       }
     } catch (err: any) {
+      dispatch(setIsUploadLoading(false));
       toast({ title: "Error!", description: err.response.data.message });
     }
   }
@@ -212,94 +213,114 @@ function FormEditProfile({ profile }: { profile: JoinProps }) {
         <Paragraph className="text-lg font-medium">{profile.name}</Paragraph>
       </div>
 
-      <div className="mt-5 relative  w-full">
-        <div className="grid grid-cols-1 gap-6" style={{ padding: "0 2rem" }}>
-          <div className="flex items-center w-full justify-end ">
+      <div className="mt-5 relative w-full">
+        <div className="grid grid-cols-1 p-[2rem] gap-5 sm:gap-8">
+          <div className="flex flex-col sm:flex-row sm:items-center items-start w-full justify-between">
             <label
               htmlFor="nama"
-              className="block text-lg font-medium text-black w-1/3"
+              className="block text-base sm:text-lg  font-medium text-primary-black"
             >
               Nama
             </label>
-            <Input
-              {...register("nama", { required: true })}
-              type="text"
-              placeholder="Nama Anda"
-              className="mt-1 w-2/3 border border-spanish-gray rounded-full p-6"
-            />
-            <Paragraph className="text-xs font-medium mt-2">
-              {errors.nama?.message}
-            </Paragraph>
+            <div className="w-full sm:w-2/3 mt-1 sm:mt-0">
+              <Input
+                {...register("nama", { required: true })}
+                type="text"
+                placeholder="Nama Anda"
+                className="border border-spanish-gray rounded-full p-6"
+              />
+              {errors.nama ? (
+                <Paragraph className="text-xs font-medium mt-2">
+                  {errors.nama.message}
+                </Paragraph>
+              ) : null}
+            </div>
           </div>
-          <div className="flex items-center w-full justify-end">
+          <div className="flex flex-col sm:flex-row sm:items-center items-start w-full justify-between">
             <label
               htmlFor="email"
-              className="block text-lg font-medium text-black w-1/3"
+              className="block text-base sm:text-lg  font-medium text-primary-black"
             >
               Nomor Telepon
             </label>
-            <Input
-              {...register("no_hp", { required: true })}
-              type="tel"
-              placeholder="Nomor Telepon Anda"
-              className="mt-1 w-2/3 border border-spanish-gray rounded-full p-6"
-            />
-            <Paragraph className="text-xs font-medium mt-2">
-              {errors.no_hp?.message}
-            </Paragraph>
+            <div className="w-full sm:w-2/3 mt-1 sm:mt-0">
+              <Input
+                {...register("no_hp", { required: true })}
+                type="number"
+                placeholder="Nomor Telepon Anda"
+                className="w-full border border-spanish-gray rounded-full p-6"
+              />
+              {errors.no_hp ? (
+                <Paragraph className="text-xs font-medium mt-2">
+                  {errors.no_hp.message}
+                </Paragraph>
+              ) : null}
+            </div>
           </div>
-          <div className="flex items-center w-full justify-end">
+          <div className="flex flex-col sm:flex-row sm:items-center items-start w-full justify-between">
             <label
               htmlFor="jenis_kelamin"
-              className="block text-lg font-medium text-black w-1/3"
+              className="block text-base sm:text-lg  font-medium text-primary-black"
             >
               Jenis Kelamin
             </label>
-            <select
-              defaultValue="Laki-laki"
-              {...register("jenis_kelamin", { required: true })}
-              className="mt-1 w-2/3 border border-spanish-gray rounded-full p-2 bg-white"
-            >
-              <option value="Laki-laki">Laki-laki</option>
-              <option value="Perempuan">Perempuan</option>
-            </select>
-            <Paragraph className="text-xs font-medium mt-2">
-              {errors.jenis_kelamin?.message}
-            </Paragraph>
+            <div className="w-full sm:w-2/3 mt-1 sm:mt-0">
+              <select
+                defaultValue="Laki-laki"
+                {...register("jenis_kelamin", { required: true })}
+                className="border w-full border-spanish-gray rounded-full p-2 bg-white"
+              >
+                <option value="Laki-laki">Laki-laki</option>
+                <option value="Perempuan">Perempuan</option>
+              </select>
+              {errors.jenis_kelamin ? (
+                <Paragraph className="text-xs font-medium mt-2">
+                  {errors.jenis_kelamin.message}
+                </Paragraph>
+              ) : null}
+            </div>
           </div>
-          <div className="flex items-center w-full justify-end">
+          <div className="flex flex-col sm:flex-row sm:items-center items-start w-full justify-between">
             <label
               htmlFor="umur"
-              className="block text-lg font-medium text-black w-1/3"
+              className="block text-base sm:text-lg  font-medium text-primary-black"
             >
               Umur
             </label>
-            <Input
-              {...register("umur", { required: true })}
-              type="number"
-              placeholder="Umur anda"
-              className="mt-1 w-2/3 border border-spanish-gray rounded-full p-6"
-            />
-            <Paragraph className="text-xs font-medium mt-2">
-              {errors.umur?.message}
-            </Paragraph>
+            <div className="w-full sm:w-2/3 mt-1 sm:mt-0">
+              <Input
+                {...register("umur", { required: true })}
+                type="number"
+                placeholder="Umur anda"
+                className="w-full border border-spanish-gray rounded-full p-6"
+              />
+              {errors.umur ? (
+                <Paragraph className="text-xs font-medium mt-2">
+                  {errors.umur.message}
+                </Paragraph>
+              ) : null}
+            </div>
           </div>
-          <div className="flex items-start w-full justify-end">
+          <div className="flex flex-col sm:flex-row sm:items-center items-start w-full justify-between">
             <label
               htmlFor="bio"
-              className="block text-lg font-medium text-black w-1/3"
+              className="block text-base sm:text-lg  font-medium text-primary-black"
             >
               Bio
             </label>
-            <Textarea
-              {...register("bio", { required: true })}
-              placeholder="Deskripsi anda"
-              name="deskripsi"
-              className="mt-2 h-full min-h-[125px] border-spanish-gray w-2/3 rounded-md p-4 placeholder-pink-500 placeholder-opacity-75"
-            />
-            <Paragraph className="text-xs font-medium mt-2">
-              {errors.bio?.message}
-            </Paragraph>
+            <div className="w-full sm:w-2/3 mt-1 sm:mt-0">
+              <Textarea
+                {...register("bio", { required: true })}
+                placeholder="Deskripsi anda"
+                name="bio"
+                className="h-full w-full min-h-[125px] border-spanish-gray rounded-md p-4 placeholder-pink-500 placeholder-opacity-75"
+              />
+              {errors.bio ? (
+                <Paragraph className="text-xs font-medium mt-2">
+                  {errors.bio.message}
+                </Paragraph>
+              ) : null}
+            </div>
           </div>
         </div>
       </div>

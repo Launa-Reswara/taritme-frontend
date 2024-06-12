@@ -23,7 +23,7 @@ import {
   DEVELOPMENT_API_URL,
   PRODUCTION_API_URL,
 } from "@/lib/utils/constants";
-import { FormPelatihSchema } from "@/lib/utils/schemas";
+import { formPelatihSchema } from "@/lib/utils/schemas";
 import {
   setId,
   setInitialData,
@@ -139,44 +139,73 @@ export default function Pelatih() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {pelatih.map((item) => (
-                  <TableRow
-                    key={item.id}
-                    className="bg-secondary-color hover:bg-secondary-color hover:odd:bg-light-silver odd:bg-light-silver"
-                  >
-                    <TableCell className="text-center flex justify-center items-center">
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        className="w-10 h-10"
-                      />
+                {pelatih.length ? (
+                  pelatih.map((item) => (
+                    <TableRow
+                      key={item.id}
+                      className="bg-secondary-color hover:bg-secondary-color hover:odd:bg-light-silver odd:bg-light-silver"
+                    >
+                      <TableCell className="text-center flex justify-center items-center">
+                        <Image
+                          src={item.image}
+                          alt={item.name}
+                          className="w-10 h-10"
+                        />
+                      </TableCell>
+                      <TableCell className="text-center">{item.name}</TableCell>
+                      <TableCell className="text-center">
+                        {item.no_hp}
+                      </TableCell>
+                      <TableCell className="text-center">
+                        {item.email}
+                      </TableCell>
+                      <TableCell className="text-center">
+                        {item.status}
+                      </TableCell>
+                      <TableCell className="flex justify-center items-center space-x-4">
+                        <Button
+                          variant="outline"
+                          onClick={() => {
+                            dispatch(setIsEditPelatih(true));
+                            dispatch(setInitialData(item));
+                          }}
+                        >
+                          <Pencil />
+                        </Button>
+                        <Button
+                          variant="outline"
+                          onClick={() => {
+                            dispatch(setId(item.id));
+                            handleDelete();
+                          }}
+                        >
+                          <Trash />
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow className="bg-secondary-color hover:bg-secondary-color hover:odd:bg-light-silver odd:bg-light-silver">
+                    <TableCell className="text-center font-medium">
+                      No data
                     </TableCell>
-                    <TableCell className="text-center">{item.name}</TableCell>
-                    <TableCell className="text-center">{item.no_hp}</TableCell>
-                    <TableCell className="text-center">{item.email}</TableCell>
-                    <TableCell className="text-center">{item.status}</TableCell>
-                    <TableCell className="flex justify-center items-center space-x-4">
-                      <Button
-                        variant="outline"
-                        onClick={() => {
-                          dispatch(setIsEditPelatih(true));
-                          dispatch(setInitialData(item));
-                        }}
-                      >
-                        <Pencil />
-                      </Button>
-                      <Button
-                        variant="outline"
-                        onClick={() => {
-                          dispatch(setId(item.id));
-                          handleDelete();
-                        }}
-                      >
-                        <Trash />
-                      </Button>
+                    <TableCell className="text-center font-medium">
+                      No data
+                    </TableCell>
+                    <TableCell className="text-center font-medium">
+                      No data
+                    </TableCell>
+                    <TableCell className="text-center font-medium">
+                      No data
+                    </TableCell>
+                    <TableCell className="text-center font-medium">
+                      No data
+                    </TableCell>
+                    <TableCell className="text-center font-medium">
+                      No data
                     </TableCell>
                   </TableRow>
-                ))}
+                )}
               </TableBody>
             </Table>
           </div>
@@ -215,7 +244,7 @@ function FormEditpelatih() {
       tarif_per_jam: price,
       status: status,
     },
-    resolver: zodResolver(FormPelatihSchema),
+    resolver: zodResolver(formPelatihSchema),
   });
 
   async function uploadImage(): Promise<string | undefined> {
@@ -269,9 +298,11 @@ function FormEditpelatih() {
         toast({ title: "Success!", description: response.data.message });
         dispatch(setIsEditPelatih(false));
       } else {
+        dispatch(setIsUploadLoading(false));
         toast({ title: "Failed!", description: response.data.message });
       }
     } catch (err: any) {
+      dispatch(setIsUploadLoading(false));
       toast({ title: "Error!", description: err.response.data.message });
     }
   }
@@ -495,7 +526,7 @@ function FormTambahPelatih() {
       deskripsi: "",
       tarif_per_jam: "",
     },
-    resolver: zodResolver(FormPelatihSchema),
+    resolver: zodResolver(formPelatihSchema),
   });
 
   async function addImage(): Promise<string | undefined> {
@@ -556,6 +587,7 @@ function FormTambahPelatih() {
         toast({ title: "Failed!", description: response.data.message });
       }
     } catch (err: any) {
+      dispatch(setIsUploadLoading(false));
       toast({ title: "Error!", description: err.response.data.message });
     }
   }
@@ -656,7 +688,7 @@ function FormTambahPelatih() {
                     No Hp
                   </label>
                   <Input
-                    type="tel"
+                    type="number"
                     {...register("no_hp", { required: true })}
                     placeholder="No HP anda"
                     name="no_hp"

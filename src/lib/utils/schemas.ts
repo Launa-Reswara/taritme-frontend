@@ -36,11 +36,11 @@ export const profileSchema = z.object({
   bio: z.string().min(1),
 });
 
-export const FormPelatihSchema = z.object({
+export const formPelatihSchema = z.object({
   nama: z.string().min(1),
-  no_hp: z.number().min(12).max(12),
+  no_hp: z.string().min(12).max(12),
   email: z.string().email().min(1),
   status: z.enum(["Aktif", "Tidak Aktif"]),
   deskripsi: z.string().min(1),
-  tarif_per_jam: z.number().min(1),
+  tarif_per_jam: z.string().min(1),
 });

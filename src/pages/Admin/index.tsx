@@ -7,6 +7,7 @@ import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { useToast } from "@/components/ui/use-toast";
 import { getPelatihTari, getUsers } from "@/features";
+import { UserProfileProps, UserProps } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { m } from "framer-motion";
 import { UserRound } from "lucide-react";
@@ -17,7 +18,9 @@ export default function Admin() {
   async function getStatistics() {
     try {
       const pelatihTari = await getPelatihTari();
-      const users = await getUsers();
+      const users = (await getUsers()) as Array<
+        UserProfileProps & Pick<UserProps, "name" | "is_already_paid">
+      >;
 
       return { pelatihTari, users };
     } catch (err: any) {
@@ -94,14 +97,25 @@ export default function Admin() {
                     Customer
                   </Heading>
                   <div className="flex sm:flex-col mt-4 flex-wrap gap-4 justify-start items-start flex-row">
-                    {users.map((item, index) => (
-                      <div className="flex space-x-3" key={index + 1}>
-                        <Image src="/images/ryu-user.svg" alt="user" />
-                        <div>
-                          <Paragraph className="text-sm">{item.name}</Paragraph>
+                    {users
+                      .filter((item) => item.is_already_paid)
+                      .map((item, index) => (
+                        <div
+                          className="flex space-x-3 justify-center items-center"
+                          key={index + 1}
+                        >
+                          <Image
+                            src={item.image}
+                            alt={item.name}
+                            className="w-10 h-10 rounded-full"
+                          />
+                          <div>
+                            <Paragraph className="text-sm">
+                              {item.name}
+                            </Paragraph>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
                   </div>
                 </div>
               </div>
@@ -113,8 +127,15 @@ export default function Admin() {
                 </Heading>
                 <div className="flex 2xl:flex-col mt-4 flex-wrap gap-4 justify-start items-start flex-row">
                   {users.map((item) => (
-                    <div className="flex space-x-3" key={item.id}>
-                      <Image src="/images/ryu-user.svg" alt={item.name} />
+                    <div
+                      className="flex justify-center items-center space-x-3"
+                      key={item.id}
+                    >
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        className="w-10 h-10 rounded-full"
+                      />
                       <div>
                         <Paragraph className="text-sm">{item.name}</Paragraph>
                       </div>
@@ -129,9 +150,12 @@ export default function Admin() {
                 </Heading>
                 <div className="flex 2xl:flex-col mt-4 flex-wrap gap-4 justify-start items-start flex-row">
                   {pelatihTari.map((item) => (
-                    <div className="flex space-x-3" key={item.id}>
+                    <div
+                      className="flex justify-center items-center space-x-3"
+                      key={item.id}
+                    >
                       <Image
-                        className="w-10 h-10"
+                        className="w-10 h-10 rounded-full"
                         src={item.image}
                         alt={item.name}
                       />

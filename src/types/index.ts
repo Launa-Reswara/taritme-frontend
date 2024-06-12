@@ -1,10 +1,17 @@
 import { ReactNode } from "react";
 
+declare global {
+  interface Window {
+    snap: any;
+  }
+}
+
 export type UserProps = {
   id: number;
   name: string;
   email: string;
   password: string;
+  is_already_paid: 0 | 1;
 };
 
 export type KomunitasProps = {
@@ -148,7 +155,7 @@ export type UserSliceProps = {
 
 export type UserProfileProps = {
   id: number;
-  name: string;
+  users_id: number;
   jenis_kelamin: "Laki-laki" | "Perempuan";
   bio: string;
   no_hp: string;

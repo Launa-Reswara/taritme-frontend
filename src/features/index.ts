@@ -46,7 +46,7 @@ export async function getPelatihTari(): Promise<PelatihProps[]> {
 }
 
 // users
-export async function getUsers(): Promise<UserProps[]> {
+export async function getUsers(): Promise<UserProfileProps[]> {
   try {
     const response = await axios.get(
       `${
@@ -54,7 +54,7 @@ export async function getUsers(): Promise<UserProps[]> {
       }/api/users`
     );
 
-    return response.data.data as UserProps[];
+    return response.data.data as UserProfileProps[];
   } catch (err: any) {
     throw new Error(err.response.data.message);
   }

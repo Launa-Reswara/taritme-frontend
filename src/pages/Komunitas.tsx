@@ -37,7 +37,7 @@ export default function Komunitas() {
   if (isPending) return <IsPending />;
   if (isError) return <IsError />;
 
-  const komunitas = data.data.data as KomunitasProps[];
+  const komunitas = data as KomunitasProps[];
 
   return (
     <>

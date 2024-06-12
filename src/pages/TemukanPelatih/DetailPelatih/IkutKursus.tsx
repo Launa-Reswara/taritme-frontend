@@ -67,7 +67,7 @@ export default function IkutiKursus() {
     refetchOnReconnect: false,
   });
 
-  const pelatihTari = data?.data.data[0] as PelatihProps;
+  const pelatihTari = data as PelatihProps;
 
   function onSubmit() {
     async function addRiwayatKursus(orderId: string) {
@@ -197,7 +197,7 @@ export default function IkutiKursus() {
                     <span className="text-base text-white">
                       {pelatihTari.rating}{" "}
                       <span className="text-white/50 text-xs">
-                        ({pelatihTari.total_review} ulasan)
+                        ({pelatihTari.total_comments} ulasan)
                       </span>
                     </span>
                   </div>

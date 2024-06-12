@@ -99,7 +99,8 @@ export default function Pelatih() {
   if (isPending) return <IsPending />;
   if (isError) return <IsError />;
 
-  const pelatih = data.data.data as unknown as PelatihProps[];
+  const pelatih = data as PelatihProps[];
+
   return (
     <>
       <SidebarAdmin />

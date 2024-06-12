@@ -5,21 +5,18 @@ import {
 } from "@/lib/utils/constants";
 import { client } from "@/lib/utils/contentfulClient";
 import {
-  BaseResponseApiProps,
   KomunitasProps,
   PelatihProps,
+  PenilaianProps,
+  RiwayatKursusProps,
   UserProfileProps,
   UserProps,
 } from "@/types";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import Cookies from "js-cookie";
 
-type ResponseGetKomunitasProps = Omit<AxiosResponse, "data"> & {
-  data: BaseResponseApiProps & { data: KomunitasProps[] };
-};
-
 // komunitas
-export async function getKomunitas(): Promise<ResponseGetKomunitasProps> {
+export async function getKomunitas(): Promise<KomunitasProps[]> {
   try {
     const response = await axios.get(
       `${
@@ -27,18 +24,14 @@ export async function getKomunitas(): Promise<ResponseGetKomunitasProps> {
       }/api/komunitas`
     );
 
-    return response as ResponseGetKomunitasProps;
+    return response.data.data as KomunitasProps[];
   } catch (err: any) {
     throw new Error(err.response.data.message);
   }
 }
 
-type ResponseGetPelatihProps = Omit<AxiosResponse, "data"> & {
-  data: BaseResponseApiProps & { data: PelatihProps[] };
-};
-
 // pelatih tari
-export async function getPelatihTari(): Promise<ResponseGetPelatihProps> {
+export async function getPelatihTari(): Promise<PelatihProps[]> {
   try {
     const response = await axios.get(
       `${
@@ -46,18 +39,14 @@ export async function getPelatihTari(): Promise<ResponseGetPelatihProps> {
       }/api/pelatih-tari`
     );
 
-    return response as ResponseGetPelatihProps;
+    return response.data.data as PelatihProps[];
   } catch (err: any) {
     throw new Error(err.response.data.message);
   }
 }
 
-type ResponseGetUsersProps = Omit<AxiosResponse, "data"> & {
-  data: BaseResponseApiProps & { data: UserProps[] };
-};
-
 // users
-export async function getUsers(): Promise<ResponseGetUsersProps> {
+export async function getUsers(): Promise<UserProps[]> {
   try {
     const response = await axios.get(
       `${
@@ -65,15 +54,11 @@ export async function getUsers(): Promise<ResponseGetUsersProps> {
       }/api/users`
     );
 
-    return response as ResponseGetUsersProps;
+    return response.data.data as UserProps[];
   } catch (err: any) {
     throw new Error(err.response.data.message);
   }
 }
-
-type ResponseGetUserProfileProps = Omit<AxiosResponse, "data"> & {
-  data: BaseResponseApiProps & { data: UserProps & UserProfileProps };
-};
 
 // user profile
 export async function getUserProfile() {
@@ -89,14 +74,14 @@ export async function getUserProfile() {
       }
     );
 
-    return response as ResponseGetUserProfileProps;
+    return response.data.data as UserProps & UserProfileProps;
   } catch (err: any) {
     throw new Error(err.response.data.message);
   }
 }
 
 // riwayat kursus
-export async function getRiwayatKursus() {
+export async function getRiwayatKursus(): Promise<RiwayatKursusProps[]> {
   try {
     const response = await axios.get(
       `${
@@ -105,7 +90,7 @@ export async function getRiwayatKursus() {
       { headers: { Authorization: `Bearer ${Cookies.get("token")}` } }
     );
 
-    return response.data.data;
+    return response.data.data as RiwayatKursusProps[];
   } catch (err: any) {
     throw new Error(err.response.data.message);
   }
@@ -129,7 +114,9 @@ export async function getArsipKesenianById(id: string) {
   }
 }
 
-export async function getPenilaianPelatihTari(name: string) {
+export async function getPenilaianPelatihTari(
+  name: string
+): Promise<PenilaianProps[]> {
   try {
     const response = await axios.get(
       `${
@@ -138,7 +125,7 @@ export async function getPenilaianPelatihTari(name: string) {
       { headers: { Authorization: `Bearer ${Cookies.get("token")}` } }
     );
 
-    return response.data.data;
+    return response.data.data as PenilaianProps[];
   } catch (err: any) {
     throw new Error("Failed to get penilaian pelatih tari!");
   }
@@ -168,7 +155,7 @@ export async function getPaymentStatus(orderId: string) {
       { headers: { Authorization: `Bearer ${Cookies.get("token")}` } }
     );
 
-    return response.data;
+    return response.data.data;
   } catch (err: any) {
     throw new Error(err.response.data.message);
   }

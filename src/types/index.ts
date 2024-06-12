@@ -50,7 +50,7 @@ export type PelatihProps = {
   status: "Aktif" | "Tidak Aktif";
   email: string;
   rating: number;
-  total_review: number;
+  total_comments: number;
 };
 
 export type DetailPelatihProps = {
@@ -118,7 +118,19 @@ export type TokenSliceProps = {
   };
 };
 
-export type RiwayatKursusProps = PelatihProps;
+export type RiwayatKursusProps = {
+  email: string;
+  id: number;
+  order_id: string;
+  pelatih_tari_description: string;
+  pelatih_tari_id: number;
+  pelatih_tari_image: string;
+  pelatih_tari_name: string;
+  pelatih_tari_price: number;
+  users_id: number;
+  rating: number;
+  total_comments: number;
+};
 
 export type BaseResponseApiProps = {
   statusCode: number;
@@ -142,4 +154,15 @@ export type UserProfileProps = {
   no_hp: string;
   age: number;
   image: string;
+};
+
+export type PenilaianProps = {
+  comment: string;
+  id: number;
+  order_id: string;
+  pelatih_tari_id: number;
+  pelatih_tari_name: string;
+  rating: number;
+  users_email: string;
+  users_name: string;
 };

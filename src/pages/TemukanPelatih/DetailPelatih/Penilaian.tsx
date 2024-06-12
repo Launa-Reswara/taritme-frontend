@@ -107,10 +107,9 @@ export default function Penilaian() {
   return (
     <>
       <Layout>
-        {data.statusCode === 200 &&
-        orderId &&
-        orderId === data.data.order_id &&
-        data.data.transaction_status === "settlement" ? (
+        {orderId &&
+        orderId === data.order_id &&
+        data.transaction_status === "settlement" ? (
           <div className="flex w-full flex-col md:flex-row md:space-x-8 justify-center items-center md:justify-start md:items-start">
             <div>
               <div>

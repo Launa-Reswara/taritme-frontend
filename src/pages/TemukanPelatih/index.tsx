@@ -39,7 +39,7 @@ export default function TemukanPelatih() {
   if (isPending) return <IsPending />;
   if (isError) return <IsError />;
 
-  const pelatih = data.data.data as PelatihProps[];
+  const pelatih = data as PelatihProps[];
 
   return (
     <>
@@ -86,7 +86,7 @@ export default function TemukanPelatih() {
                         <span className="text-base text-white">
                           {item.rating}{" "}
                           <span className="text-white/50 text-xs">
-                            ({item.total_review} ulasan)
+                            ({item.total_comments} ulasan)
                           </span>
                         </span>
                       </div>
@@ -129,7 +129,7 @@ export default function TemukanPelatih() {
                         <span className="text-base text-white">
                           {item.rating}{" "}
                           <span className="text-white/50 text-xs">
-                            ({item.total_review} ulasan)
+                            ({item.total_comments} ulasan)
                           </span>
                         </span>
                       </div>
@@ -147,11 +147,7 @@ export default function TemukanPelatih() {
           </div>
         </div>
       </Layout>
-      <SearchCommand
-        open={open}
-        setOpen={setOpen}
-        data={data?.data.data as PelatihProps[]}
-      />
+      <SearchCommand open={open} setOpen={setOpen} data={data} />
     </>
   );
 }

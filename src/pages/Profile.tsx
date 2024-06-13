@@ -50,7 +50,7 @@ export default function Profile() {
   if (isPending) return <IsPending />;
   if (isError) return <IsError />;
 
-  const initialData = data.data.data as unknown as JoinProps[];
+  const initialData = data as unknown as JoinProps[];
   const profile = initialData[0];
 
   return (

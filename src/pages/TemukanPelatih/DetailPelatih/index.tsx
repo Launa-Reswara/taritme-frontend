@@ -185,7 +185,7 @@ export default function DetailPelatih() {
                 <Paragraph>
                   {pelatih.rating}{" "}
                   <span className="text-primary-black/50">
-                    ({pelatih.total_review} Ulasan)
+                    ({pelatih.total_comments} Ulasan)
                   </span>
                 </Paragraph>
               </div>

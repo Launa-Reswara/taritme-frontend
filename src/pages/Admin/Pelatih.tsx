@@ -629,7 +629,7 @@ function FormTambahPelatih() {
                     htmlFor="foto"
                     className="block font-normal text-primary-black"
                   >
-                    Foto
+                    Foto Profile
                   </label>
                   <Input
                     placeholder="Unggah foto"
@@ -641,7 +641,40 @@ function FormTambahPelatih() {
                     className="mt-2 border-spanish-gray w-full sm:max-w-[250px] rounded-full p-2"
                   />
                 </div>
-
+                {/*<div className="w-full ">
+                  <label
+                    htmlFor="detail_foto_pelatih"
+                    className="block font-normal text-primary-black"
+                  >
+                    Detail Foto Pelatih (Max 3 foto)
+                  </label>
+                  <div className="flex space-x-5 justify-between items-center">
+                    <Input
+                      placeholder="Detail Foto Pelatih"
+                      type="file"
+                      name="detail_foto_pelatih_1"
+                      multiple={false}
+                      required
+                      className="mt-2 border-spanish-gray w-full sm:max-w-[250px] rounded-full p-2"
+                    />
+                    <Input
+                      placeholder="Detail Foto Pelatih"
+                      type="file"
+                      name="detail_foto_pelatih_2"
+                      multiple={false}
+                      required
+                      className="mt-2 border-spanish-gray w-full sm:max-w-[250px] rounded-full p-2"
+                    />
+                    <Input
+                      placeholder="Detail Foto Pelatih"
+                      type="file"
+                      name="detail_foto_pelatih_3"
+                      multiple={false}
+                      required
+                      className="mt-2 border-spanish-gray w-full sm:max-w-[250px] rounded-full p-2"
+                    />
+                  </div>
+            </div>*/}
                 <div className="w-full">
                   <label
                     htmlFor="nama"

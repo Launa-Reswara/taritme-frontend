@@ -67,11 +67,7 @@ export default function Profile() {
         </button>
       </div>
       <div className="mt-5">
-        <Heading
-          as="h2"
-          className="font-normal mb-2 text-primary-color"
-          style={{ fontSize: "1.5rem" }}
-        >
+        <Heading as="h1" className="mb-2">
           Profile
         </Heading>
       </div>
@@ -97,9 +93,9 @@ function FormEditProfile({ profile }: { profile: JoinProps }) {
   } = useForm({
     defaultValues: {
       nama: profile.name,
-      no_hp: profile.no_hp,
+      no_hp: profile.no_hp.toString(),
       jenis_kelamin: profile.jenis_kelamin,
-      umur: profile.age,
+      umur: profile.age.toString(),
       bio: profile.bio,
     },
     resolver: zodResolver(profileSchema),

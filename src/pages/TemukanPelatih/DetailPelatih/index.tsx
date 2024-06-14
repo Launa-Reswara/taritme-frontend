@@ -6,7 +6,7 @@ import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { getDetailPelatihTari, getPenilaianPelatihTari } from "@/features";
 import { useTitle } from "@/hooks";
-import { toRupiah } from "@/lib/helpers";
+import { normalizeString, toRupiah } from "@/lib/helpers";
 import { cn } from "@/lib/utils/cn";
 import { DetailPelatihProps, PelatihProps } from "@/types";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
@@ -22,7 +22,7 @@ export default function DetailPelatih() {
   const navigate = useNavigate();
   const pelatihName = name as string;
 
-  useTitle(`Pelatih ${pelatihName} | Taritme`);
+  useTitle(`Pelatih ${normalizeString(pelatihName)} | Taritme`);
 
   const { data, isPending, isError } = useQuery({
     queryKey: ["detail_pelatih"],
@@ -61,29 +61,32 @@ export default function DetailPelatih() {
           {/** Solusi 1: buat breakpoints custom untuk width bungkus grid */}
           <div
             className={cn(
-              "grid grid-cols-2 w-[350px]",
-              "sm:w-[610px] md:w-[700px] xl:w-[900px] md:grid-cols-3",
+              "grid grid-cols-2 w-full",
+              "md:grid-cols-3",
               "gap-4 grid-rows-1"
             )}
           >
-            <Image
-              src={pelatih.image_1}
-              alt="detail pelatih"
-              className="row-span-2 h-full mx-auto w-full col-span-2"
-              draggable={false}
-            />
-            <Image
-              src={pelatih.image_2}
-              alt="detail pelatih"
-              draggable={false}
-              className="w-full"
-            />
-            <Image
-              src={pelatih.image_3}
-              alt="detail pelatih"
-              draggable={false}
-              className="w-full"
-            />
+            <div className="row-span-2 h-full mx-auto w-full col-span-2 bg-primary-color rounded-xl flex justify-center">
+              <Image
+                src={pelatih.image_1}
+                alt="detail pelatih"
+                draggable={false}
+              />
+            </div>
+            <div className="h-full flex justify-center rounded-xl mx-auto bg-primary-color w-full">
+              <Image
+                src={pelatih.image_2}
+                alt="detail pelatih"
+                draggable={false}
+              />
+            </div>
+            <div className="h-full flex justify-center rounded-xl mx-auto bg-primary-color w-full">
+              <Image
+                src={pelatih.image_3}
+                alt="detail pelatih"
+                draggable={false}
+              />
+            </div>
           </div>
           <div className="mt-14 w-full">
             <div className="space-x-8 w-fit">

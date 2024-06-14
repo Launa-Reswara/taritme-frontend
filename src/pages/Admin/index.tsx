@@ -7,6 +7,7 @@ import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { useToast } from "@/components/ui/use-toast";
 import { getPelatihTari, getUsers } from "@/features";
+import { UserProfileProps, UserProps } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { m } from "framer-motion";
 import { UserRound } from "lucide-react";
@@ -17,7 +18,9 @@ export default function Admin() {
   async function getStatistics() {
     try {
       const pelatihTari = await getPelatihTari();
-      const users = await getUsers();
+      const users = (await getUsers()) as Array<
+        UserProfileProps & Pick<UserProps, "name" | "is_already_paid">
+      >;
 
       return { pelatihTari, users };
     } catch (err: any) {
@@ -37,6 +40,7 @@ export default function Admin() {
   if (isError) return <IsError />;
 
   const { users, pelatihTari } = data;
+  const customer = users.filter((item) => item.is_already_paid);
 
   return (
     <>
@@ -53,7 +57,7 @@ export default function Admin() {
             <div className="bg-primary-color rounded-xl px-8 py-6 flex justify-between items-center w-full 2xl:w-[350px]">
               <div>
                 <span className="text-white font-bold text-2xl">
-                  {users.data.data.length}
+                  {users.length}
                 </span>
                 <Paragraph className="text-white">Pengguna</Paragraph>
               </div>
@@ -64,7 +68,7 @@ export default function Admin() {
             <div className="bg-primary-color rounded-xl px-8 py-6 flex justify-between items-center w-full 2xl:w-[350px]">
               <div>
                 <span className="text-white font-bold text-2xl">
-                  {pelatihTari.data.data.length}
+                  {pelatihTari.length}
                 </span>
                 <Paragraph className="text-white">Instruktur</Paragraph>
               </div>
@@ -74,7 +78,9 @@ export default function Admin() {
             </div>
             <div className="bg-primary-color rounded-xl px-8 py-6 flex justify-between items-center w-full 2xl:w-[350px]">
               <div>
-                <span className="text-white font-bold text-2xl">10</span>
+                <span className="text-white font-bold text-2xl">
+                  {customer.length}
+                </span>
                 <Paragraph className="text-white">Customer</Paragraph>
               </div>
               <div className="bg-white p-3 rounded-xl w-fit">
@@ -94,9 +100,16 @@ export default function Admin() {
                     Customer
                   </Heading>
                   <div className="flex sm:flex-col mt-4 flex-wrap gap-4 justify-start items-start flex-row">
-                    {users.data.data.map((item, index) => (
-                      <div className="flex space-x-3" key={index + 1}>
-                        <Image src="/images/ryu-user.svg" alt="user" />
+                    {customer.map((item, index) => (
+                      <div
+                        className="flex space-x-3 justify-center items-center"
+                        key={index + 1}
+                      >
+                        <Image
+                          src={item.image}
+                          alt={item.name}
+                          className="w-10 h-10 rounded-full"
+                        />
                         <div>
                           <Paragraph className="text-sm">{item.name}</Paragraph>
                         </div>
@@ -112,9 +125,16 @@ export default function Admin() {
                   Pengguna
                 </Heading>
                 <div className="flex 2xl:flex-col mt-4 flex-wrap gap-4 justify-start items-start flex-row">
-                  {users.data.data.map((item) => (
-                    <div className="flex space-x-3" key={item.id}>
-                      <Image src="/images/ryu-user.svg" alt={item.name} />
+                  {users.map((item) => (
+                    <div
+                      className="flex justify-center items-center space-x-3"
+                      key={item.id}
+                    >
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        className="w-10 h-10 rounded-full"
+                      />
                       <div>
                         <Paragraph className="text-sm">{item.name}</Paragraph>
                       </div>
@@ -128,10 +148,13 @@ export default function Admin() {
                   Pelatih
                 </Heading>
                 <div className="flex 2xl:flex-col mt-4 flex-wrap gap-4 justify-start items-start flex-row">
-                  {pelatihTari.data.data.map((item) => (
-                    <div className="flex space-x-3" key={item.id}>
+                  {pelatihTari.map((item) => (
+                    <div
+                      className="flex justify-center items-center space-x-3"
+                      key={item.id}
+                    >
                       <Image
-                        className="w-10 h-10"
+                        className="w-10 h-10 rounded-full"
                         src={item.image}
                         alt={item.name}
                       />

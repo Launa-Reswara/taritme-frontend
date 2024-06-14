@@ -68,7 +68,7 @@ export default function LoginAdmin() {
           setIsWrongAdminData(true);
         }
       } catch (err: any) {
-        toast({ title: "Error!", description: err.message });
+        toast({ title: "Error!", description: err.response.data.message });
       }
     }
 

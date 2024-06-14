@@ -52,7 +52,7 @@ function Admin({ children }: ChildrenProps) {
     (state: TokenSliceProps) => state.token
   );
 
-  return isTokenAdminAvailable ? children : <Navigate to="/auth/login/admin" />;
+  return isTokenAdminAvailable ? children : <Navigate to="/" />;
 }
 
 function AdminAuth({ children }: ChildrenProps) {

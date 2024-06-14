@@ -52,10 +52,8 @@ export default function Login() {
           }
         );
 
-        console.log(response);
-
         if (response.status === 200) {
-          Cookies.set("token", response.data.data.token);
+          Cookies.set("token", response.data.token);
           setIsWrongLoginData(false);
 
           toast({

@@ -1,4 +1,3 @@
-// TODO: pecah-pecah jadi bagian kecil
 import IsError from "@/components/IsError";
 import IsPending from "@/components/IsPending";
 import SidebarAdmin from "@/components/SidebarAdmin";
@@ -24,6 +23,7 @@ import {
   DEVELOPMENT_API_URL,
   PRODUCTION_API_URL,
 } from "@/lib/utils/constants";
+import { formPelatihSchema } from "@/lib/utils/schemas";
 import {
   setId,
   setInitialData,
@@ -32,6 +32,7 @@ import {
   setIsUploadLoading,
 } from "@/store/slices/pelatih.slice";
 import { PelatihProps, PelatihSliceProps } from "@/types";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   keepPreviousData,
   useMutation,
@@ -86,8 +87,6 @@ export default function Pelatih() {
     }
   }
 
-  const pelatih = data?.data.data as unknown as PelatihProps[];
-
   const deleteMutation = useMutation({
     mutationFn: deletePelatihTari,
     onSuccess: () => queryClient.invalidateQueries(),
@@ -96,6 +95,11 @@ export default function Pelatih() {
   function handleDelete() {
     deleteMutation.mutate();
   }
+
+  if (isPending) return <IsPending />;
+  if (isError) return <IsError />;
+
+  const pelatih = data as PelatihProps[];
 
   return (
     <>
@@ -108,45 +112,35 @@ export default function Pelatih() {
         className="lg:ml-[358px] min-h-svh flex justify-start p-4 lg:p-10 items-center flex-col"
       >
         <section className="flex w-full justify-center items-center">
-          {isPending ? (
-            <IsPending />
-          ) : isError ? (
-            <IsError />
-          ) : (
-            <div className="w-full">
-              <button
-                className="text-primary-black text-2xl"
-                type="button"
-                aria-label="tambah pelatih"
-                onClick={() => dispatch(setIsTambahPelatih(true))}
-              >
-                + Tambah Pelatih
-              </button>
-              <Table className="w-full mt-10">
-                <TableHeader>
-                  <TableRow className="bg-primary-color hover:bg-primary-color">
-                    <TableHead className="text-center text-white">
-                      Foto
-                    </TableHead>
-                    <TableHead className="text-center text-white">
-                      Nama
-                    </TableHead>
-                    <TableHead className="text-center text-white">
-                      No HP
-                    </TableHead>
-                    <TableHead className="text-center text-white">
-                      Email
-                    </TableHead>
-                    <TableHead className="text-center text-white">
-                      Status
-                    </TableHead>
-                    <TableHead className="text-center text-white">
-                      Aksi
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {pelatih.map((item) => (
+          <div className="w-full">
+            <button
+              className="text-primary-black text-2xl"
+              type="button"
+              aria-label="tambah pelatih"
+              onClick={() => dispatch(setIsTambahPelatih(true))}
+            >
+              + Tambah Pelatih
+            </button>
+            <Table className="w-full mt-10">
+              <TableHeader>
+                <TableRow className="bg-primary-color hover:bg-primary-color">
+                  <TableHead className="text-center text-white">Foto</TableHead>
+                  <TableHead className="text-center text-white">Nama</TableHead>
+                  <TableHead className="text-center text-white">
+                    No HP
+                  </TableHead>
+                  <TableHead className="text-center text-white">
+                    Email
+                  </TableHead>
+                  <TableHead className="text-center text-white">
+                    Status
+                  </TableHead>
+                  <TableHead className="text-center text-white">Aksi</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {pelatih.length ? (
+                  pelatih.map((item) => (
                     <TableRow
                       key={item.id}
                       className="bg-secondary-color hover:bg-secondary-color hover:odd:bg-light-silver odd:bg-light-silver"
@@ -189,11 +183,32 @@ export default function Pelatih() {
                         </Button>
                       </TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          )}
+                  ))
+                ) : (
+                  <TableRow className="bg-secondary-color hover:bg-secondary-color hover:odd:bg-light-silver odd:bg-light-silver">
+                    <TableCell className="text-center font-medium">
+                      No data
+                    </TableCell>
+                    <TableCell className="text-center font-medium">
+                      No data
+                    </TableCell>
+                    <TableCell className="text-center font-medium">
+                      No data
+                    </TableCell>
+                    <TableCell className="text-center font-medium">
+                      No data
+                    </TableCell>
+                    <TableCell className="text-center font-medium">
+                      No data
+                    </TableCell>
+                    <TableCell className="text-center font-medium">
+                      No data
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
         </section>
       </m.main>
       {isTambahPelatih ? <FormTambahPelatih /> : null}
@@ -229,6 +244,7 @@ function FormEditpelatih() {
       tarif_per_jam: price,
       status: status,
     },
+    resolver: zodResolver(formPelatihSchema),
   });
 
   async function uploadImage(): Promise<string | undefined> {
@@ -239,7 +255,7 @@ function FormEditpelatih() {
       const response = await axios.post(
         `${
           CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-        }/api/pelatih-tari/upload-image`,
+        }/api/pelatih-tari/upload-image/${id}`,
         formData,
         {
           headers: {
@@ -250,15 +266,13 @@ function FormEditpelatih() {
 
       return response.data.data as string;
     } catch (err: any) {
-      toast({ title: "Error!", description: err.message });
+      toast({ title: "Error!", description: err.response.data.message });
     }
   }
 
   async function editPelatihTari(): Promise<void> {
     try {
       dispatch(setIsUploadLoading(true));
-
-      const cloudinaryImage = await uploadImage();
 
       const response: AxiosResponse = await axios.patch(
         `${
@@ -267,7 +281,6 @@ function FormEditpelatih() {
         {
           email: getValues("email"),
           name: getValues("nama"),
-          image: cloudinaryImage,
           price: getValues("tarif_per_jam"),
           no_hp: getValues("no_hp"),
           status: getValues("status"),
@@ -285,12 +298,19 @@ function FormEditpelatih() {
         toast({ title: "Success!", description: response.data.message });
         dispatch(setIsEditPelatih(false));
       } else {
+        dispatch(setIsUploadLoading(false));
         toast({ title: "Failed!", description: response.data.message });
       }
     } catch (err: any) {
-      toast({ title: "Error!", description: err.message });
+      dispatch(setIsUploadLoading(false));
+      toast({ title: "Error!", description: err.response.data.message });
     }
   }
+
+  const uploadImageMutation = useMutation({
+    mutationFn: uploadImage,
+    onSuccess: () => queryClient.invalidateQueries(),
+  });
 
   const editPelatihTariMutation = useMutation({
     mutationFn: editPelatihTari,
@@ -298,7 +318,8 @@ function FormEditpelatih() {
   });
 
   function onSubmit() {
-    editPelatihTariMutation.mutate();
+    uploadImageMutation.mutateAsync();
+    editPelatihTariMutation.mutateAsync();
   }
 
   return (
@@ -406,13 +427,14 @@ function FormEditpelatih() {
                   >
                     Status
                   </label>
-                  <Input
-                    type="text"
+                  <select
+                    defaultValue="Status"
                     {...register("status", { required: true })}
-                    placeholder="Status anda"
-                    name="status"
-                    className="mt-2 border-spanish-gray w-full rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
-                  />
+                    className="mt-1 w-full border border-spanish-gray bg-white rounded-full p-2"
+                  >
+                    <option value="Aktif">Aktif</option>
+                    <option value="Tidak Aktif">Tidak Aktif</option>
+                  </select>
                   <Paragraph className="text-xs font-medium mt-2">
                     {errors.status?.message}
                   </Paragraph>
@@ -504,9 +526,10 @@ function FormTambahPelatih() {
       deskripsi: "",
       tarif_per_jam: "",
     },
+    resolver: zodResolver(formPelatihSchema),
   });
 
-  async function uploadImage(): Promise<string | undefined> {
+  async function addImage(): Promise<string | undefined> {
     try {
       const formData = new FormData();
       formData.append("my_file", photo[0]);
@@ -514,7 +537,7 @@ function FormTambahPelatih() {
       const response = await axios.post(
         `${
           CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-        }/api/pelatih-tari/upload-image`,
+        }/api/pelatih-tari/add-image`,
         formData,
         {
           headers: {
@@ -525,7 +548,7 @@ function FormTambahPelatih() {
 
       return response.data.data;
     } catch (err: any) {
-      toast({ title: "Error!", description: err.message });
+      toast({ title: "Error!", description: err.response.data.message });
     }
   }
 
@@ -533,7 +556,7 @@ function FormTambahPelatih() {
     try {
       dispatch(setIsUploadLoading(true));
 
-      const cloudinaryImage = await uploadImage();
+      const cloudinaryImage = await addImage();
 
       const response: AxiosResponse = await axios.post(
         `${
@@ -543,10 +566,10 @@ function FormTambahPelatih() {
           name: getValues("nama"),
           email: getValues("email"),
           no_hp: getValues("no_hp"),
+          image: cloudinaryImage,
           description: getValues("deskripsi"),
           status: getValues("status"),
           price: getValues("tarif_per_jam"),
-          image: cloudinaryImage,
         },
         {
           headers: {
@@ -560,9 +583,11 @@ function FormTambahPelatih() {
         toast({ title: "Success!", description: response.data.message });
         dispatch(setIsTambahPelatih(false));
       } else {
+        dispatch(setIsUploadLoading(false));
         toast({ title: "Failed!", description: response.data.message });
       }
     } catch (err: any) {
+      dispatch(setIsUploadLoading(false));
       toast({ title: "Error!", description: err.response.data.message });
     }
   }
@@ -573,7 +598,7 @@ function FormTambahPelatih() {
   });
 
   function onSubmit() {
-    addPelatihTariMutation.mutate();
+    addPelatihTariMutation.mutateAsync();
   }
 
   return (
@@ -604,7 +629,7 @@ function FormTambahPelatih() {
                     htmlFor="foto"
                     className="block font-normal text-primary-black"
                   >
-                    Foto
+                    Foto Profile
                   </label>
                   <Input
                     placeholder="Unggah foto"
@@ -616,7 +641,40 @@ function FormTambahPelatih() {
                     className="mt-2 border-spanish-gray w-full sm:max-w-[250px] rounded-full p-2"
                   />
                 </div>
-
+                {/*<div className="w-full ">
+                  <label
+                    htmlFor="detail_foto_pelatih"
+                    className="block font-normal text-primary-black"
+                  >
+                    Detail Foto Pelatih (Max 3 foto)
+                  </label>
+                  <div className="flex space-x-5 justify-between items-center">
+                    <Input
+                      placeholder="Detail Foto Pelatih"
+                      type="file"
+                      name="detail_foto_pelatih_1"
+                      multiple={false}
+                      required
+                      className="mt-2 border-spanish-gray w-full sm:max-w-[250px] rounded-full p-2"
+                    />
+                    <Input
+                      placeholder="Detail Foto Pelatih"
+                      type="file"
+                      name="detail_foto_pelatih_2"
+                      multiple={false}
+                      required
+                      className="mt-2 border-spanish-gray w-full sm:max-w-[250px] rounded-full p-2"
+                    />
+                    <Input
+                      placeholder="Detail Foto Pelatih"
+                      type="file"
+                      name="detail_foto_pelatih_3"
+                      multiple={false}
+                      required
+                      className="mt-2 border-spanish-gray w-full sm:max-w-[250px] rounded-full p-2"
+                    />
+                  </div>
+            </div>*/}
                 <div className="w-full">
                   <label
                     htmlFor="nama"
@@ -663,7 +721,7 @@ function FormTambahPelatih() {
                     No Hp
                   </label>
                   <Input
-                    type="tel"
+                    type="number"
                     {...register("no_hp", { required: true })}
                     placeholder="No HP anda"
                     name="no_hp"
@@ -681,13 +739,14 @@ function FormTambahPelatih() {
                   >
                     Status
                   </label>
-                  <Input
-                    type="text"
+                  <select
+                    defaultValue="Status"
                     {...register("status", { required: true })}
-                    placeholder="Status anda"
-                    name="status"
-                    className="mt-2 border-spanish-gray w-full rounded-full p-4 placeholder-pink-500 placeholder-opacity-75"
-                  />
+                    className="mt-1 w-full border border-spanish-gray bg-white rounded-full p-2"
+                  >
+                    <option value="Aktif">Aktif</option>
+                    <option value="Tidak Aktif">Tidak Aktif</option>
+                  </select>
                   <Paragraph className="text-xs font-medium mt-2">
                     {errors.status?.message}
                   </Paragraph>

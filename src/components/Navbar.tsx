@@ -28,7 +28,7 @@ export default function Navbar() {
   }
 
   return (
-    <header className="dark:bg-primary-black/80 backdrop-blur-lg bg-white/80 w-full flex justify-center items-center">
+    <header className="dark:bg-primary-black/80 sticky top-0 z-50 backdrop-blur-lg bg-white/80 w-full flex justify-center items-center">
       <nav className="max-w-[1440px] w-full px-4 py-3 justify-between flex items-center">
         <Link to="/">
           <img

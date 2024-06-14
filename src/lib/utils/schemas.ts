@@ -17,7 +17,7 @@ export const loginAdminSchema = z.object({
 });
 
 export const penilaianSchema = z.object({
-  ulasan: z.string().min(20),
+  ulasan: z.string().min(1),
 });
 
 export const ikutiKursusSchema = z.object({
@@ -26,4 +26,21 @@ export const ikutiKursusSchema = z.object({
   no_hp: z.string().min(12),
   email: z.string().email().min(1),
   daerah: z.string().min(1),
+});
+
+export const profileSchema = z.object({
+  nama: z.string().min(1),
+  no_hp: z.string().min(12).max(12),
+  jenis_kelamin: z.enum(["Laki-laki", "Perempuan"]),
+  umur: z.string().min(1),
+  bio: z.string().min(1),
+});
+
+export const formPelatihSchema = z.object({
+  nama: z.string().min(1),
+  no_hp: z.string().min(12).max(12),
+  email: z.string().email().min(1),
+  status: z.enum(["Aktif", "Tidak Aktif"]),
+  deskripsi: z.string().min(1),
+  tarif_per_jam: z.string().min(1),
 });

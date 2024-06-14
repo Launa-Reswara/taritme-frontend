@@ -1,10 +1,17 @@
 import { ReactNode } from "react";
 
+declare global {
+  interface Window {
+    snap: any;
+  }
+}
+
 export type UserProps = {
   id: number;
   name: string;
   email: string;
   password: string;
+  is_already_paid: 0 | 1;
 };
 
 export type KomunitasProps = {
@@ -50,7 +57,7 @@ export type PelatihProps = {
   status: "Aktif" | "Tidak Aktif";
   email: string;
   rating: number;
-  total_review: number;
+  total_comments: number;
 };
 
 export type DetailPelatihProps = {
@@ -80,10 +87,12 @@ export type PelatihSliceProps = {
     setId: (id: number) => void;
     isEditPelatih: boolean;
     isUploadLoading: boolean;
+    isOpenSearchCommand: boolean;
     setIsEditPelatih: (isEditPelatih: boolean) => void;
     initialData: PelatihProps;
     setInitialData: (initialData: PelatihProps) => void;
     setIsUploadLoading: (isUploadLoading: boolean) => void;
+    setIsOpenSearchCommand: (isOpenSearchCommand: boolean) => void;
   };
 };
 
@@ -116,7 +125,19 @@ export type TokenSliceProps = {
   };
 };
 
-export type RiwayatKursusProps = PelatihProps;
+export type RiwayatKursusProps = {
+  email: string;
+  id: number;
+  order_id: string;
+  pelatih_tari_description: string;
+  pelatih_tari_id: number;
+  pelatih_tari_image: string;
+  pelatih_tari_name: string;
+  pelatih_tari_price: number;
+  users_id: number;
+  rating: number;
+  total_comments: number;
+};
 
 export type BaseResponseApiProps = {
   statusCode: number;
@@ -127,6 +148,8 @@ export type UserSliceProps = {
   user: {
     isEditProfile: boolean;
     setIsEditProfile: (isEditProfile: boolean) => void;
+    isUploadLoading: boolean;
+    setIsUploadLoading: (isUploadLoading: boolean) => void;
   };
 };
 
@@ -138,4 +161,15 @@ export type UserProfileProps = {
   no_hp: string;
   age: number;
   image: string;
+};
+
+export type PenilaianProps = {
+  comment: string;
+  id: number;
+  order_id: string;
+  pelatih_tari_id: number;
+  pelatih_tari_name: string;
+  rating: number;
+  users_email: string;
+  users_name: string;
 };

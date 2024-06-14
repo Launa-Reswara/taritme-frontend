@@ -4,28 +4,22 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
-import { getDetailPelatihTari } from "@/features";
+import { getDetailPelatihTari, getPenilaianPelatihTari } from "@/features";
 import { useTitle } from "@/hooks";
 import { toRupiah } from "@/lib/helpers";
 import { cn } from "@/lib/utils/cn";
-import { ulasanList } from "@/lib/utils/data";
-import { DetailPelatihProps, PelatihProps, TokenSliceProps } from "@/types";
+import { DetailPelatihProps, PelatihProps } from "@/types";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { Heart } from "lucide-react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 export default function DetailPelatih() {
   const [tabs, setTabs] = useState<"Tentang" | "Ulasan">("Tentang");
 
-  const { isTokenAdminAvailable, isTokenUserAvailable } = useSelector(
-    (state: TokenSliceProps) => state.token
-  );
-
-  const navigate = useNavigate();
   const { name } = useParams();
 
+  const navigate = useNavigate();
   const pelatihName = name as string;
 
   useTitle(`Pelatih ${pelatihName} | Taritme`);
@@ -38,10 +32,18 @@ export default function DetailPelatih() {
     placeholderData: keepPreviousData,
   });
 
+  const { data: penilaian } = useQuery({
+    queryKey: ["get-penilaian-pelatih-tari"],
+    queryFn: () => getPenilaianPelatihTari(pelatihName),
+    placeholderData: keepPreviousData,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+  });
+
   if (isPending) return <IsPending />;
   if (isError) return <IsError />;
 
-  const pelatih = data.data.data[0] as DetailPelatihProps & PelatihProps;
+  const pelatih = data as DetailPelatihProps & PelatihProps;
 
   return (
     <Layout className="md:flex-row flex-col-reverse justify-between items-start">
@@ -131,27 +133,33 @@ export default function DetailPelatih() {
               </div>
             ) : (
               <div className="w-full space-y-4 mt-10">
-                {ulasanList.map((item) => (
-                  <div
-                    key={item.id}
-                    className="border-l-4 w-full py-2 px-3 border-l-primary-black"
-                  >
-                    <div className="w-full justify-between flex items-center">
-                      <Paragraph className="font-medium">{item.name}</Paragraph>
-                      <div className="flex justify-center items-center w-fit space-x-2">
-                        <span>{item.rating}</span>
-                        <Image
-                          src="/images/star-icon.svg"
-                          alt="star"
-                          className="w-4 h-4"
-                        />
+                {penilaian ? (
+                  penilaian.map((item) => (
+                    <div
+                      key={item.id}
+                      className="border-l-4 w-full py-2 px-3 border-l-primary-black"
+                    >
+                      <div className="w-full justify-between flex items-center">
+                        <Paragraph className="font-medium">
+                          {item.users_name}
+                        </Paragraph>
+                        <div className="flex justify-center items-center w-fit space-x-2">
+                          <span>{item.rating}</span>
+                          <Image
+                            src="/images/star-icon.svg"
+                            alt="star"
+                            className="w-4 h-4"
+                          />
+                        </div>
                       </div>
+                      <Paragraph className="text-[14px] w-full">
+                        {item.comment}
+                      </Paragraph>
                     </div>
-                    <Paragraph className="text-[14px] w-full">
-                      {item.comment}
-                    </Paragraph>
-                  </div>
-                ))}
+                  ))
+                ) : (
+                  <Paragraph>Belum ada ulasan!</Paragraph>
+                )}
               </div>
             )}
           </div>
@@ -177,7 +185,7 @@ export default function DetailPelatih() {
                 <Paragraph>
                   {pelatih.rating}{" "}
                   <span className="text-primary-black/50">
-                    ({pelatih.total_review} Ulasan)
+                    ({pelatih.total_comments} Ulasan)
                   </span>
                 </Paragraph>
               </div>
@@ -215,25 +223,6 @@ export default function DetailPelatih() {
               </div>
             </div>
           </div>
-          {isTokenUserAvailable || isTokenAdminAvailable ? (
-            <div>
-              <Paragraph>Ratings</Paragraph>
-              <Paragraph className="text-xs mt-2">
-                Apakah kamu menyukai keseluruhan service yang diberikan?
-              </Paragraph>
-              <div className="flex mt-5 justify-center items-center w-fit space-x-4">
-                {Array(5)
-                  .fill(null)
-                  .map((_, index) => (
-                    <Image
-                      key={index + 1}
-                      src="/images/unstar.svg"
-                      alt="unstar"
-                    />
-                  ))}
-              </div>
-            </div>
-          ) : null}
         </div>
       </aside>
     </Layout>

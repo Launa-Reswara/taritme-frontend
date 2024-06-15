@@ -9,7 +9,7 @@ import { Heading, Paragraph } from "@/components/ui/typography";
 import { useToast } from "@/components/ui/use-toast";
 import { getDetailPelatihTari } from "@/features";
 import { useTitle } from "@/hooks";
-import { toRupiah } from "@/lib/helpers";
+import { normalizeString, toRupiah } from "@/lib/helpers";
 import {
   CONDITION,
   DEVELOPMENT_API_URL,
@@ -34,10 +34,7 @@ export default function IkutiKursus() {
 
   const nameStr = name as string;
 
-  const pelatihName = nameStr
-    .split("-")
-    .map((item) => item[0].toUpperCase() + item.substring(1))
-    .join(" ");
+  const pelatihName = normalizeString(nameStr);
 
   useTitle(`Ikut kursus ${pelatihName} | Taritme`);
 

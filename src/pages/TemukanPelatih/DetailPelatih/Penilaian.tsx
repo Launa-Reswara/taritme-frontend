@@ -122,8 +122,8 @@ export default function Penilaian() {
                 </button>
                 <div className="bg-primary-color mt-6 p-5 h-[352px] flex justify-center items-center w-full relative rounded-xl">
                   <Image
-                    src="/images/lunamaya-instruktur-tari.png"
-                    alt="Luna Maya"
+                    src={pelatihTari.image}
+                    alt={pelatihTari.name}
                     className="absolute -top-20"
                   />
                   <div className="mt-36">
@@ -137,9 +137,9 @@ export default function Penilaian() {
                       <div className="flex justify-center items-center w-fit space-x-2">
                         <Image src="/images/star-icon.svg" alt="star" />
                         <span className="text-base text-white">
-                          4.9{" "}
+                          {pelatihTari.rating}{" "}
                           <span className="text-white/50 text-xs">
-                            (5 ulasan)
+                            ({pelatihTari.total_comments} ulasan)
                           </span>
                         </span>
                       </div>
@@ -188,7 +188,7 @@ export default function Penilaian() {
                   <Textarea
                     {...register("ulasan", { required: true })}
                     className="border border-spanish-gray rounded-lg h-52 px-3 mt-10"
-                    placeholder="Contoh : Kak Luna Maya sangat pandai melatih, sehingga gerakannya mudah di pahami"
+                    placeholder="Contoh: Kak Rina Ayu sangat pandai melatih, sehingga gerakannya mudah di pahami"
                   />
                   <Paragraph className="text-xs mt-2 font-medium">
                     {errors.ulasan?.message}

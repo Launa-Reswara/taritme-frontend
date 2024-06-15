@@ -15,4 +15,6 @@ export const CONTENTFUL_SPACE_ID: string = import.meta.env
 export const CONDITION = process.env.NODE_ENV as "development" | "production";
 export const MIDTRANS_DEVELOPMENT_SNAP_SCRIPT = import.meta.env
   .VITE_MIDTRANS_DEVELOPMENT_SNAP_SCRIPT;
+export const MIDTRANS_PRODUCTION_SNAP_SCRIPT = import.meta.env
+  .VITE_MIDTRANS_PRODUCTION_SNAP_SCRIPT;
 export const MIDTRANS_CLIENT_KEY = import.meta.env.MIDTRANS_CLIENT_KEY;

@@ -46,8 +46,8 @@ export default function DetailPelatih() {
   const pelatih = data as DetailPelatihProps & PelatihProps;
 
   return (
-    <Layout className="md:flex-row flex-col-reverse justify-between items-start">
-      <div className="md:mr-10">
+    <Layout className="md:flex-row w-full flex-col-reverse justify-between items-start">
+      <div className="md:mr-10 w-full">
         <button
           type="button"
           aria-label="kembali"

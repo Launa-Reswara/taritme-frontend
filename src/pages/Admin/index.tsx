@@ -25,7 +25,7 @@ export default function Admin() {
       return { pelatihTari, users };
     } catch (err: any) {
       toast({ title: "Error!" });
-      throw new Error(err.message);
+      throw new Error(err.response.data.message);
     }
   }
 

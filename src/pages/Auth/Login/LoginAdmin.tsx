@@ -43,7 +43,7 @@ export default function LoginAdmin() {
             CONDITION === "development"
               ? DEVELOPMENT_API_URL
               : PRODUCTION_API_URL
-          }/api/auth/login/admin`,
+          }/api/v1/auth/login/admin`,
           {
             email: getValues("email"),
             password: getValues("password"),

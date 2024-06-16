@@ -21,7 +21,7 @@ export async function getKomunitas(): Promise<KomunitasProps[]> {
     const response = await axios.get(
       `${
         CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-      }/api/komunitas`
+      }/api/v1/komunitas`
     );
 
     return response.data.data as KomunitasProps[];
@@ -36,7 +36,7 @@ export async function getPelatihTari(): Promise<PelatihProps[]> {
     const response = await axios.get(
       `${
         CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-      }/api/pelatih-tari`
+      }/api/v1/pelatih-tari`
     );
 
     return response.data.data as PelatihProps[];
@@ -51,7 +51,7 @@ export async function getUsers(): Promise<UserProfileProps[]> {
     const response = await axios.get(
       `${
         CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-      }/api/users`
+      }/api/v1/users`
     );
 
     return response.data.data as UserProfileProps[];
@@ -66,7 +66,7 @@ export async function getUserProfile() {
     const response = await axios.get(
       `${
         CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-      }/api/users/profile`,
+      }/api/v1/users/profile`,
       {
         headers: {
           Authorization: `Bearer ${Cookies.get("token")}`,
@@ -86,7 +86,7 @@ export async function getRiwayatKursus(): Promise<RiwayatKursusProps[]> {
     const response = await axios.get(
       `${
         CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-      }/api/riwayat-kursus`,
+      }/api/v1/riwayat-kursus`,
       { headers: { Authorization: `Bearer ${Cookies.get("token")}` } }
     );
 
@@ -121,7 +121,7 @@ export async function getPenilaianPelatihTari(
     const response = await axios.get(
       `${
         CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-      }/api/pelatih-tari/${name}/kumpulan-penilaian`,
+      }/api/v1/pelatih-tari/${name}/kumpulan-penilaian`,
       { headers: { Authorization: `Bearer ${Cookies.get("token")}` } }
     );
 
@@ -136,7 +136,7 @@ export async function getDetailPelatihTari(name: string) {
     const response = await axios.get(
       `${
         CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-      }/api/pelatih-tari/${name}`,
+      }/api/v1/pelatih-tari/${name}`,
       { headers: { Authorization: `Bearer ${Cookies.get("token")}` } }
     );
 
@@ -151,7 +151,7 @@ export async function getPaymentStatus(orderId: string) {
     const response = await axios.get(
       `${
         CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-      }/api/pelatih-tari/payment/${orderId}`,
+      }/api/v1/pelatih-tari/payment/${orderId}`,
       { headers: { Authorization: `Bearer ${Cookies.get("token")}` } }
     );
 

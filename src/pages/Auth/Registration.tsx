@@ -47,7 +47,7 @@ export default function Registration() {
             CONDITION === "development"
               ? DEVELOPMENT_API_URL
               : PRODUCTION_API_URL
-          }/api/auth/registration`,
+          }/api/v1/auth/registration`,
           {
             name: getValues("name"),
             email: getValues("email"),

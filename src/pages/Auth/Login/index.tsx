@@ -45,7 +45,7 @@ export default function Login() {
             CONDITION === "development"
               ? DEVELOPMENT_API_URL
               : PRODUCTION_API_URL
-          }/api/auth/login`,
+          }/api/v1/auth/login`,
           {
             email: getValues("email"),
             password: getValues("password"),

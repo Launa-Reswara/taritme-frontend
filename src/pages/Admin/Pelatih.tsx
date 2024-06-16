@@ -71,7 +71,7 @@ export default function Pelatih() {
       const response: AxiosResponse = await axios.delete(
         `${
           CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-        }/api/pelatih-tari/delete/${id}`,
+        }/api/v1/pelatih-tari/delete/${id}`,
         {
           headers: {
             Authorization: `Bearer ${Cookies.get("token-admin")}`,
@@ -255,7 +255,7 @@ function FormEditpelatih() {
       const response = await axios.post(
         `${
           CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-        }/api/pelatih-tari/upload-image/${id}`,
+        }/api/v1/pelatih-tari/upload-image/${id}`,
         formData,
         {
           headers: {
@@ -277,7 +277,7 @@ function FormEditpelatih() {
       const response: AxiosResponse = await axios.patch(
         `${
           CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-        }/api/pelatih-tari/edit/${id}`,
+        }/api/v1/pelatih-tari/edit/${id}`,
         {
           email: getValues("email"),
           name: getValues("nama"),
@@ -537,7 +537,7 @@ function FormTambahPelatih() {
       const response = await axios.post(
         `${
           CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-        }/api/pelatih-tari/add-image`,
+        }/api/v1/pelatih-tari/add-image`,
         formData,
         {
           headers: {
@@ -561,7 +561,7 @@ function FormTambahPelatih() {
       const response: AxiosResponse = await axios.post(
         `${
           CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-        }/api/pelatih-tari/add`,
+        }/api/v1/pelatih-tari/add`,
         {
           name: getValues("nama"),
           email: getValues("email"),

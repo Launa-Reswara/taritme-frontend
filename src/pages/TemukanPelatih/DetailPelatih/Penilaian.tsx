@@ -79,7 +79,7 @@ export default function Penilaian() {
             CONDITION === "development"
               ? DEVELOPMENT_API_URL
               : PRODUCTION_API_URL
-          }/api/pelatih-tari/${name}/penilaian`,
+          }/api/v1/pelatih-tari/${name}/penilaian`,
           {
             pelatih_tari_id: pelatihTari.id,
             pelatih_tari_name: pelatihTari.name,

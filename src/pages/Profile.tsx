@@ -111,7 +111,7 @@ function FormEditProfile({ profile }: { profile: JoinProps }) {
       const response = await axios.post(
         `${
           CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-        }/api/users/profile/upload-image/${profile.id}`,
+        }/api/v1/users/profile/upload-image/${profile.id}`,
         formData,
         {
           headers: {
@@ -133,7 +133,7 @@ function FormEditProfile({ profile }: { profile: JoinProps }) {
       const response: AxiosResponse = await axios.patch(
         `${
           CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
-        }/api/users/profile/edit/${profile.id}`,
+        }/api/v1/users/profile/edit/${profile.id}`,
         {
           name: getValues("nama"),
           no_hp: getValues("no_hp"),

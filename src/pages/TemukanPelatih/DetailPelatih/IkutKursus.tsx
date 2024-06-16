@@ -74,7 +74,7 @@ export default function IkutiKursus() {
             CONDITION === "development"
               ? DEVELOPMENT_API_URL
               : PRODUCTION_API_URL
-          }/api/riwayat-kursus`,
+          }/api/v1/riwayat-kursus`,
           {
             pelatih_tari_name: name,
             order_id: orderId,
@@ -104,7 +104,7 @@ export default function IkutiKursus() {
             CONDITION === "development"
               ? DEVELOPMENT_API_URL
               : PRODUCTION_API_URL
-          }/api/pelatih-tari/${slugify(pelatihName, {
+          }/api/v1/pelatih-tari/${slugify(pelatihName, {
             lower: true,
           })}/transactions`,
           {

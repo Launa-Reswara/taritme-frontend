@@ -1,7 +1,6 @@
 import IsError from "@/components/IsError";
 import IsPending from "@/components/IsPending";
 import Layout from "@/components/Layout";
-import ModalKomunitas from "@/components/ModalKomunitas";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Image from "@/components/ui/image";
@@ -15,7 +14,10 @@ import {
 import { KomunitasProps, ModalKomunitasSliceProps } from "@/types";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { ArrowRightIcon } from "lucide-react";
+import { Suspense, lazy } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
+const ModalKomunitas = lazy(() => import("@/components/ModalKomunitas"));
 
 export default function Komunitas() {
   const dispatch = useDispatch();
@@ -94,7 +96,9 @@ export default function Komunitas() {
         </div>
       </Layout>
       {idModal === dataModalKomunitas.id && idModal !== 0 ? (
-        <ModalKomunitas {...dataModalKomunitas} />
+        <Suspense>
+          <ModalKomunitas {...dataModalKomunitas} />
+        </Suspense>
       ) : null}
     </>
   );

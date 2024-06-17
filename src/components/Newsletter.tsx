@@ -26,7 +26,7 @@ export default function Newsletter() {
   });
 
   function onSubmit() {
-    async function submitEmail() {
+    async function submitEmail(): Promise<void> {
       try {
         const response = await axios.post(
           MAILERLITE_SUBSCRIBE_API,

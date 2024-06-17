@@ -64,10 +64,9 @@ export type DetailPelatihProps = {
   id: number;
   pelatih_tari_id: number;
   tentang_pelatih: string;
-  image_1: string;
-  image_2: string;
-  image_3: string;
-  price_per_paket: number;
+  image_1: string | null;
+  image_2: string | null;
+  image_3: string | null;
 };
 
 export type ModalKomunitasSliceProps = {

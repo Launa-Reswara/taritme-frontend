@@ -1,8 +1,6 @@
 import IsError from "@/components/IsError";
 import IsPending from "@/components/IsPending";
 import Layout from "@/components/Layout";
-import Newsletter from "@/components/Newsletter";
-import ReadingTime from "@/components/ReadingTime";
 import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { useToast } from "@/components/ui/use-toast";
@@ -14,8 +12,12 @@ import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { MessageCircle, Share, ThumbsUp } from "lucide-react";
+import { Suspense, lazy } from "react";
 import { Link } from "react-router-dom";
 import { useClipboard } from "use-clipboard-copy";
+
+const Newsletter = lazy(() => import("@/components/Newsletter"));
+const ReadingTime = lazy(() => import("@/components/ReadingTime"));
 
 export default function ArsipKesenian() {
   const { toast } = useToast();
@@ -41,7 +43,7 @@ export default function ArsipKesenian() {
   }
 
   return (
-    <Layout className="flex-row justify-between items-start">
+    <Layout className="md:flex-row flex-col justify-between items-start">
       <div className="xl:mr-28 md:mr-14">
         <Heading as="h1">Arsip Kesenian</Heading>
         <div className="flex flex-col space-y-14 my-10 justify-start items-start">
@@ -79,11 +81,13 @@ export default function ArsipKesenian() {
                       "w-full justify-start items-start md:items-center"
                     )}
                   >
-                    <ReadingTime
-                      content={documentToHtmlString(
-                        item.fields.content
-                      ).toString()}
-                    />
+                    <Suspense>
+                      <ReadingTime
+                        content={documentToHtmlString(
+                          item.fields.content
+                        ).toString()}
+                      />
+                    </Suspense>
                     <div className="flex justify-start items-center space-x-4 md:space-x-8 mt-2 md:mt-0">
                       <button className="flex justify-start items-center space-x-2">
                         <ThumbsUp size={20} />
@@ -124,12 +128,11 @@ export default function ArsipKesenian() {
             </div>
           ))}
         </div>
-        <div className="block md:hidden">
-          <Newsletter />
-        </div>
       </div>
-      <aside className="sticky top-14 hidden md:block">
-        <Newsletter />
+      <aside className="sticky top-14">
+        <Suspense>
+          <Newsletter />
+        </Suspense>
       </aside>
     </Layout>
   );

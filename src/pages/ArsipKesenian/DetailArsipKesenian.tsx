@@ -1,4 +1,3 @@
-import BacaJugaList from "@/components/BacaJugaList";
 import IsError from "@/components/IsError";
 import IsPending from "@/components/IsPending";
 import Layout from "@/components/Layout";
@@ -11,7 +10,10 @@ import { BLOCKS } from "@contentful/rich-text-types";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { MessageCircle, Share, ThumbsUp } from "lucide-react";
+import { Suspense, lazy } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+
+const BacaJugaList = lazy(() => import("@/components/BacaJugaList"));
 
 export default function DetailArsipKesenian() {
   const navigate = useNavigate();
@@ -99,7 +101,9 @@ export default function DetailArsipKesenian() {
       </Heading>
       <div className="flex justify-center w-full mt-10">
         <div className="grid grid-cols-1 w-full sm:grid-cols-2 md:grid-cols-3 grid-rows-1 gap-6">
-          <BacaJugaList />
+          <Suspense>
+            <BacaJugaList />
+          </Suspense>
         </div>
       </div>
     </Layout>

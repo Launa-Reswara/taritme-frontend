@@ -1,5 +1,4 @@
 import {
-  Command,
   CommandEmpty,
   CommandGroup,
   CommandInput,
@@ -7,28 +6,58 @@ import {
   CommandList,
   CommandSeparator,
 } from "@/components/ui/command";
-import { Calculator, User } from "lucide-react";
+import { PelatihProps } from "@/types";
+import { CommandDialog } from "cmdk";
+import { Dispatch, SetStateAction, useEffect } from "react";
+import { Link } from "react-router-dom";
+import slugify from "slugify";
+import Image from "./ui/image";
 
-export default function SearchCommand() {
+type SearchCommandProps = {
+  data: PelatihProps[];
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+export default function SearchCommand({
+  data,
+  open,
+  setOpen,
+}: SearchCommandProps) {
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === "k" && e.ctrlKey) {
+        e.preventDefault();
+        setOpen((open) => !open);
+      }
+    };
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+  }, [setOpen]);
+
+  const initialData = open ? data : [];
+
   return (
-    <Command className="rounded-lg border shadow-md">
-      <CommandInput placeholder="Type a command or search..." />
+    <CommandDialog open={open} onOpenChange={setOpen}>
+      <CommandInput placeholder="Cari Pelatih...." />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Results">
-          <CommandItem>
-            <Calculator className="mr-2 h-4 w-4" />
-            <span>Calculator</span>
-          </CommandItem>
+          {initialData.map((item) => (
+            <Link to={slugify(item.name, { lower: true })} key={item.id}>
+              <CommandItem>
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  className="mr-2 h-4 w-4"
+                />
+                <span>{item.name}</span>
+              </CommandItem>
+            </Link>
+          ))}
         </CommandGroup>
         <CommandSeparator />
-        <CommandGroup heading="Settings">
-          <CommandItem>
-            <User className="mr-2 h-4 w-4" />
-            <span>Profile</span>
-          </CommandItem>
-        </CommandGroup>
       </CommandList>
-    </Command>
+    </CommandDialog>
   );
 }

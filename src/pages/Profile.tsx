@@ -27,6 +27,7 @@ import {
 } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
 import Cookies from "js-cookie";
+import { PencilIcon, TrashIcon } from "lucide-react";
 import { ChangeEvent } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -321,20 +322,25 @@ function FormEditProfile({ profile }: { profile: JoinProps }) {
         </div>
       </div>
 
-      <div className="mt-10 flex my-10 flex-col justify-center items-center w-full">
+      <div className="mt-10 flex my-10 justify-center space-x-10 items-center w-full">
         <Button
           type="submit"
-          className="text-black bg-secondary-color hover:bg-secondary-color/90 rounded-3xl w-72 px-4 py-6"
+          className="text-black bg-secondary-color w-72 hover:bg-secondary-color/90 rounded-3xl space-x-3 px-4 py-6"
           disabled={isUploadLoading ? true : false}
         >
+          <PencilIcon />
           {isUploadLoading ? (
             <Paragraph className="flex w-fit space-x-2 justify-center items-center">
               <span>Loading</span>
               <LoadingCircle />
             </Paragraph>
           ) : (
-            "Edit"
+            <span>Edit Profile</span>
           )}
+        </Button>
+        <Button className="bg-primary-color w-72 hover:bg-primary-black rounded-full flex justify-center items-center space-x-3 px-4 py-6">
+          <TrashIcon />
+          <span>Delete This Account</span>
         </Button>
       </div>
     </form>

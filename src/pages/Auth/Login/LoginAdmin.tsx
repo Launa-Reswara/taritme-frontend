@@ -123,7 +123,12 @@ export default function LoginAdmin() {
                 </div>
                 <div className="flex justify-between items-center w-full">
                   <div className="flex w-full justify-start space-x-2 items-center">
-                    <input type="checkbox" name="ingatkan-saya" id="" />
+                    <input
+                      type="checkbox"
+                      name="ingatkan-saya"
+                      id="ingatkan-saya"
+                      required
+                    />
                     <Paragraph className="text-xs">Ingatkan saya</Paragraph>
                   </div>
                   <CustomLink

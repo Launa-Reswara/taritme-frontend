@@ -47,7 +47,7 @@ export default function DetailPelatih() {
 
   return (
     <Layout className="md:flex-row w-full flex-col-reverse justify-between items-start">
-      <div className="md:mr-10 w-full">
+      <div className={cn("md:mr-10", tabs === "Ulasan" ? "w-full" : "")}>
         <button
           type="button"
           aria-label="kembali"
@@ -66,23 +66,51 @@ export default function DetailPelatih() {
               "gap-4 grid-rows-1"
             )}
           >
-            <div className="row-span-2 h-full mx-auto w-full col-span-2 bg-primary-color rounded-xl flex justify-center">
+            <div
+              className={cn(
+                "row-span-2 h-[200px] sm:h-[320px] mx-auto w-full col-span-2 rounded-xl flex justify-center",
+                pelatih.image_1 ? "bg-primary-color" : "bg-light-silver"
+              )}
+            >
               <Image
-                src={pelatih.image_1}
+                src={
+                  pelatih.image_1
+                    ? pelatih.image_1
+                    : "/images/placeholder-image-detail-pelatih-tari-1.png"
+                }
+                alt="detail pelatih"
+                draggable={false}
+                className="w-full"
+              />
+            </div>
+            <div
+              className={cn(
+                "h-[150px] flex justify-center rounded-xl mx-auto bg-primary-color w-full",
+                pelatih.image_2 ? "bg-primary-color" : "bg-light-silver"
+              )}
+            >
+              <Image
+                src={
+                  pelatih.image_2
+                    ? pelatih.image_2
+                    : "/images/placeholder-image-detail-pelatih-tari-1.png"
+                }
                 alt="detail pelatih"
                 draggable={false}
               />
             </div>
-            <div className="h-full flex justify-center rounded-xl mx-auto bg-primary-color w-full">
+            <div
+              className={cn(
+                "h-[150px] flex justify-center rounded-xl mx-auto bg-primary-color w-full",
+                pelatih.image_2 ? "bg-primary-color" : "bg-light-silver"
+              )}
+            >
               <Image
-                src={pelatih.image_2}
-                alt="detail pelatih"
-                draggable={false}
-              />
-            </div>
-            <div className="h-full flex justify-center rounded-xl mx-auto bg-primary-color w-full">
-              <Image
-                src={pelatih.image_3}
+                src={
+                  pelatih.image_3
+                    ? pelatih.image_3
+                    : "/images/placeholder-image-detail-pelatih-tari-1.png"
+                }
                 alt="detail pelatih"
                 draggable={false}
               />
@@ -110,7 +138,7 @@ export default function DetailPelatih() {
               </button>
             </div>
             {tabs === "Tentang" ? (
-              <div className="space-y-6 mt-10">
+              <div className="space-y-6 w-full mt-10">
                 <Heading as="h1">Pelatih Tari Piring</Heading>
                 <div>
                   <Heading as="h2" className="mb-2">
@@ -136,7 +164,7 @@ export default function DetailPelatih() {
               </div>
             ) : (
               <div className="w-full space-y-4 mt-10">
-                {penilaian ? (
+                {penilaian?.length ? (
                   penilaian.map((item) => (
                     <div
                       key={item.id}
@@ -161,7 +189,9 @@ export default function DetailPelatih() {
                     </div>
                   ))
                 ) : (
-                  <Paragraph>Belum ada ulasan!</Paragraph>
+                  <Paragraph className="font-semibold text-lg">
+                    Belum ada ulasan!
+                  </Paragraph>
                 )}
               </div>
             )}

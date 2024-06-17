@@ -156,7 +156,7 @@ export default function Registration() {
                 </div>
                 <div className="flex justify-start items-center w-full">
                   <div className="flex w-full justify-start space-x-2 items-center">
-                    <input type="checkbox" name="ingatkan_saya" />
+                    <input type="checkbox" name="agreement" required />
                     <Paragraph className="text-xs">
                       I agree to the terms of service and privacy and policy
                     </Paragraph>

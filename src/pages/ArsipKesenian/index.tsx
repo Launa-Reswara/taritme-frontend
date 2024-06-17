@@ -5,16 +5,23 @@ import Newsletter from "@/components/Newsletter";
 import ReadingTime from "@/components/ReadingTime";
 import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
+import { useToast } from "@/components/ui/use-toast";
 import { getArsipKesenian } from "@/features";
 import { useTitle } from "@/hooks";
 import { cn } from "@/lib/utils/cn";
+import { PRODUCTION_URL } from "@/lib/utils/constants";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { MessageCircle, Share, ThumbsUp } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useClipboard } from "use-clipboard-copy";
 
 export default function ArsipKesenian() {
+  const { toast } = useToast();
+
+  const clipboard = useClipboard({ copiedTimeout: 900 });
+
   useTitle("Arsip Kesenian | Taritme");
 
   const { data, isPending, isError } = useQuery({
@@ -27,6 +34,11 @@ export default function ArsipKesenian() {
 
   if (isPending) return <IsPending />;
   if (isError) return <IsError />;
+
+  function onShare(link: string) {
+    clipboard.copy(link);
+    toast({ title: "Success!", description: "Success to copy share link!" });
+  }
 
   return (
     <Layout className="flex-row justify-between items-start">
@@ -85,7 +97,16 @@ export default function ArsipKesenian() {
                           10
                         </span>
                       </button>
-                      <button className="flex justify-start items-center space-x-2">
+                      <button
+                        className="flex justify-start items-center space-x-2"
+                        onClick={() =>
+                          clipboard.copy(
+                            onShare(
+                              `${PRODUCTION_URL}/arsip-kesenian/${item.sys.id}`
+                            )
+                          )
+                        }
+                      >
                         <Share size={20} />
                         <span className="text-primary-black text-xs md:text-base">
                           Share

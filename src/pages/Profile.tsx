@@ -181,7 +181,7 @@ function FormEditProfile({ profile }: { profile: JoinProps }) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-      <header
+      <div
         className="mt-5 relative bg-primary-color rounded-t-lg h-36 w-full"
         style={{
           borderTopLeftRadius: "1.3rem",
@@ -204,7 +204,7 @@ function FormEditProfile({ profile }: { profile: JoinProps }) {
             onChange={onChangeImage}
           />
         </div>
-      </header>
+      </div>
       <div className="ml-28 p-2">
         <Paragraph className="text-lg font-medium">{profile.name}</Paragraph>
       </div>

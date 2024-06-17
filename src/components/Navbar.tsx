@@ -8,17 +8,19 @@ import {
 import { cn } from "@/lib/utils/cn";
 import { setIsLoggedIn } from "@/store/slices/login.slice";
 import { LoginSliceProps } from "@/types";
+import Cookies from "js-cookie";
 import { Menu } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { CustomLink, Paragraph } from "./ui/typography";
-import Cookies from "js-cookie";
+import { useScroll } from "@/hooks";
 
 export default function Navbar() {
   const { isLoggedIn } = useSelector((state: LoginSliceProps) => state.login);
-  const dispatch = useDispatch();
 
+  const scroll = useScroll();
+  const dispatch = useDispatch();
   const location = useLocation();
 
   function signOut() {
@@ -28,7 +30,12 @@ export default function Navbar() {
   }
 
   return (
-    <header className="dark:bg-primary-black/80 sticky top-0 z-50 border-b border-light-silver backdrop-blur-lg bg-white/80 w-full flex justify-center items-center">
+    <header
+      className={cn(
+        "dark:bg-primary-black/80 sticky top-0 z-50 backdrop-blur-lg bg-white/80 w-full flex justify-center items-center",
+        scroll > 100 ? "border-b border-light-silver" : ""
+      )}
+    >
       <nav className="max-w-[1440px] w-full px-4 py-3 justify-between flex items-center">
         <Link to="/">
           <img

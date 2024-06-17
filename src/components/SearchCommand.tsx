@@ -31,6 +31,7 @@ export default function SearchCommand({
         setOpen((open) => !open);
       }
     };
+
     document.addEventListener("keydown", down);
     return () => document.removeEventListener("keydown", down);
   }, [setOpen]);

@@ -16,8 +16,9 @@ import { useNavigate, useParams } from "react-router-dom";
 const BacaJugaList = lazy(() => import("@/components/BacaJugaList"));
 
 export default function DetailArsipKesenian() {
-  const navigate = useNavigate();
   const { id } = useParams();
+
+  const navigate = useNavigate();
 
   useTitle(`Artikel | Taritme`);
 

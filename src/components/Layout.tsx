@@ -1,12 +1,12 @@
+import { useScroll } from "@/hooks";
 import { cn } from "@/lib/utils/cn";
 import { MotionProps, m } from "framer-motion";
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, lazy } from "react";
 import Navbar from "./Navbar";
-import { Button } from "./ui/button";
-import { ArrowUp } from "lucide-react";
-import { useScroll } from "@/hooks";
 
 type TransitionLayoutProps = MotionProps & HTMLAttributes<HTMLDivElement>;
+
+const BackToTop = lazy(() => import("@/components/BackToTop"));
 
 export default function Layout({
   className,
@@ -35,15 +35,7 @@ export default function Layout({
           {children}
         </section>
       </m.main>
-      {scroll > 100 ? (
-        <Button
-          size="icon"
-          className="fixed bottom-4 right-4 bg-primary-color hover:bg-primary-black"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        >
-          <ArrowUp />
-        </Button>
-      ) : null}
+      {scroll > 100 ? <BackToTop /> : null}
     </>
   );
 }

@@ -131,7 +131,7 @@ export default function ArsipKesenian() {
       </div>
       <aside className="sticky top-14">
         <Suspense>
-          14 <Newsletter />
+          <Newsletter />
         </Suspense>
       </aside>
     </Layout>

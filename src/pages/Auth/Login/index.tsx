@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [isWrongLoginData, setIsWrongLoginData] = useState<boolean>(false);
+  const [errMessage, setErrMessage] = useState<string>("");
 
   const { toast } = useToast();
 
@@ -69,9 +70,12 @@ export default function Login() {
             title: "Failed!",
             description: response.data.message,
           });
+          setErrMessage(response.data.message);
           setIsWrongLoginData(true);
         }
       } catch (err: any) {
+        setIsWrongLoginData(true);
+        setErrMessage(err.response.data.message);
         toast({ title: "Error!", description: err.response.data.message });
       }
     }
@@ -138,12 +142,11 @@ export default function Login() {
                       <input type="checkbox" name="ingatkan-saya" />
                       <Paragraph className="text-xs">Ingatkan saya</Paragraph>
                     </div>
-                    <CustomLink
-                      to="/lupa-password"
-                      className="text-xs w-full flex justify-end items-center"
-                    >
-                      Lupa Password?
-                    </CustomLink>
+                    <div className="w-full text-end">
+                      <CustomLink to="/lupa-password" className="text-xs">
+                        Lupa Password?
+                      </CustomLink>
+                    </div>
                   </div>
                 </div>
                 <div className="flex my-10 flex-col justify-center items-center w-full">
@@ -167,8 +170,7 @@ export default function Login() {
                   </Button>
                   {isWrongLoginData ? (
                     <Paragraph className="font-medium text-red-500 text-center mt-5">
-                      Username atau password yang kamu masukkan salah! Silahkan
-                      coba lagi.
+                      {errMessage}
                     </Paragraph>
                   ) : null}
                 </div>

@@ -74,9 +74,7 @@ export default function DetailPelatih() {
             >
               <Image
                 src={
-                  pelatih.image_1
-                    ? pelatih.image_1
-                    : "/images/placeholder-image-detail-pelatih-tari-1.png"
+                  pelatih.image_1 ? pelatih.image_1 : "/images/placeholder.png"
                 }
                 alt="detail pelatih"
                 draggable={false}
@@ -91,9 +89,7 @@ export default function DetailPelatih() {
             >
               <Image
                 src={
-                  pelatih.image_2
-                    ? pelatih.image_2
-                    : "/images/placeholder-image-detail-pelatih-tari-1.png"
+                  pelatih.image_2 ? pelatih.image_2 : "/images/placeholder.png"
                 }
                 alt="detail pelatih"
                 draggable={false}
@@ -107,9 +103,7 @@ export default function DetailPelatih() {
             >
               <Image
                 src={
-                  pelatih.image_3
-                    ? pelatih.image_3
-                    : "/images/placeholder-image-detail-pelatih-tari-1.png"
+                  pelatih.image_3 ? pelatih.image_3 : "/images/placeholder.png"
                 }
                 alt="detail pelatih"
                 draggable={false}

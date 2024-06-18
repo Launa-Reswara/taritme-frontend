@@ -183,7 +183,7 @@ function FormEditProfile({ profile }: { profile: JoinProps }) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">
       <div
-        className="mt-5 relative bg-primary-color rounded-t-lg h-36 w-full"
+        className="mt-5 relative bg-profile-bg-image bg-cover bg-center bg-no-repeat rounded-t-lg h-36 w-full"
         style={{
           borderTopLeftRadius: "1.3rem",
           borderTopRightRadius: "1.3rem",

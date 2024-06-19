@@ -1,62 +1,60 @@
+import { PelatihProps, UserProfileProps, UserProps } from "@/types";
 import {
+  Bar,
+  BarChart,
   CartesianGrid,
-  Line,
-  LineChart,
+  Legend,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
 
-const data = [
-  {
-    name: "Feb",
-    total: 50,
-  },
-  {
-    name: "Mar",
-    total: 100,
-  },
-  {
-    name: "Apr",
-    total: 150,
-  },
-  {
-    name: "May",
-    total: 200,
-  },
-  {
-    name: "Jun",
-    total: 250,
-  },
-  {
-    name: "Jul",
-    total: 300,
-  },
-];
+type DataProps = {
+  pelatihTari: PelatihProps[];
+  users: (UserProfileProps & Pick<UserProps, "name" | "is_already_paid">)[];
+};
 
-export default function ChartTotalUser() {
+export default function ChartTotalUser({ data }: { data: DataProps }) {
+  const customer = data.users.filter((item) => item.is_already_paid);
+
+  const chartData = [
+    {
+      name: "Pengguna",
+      total: data.users.length,
+    },
+    {
+      name: "Instruktur",
+      total: data.pelatihTari.length,
+    },
+    {
+      name: "Customer",
+      total: customer.length,
+    },
+  ];
+
   return (
     <ResponsiveContainer width="100%" height={350}>
-      <LineChart data={data}>
+      <BarChart data={chartData}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis
           dataKey="name"
-          stroke="#000000"
+          stroke="#761217"
           fontSize={12}
           tickLine
           axisLine
         />
         <YAxis
-          stroke="#000000"
+          stroke="#761217"
           fontSize={12}
           tickLine
           axisLine
           tickFormatter={(value) => value}
         />
         <Tooltip />
-        <Line dataKey="total" stroke="#E1B83B" />
-      </LineChart>
+        <Legend />
+        <Bar dataKey="total" fill="#761217" />
+      </BarChart>
     </ResponsiveContainer>
   );
 }

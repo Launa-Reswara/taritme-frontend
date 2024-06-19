@@ -7,10 +7,7 @@ import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { getKomunitas } from "@/features";
 import { useTitle } from "@/hooks";
-import {
-  setIdModal,
-  setModalKomunitas,
-} from "@/store/slices/modalKomunitas.slice";
+import { setIdModal, setModalKomunitas } from "@/store/slices/komunitas.slice";
 import { KomunitasProps, ModalKomunitasSliceProps } from "@/types";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { ArrowRightIcon } from "lucide-react";
@@ -23,7 +20,7 @@ export default function Komunitas() {
   const dispatch = useDispatch();
 
   const { idModal, dataModalKomunitas } = useSelector(
-    (state: ModalKomunitasSliceProps) => state.modalKomunitas
+    (state: ModalKomunitasSliceProps) => state.komunitas
   );
 
   useTitle("Komunitas | Taritme");

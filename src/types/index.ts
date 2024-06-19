@@ -70,7 +70,7 @@ export type DetailPelatihProps = {
 };
 
 export type ModalKomunitasSliceProps = {
-  modalKomunitas: {
+  komunitas: {
     idModal: number;
     setIdModal: (idModal: number) => void;
     dataModalKomunitas: KomunitasProps;

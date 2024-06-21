@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const modalKomunitasSlice = createSlice({
-  name: "modalKomunitas",
+export const komunitasSlice = createSlice({
+  name: "komunitas",
   initialState: {
     idModal: 0,
     dataModalKomunitas: {
@@ -21,6 +21,6 @@ export const modalKomunitasSlice = createSlice({
   },
 });
 
-export const { setIdModal, setModalKomunitas } = modalKomunitasSlice.actions;
+export const { setIdModal, setModalKomunitas } = komunitasSlice.actions;
 
-export default modalKomunitasSlice.reducer;
+export default komunitasSlice.reducer;

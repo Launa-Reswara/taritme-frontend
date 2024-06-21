@@ -1,4 +1,4 @@
-import { setIdModal } from "@/store/slices/modalKomunitas.slice";
+import { setIdModal } from "@/store/slices/komunitas.slice";
 import { KomunitasProps } from "@/types";
 import { m } from "framer-motion";
 import { X } from "lucide-react";

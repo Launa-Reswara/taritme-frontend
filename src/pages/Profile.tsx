@@ -27,6 +27,7 @@ import {
 } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
 import Cookies from "js-cookie";
+import { PencilIcon, TrashIcon } from "lucide-react";
 import { ChangeEvent } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -93,9 +94,9 @@ function FormEditProfile({ profile }: { profile: JoinProps }) {
   } = useForm({
     defaultValues: {
       nama: profile.name,
-      no_hp: profile.no_hp.toString(),
+      no_hp: profile.no_hp,
       jenis_kelamin: profile.jenis_kelamin,
-      umur: profile.age.toString(),
+      umur: profile.age,
       bio: profile.bio,
     },
     resolver: zodResolver(profileSchema),
@@ -161,18 +162,55 @@ function FormEditProfile({ profile }: { profile: JoinProps }) {
     }
   }
 
-  const editUserProfileMutation = useMutation({
-    mutationFn: editUserProfile,
-    onSuccess: () => queryClient.invalidateQueries(),
-  });
+  async function deleteUserAccount(): Promise<void> {
+    try {
+      const response: AxiosResponse = await axios.delete(
+        `${
+          CONDITION === "development" ? DEVELOPMENT_API_URL : PRODUCTION_API_URL
+        }/api/v1/users/delete/${profile.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        toast({ title: "Success!", description: response.data.message });
+
+        setTimeout(() => {
+          Cookies.remove("token");
+          window.location.replace("/auth/login");
+        }, 2000);
+      } else {
+        toast({ title: "Failed!", description: response.data.message });
+      }
+    } catch (err: any) {
+      toast({ title: "Error!", description: err.response.data.message });
+    }
+  }
 
   const uploadImageMutation = useMutation({
     mutationFn: uploadImage,
     onSuccess: () => queryClient.invalidateQueries(),
   });
 
+  const editUserProfileMutation = useMutation({
+    mutationFn: editUserProfile,
+    onSuccess: () => queryClient.invalidateQueries(),
+  });
+
+  const deleteUserAccountMutation = useMutation({
+    mutationFn: deleteUserAccount,
+    onSuccess: () => queryClient.invalidateQueries(),
+  });
+
   function onSubmit() {
     editUserProfileMutation.mutate();
+  }
+
+  function onDeleteAccount() {
+    deleteUserAccountMutation.mutate();
   }
 
   function onChangeImage(e: ChangeEvent<HTMLInputElement>) {
@@ -182,7 +220,7 @@ function FormEditProfile({ profile }: { profile: JoinProps }) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">
       <div
-        className="mt-5 relative bg-primary-color rounded-t-lg h-36 w-full"
+        className="mt-5 relative bg-profile-bg-image bg-cover bg-center bg-no-repeat rounded-t-lg h-36 w-full"
         style={{
           borderTopLeftRadius: "1.3rem",
           borderTopRightRadius: "1.3rem",
@@ -321,20 +359,29 @@ function FormEditProfile({ profile }: { profile: JoinProps }) {
         </div>
       </div>
 
-      <div className="mt-10 flex my-10 flex-col justify-center items-center w-full">
+      <div className="mt-10 flex my-10 justify-center space-x-10 items-center w-full">
         <Button
           type="submit"
-          className="text-black bg-secondary-color hover:bg-secondary-color/90 rounded-3xl w-72 px-4 py-6"
+          className="text-black bg-secondary-color w-72 hover:bg-secondary-color/90 rounded-3xl space-x-3 px-4 py-6"
           disabled={isUploadLoading ? true : false}
         >
+          <PencilIcon />
           {isUploadLoading ? (
             <Paragraph className="flex w-fit space-x-2 justify-center items-center">
               <span>Loading</span>
               <LoadingCircle />
             </Paragraph>
           ) : (
-            "Edit"
+            <span>Edit Profile</span>
           )}
+        </Button>
+        <Button
+          type="button"
+          className="bg-primary-color w-72 hover:bg-primary-black rounded-full flex justify-center items-center space-x-3 px-4 py-6"
+          onClick={onDeleteAccount}
+        >
+          <TrashIcon />
+          <span>Delete This Account</span>
         </Button>
       </div>
     </form>

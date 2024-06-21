@@ -20,9 +20,10 @@ const config = {
         "login-side-image": `url("/images/login-side-image.png")`,
         "abstract-home-image": `url("/images/abstract.svg")`,
         "payung-tari-home-image": `url("/images/payung-tari.png")`,
-        "rumah-gadang-komunitas-image": `url("/images/komunitas1.png")`,
-        "temukan-pelatih-bg-image": `url("/images/temukan-pelatih-bg.png")`,
+        "rumah-gadang-komunitas-image": `url("/images/komunitas1.webp")`,
+        "temukan-pelatih-bg-image": `url("/images/temukan-pelatih-bg.webp")`,
         "pelatih-tari-home-image": `url("/images/pelatih-tari-home.png")`,
+        "profile-bg-image": `url("/images/bg-profile.svg")`,
       },
       colors: {
         "primary-black": "#161925",

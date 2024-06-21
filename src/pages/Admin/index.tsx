@@ -1,4 +1,3 @@
-import ChartTotalUser from "@/components/ChartTotalUser";
 import IsError from "@/components/IsError";
 import IsPending from "@/components/IsPending";
 import SidebarAdmin from "@/components/SidebarAdmin";
@@ -7,15 +6,23 @@ import Image from "@/components/ui/image";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { useToast } from "@/components/ui/use-toast";
 import { getPelatihTari, getUsers } from "@/features";
-import { UserProfileProps, UserProps } from "@/types";
+import { PelatihProps, UserProfileProps, UserProps } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { m } from "framer-motion";
 import { UserRound } from "lucide-react";
+import { Suspense, lazy } from "react";
+
+type StatisticsProps = {
+  pelatihTari: PelatihProps[];
+  users: (UserProfileProps & Pick<UserProps, "name" | "is_already_paid">)[];
+};
+
+const ChartTotalUser = lazy(() => import("@/components/ChartTotalUser"));
 
 export default function Admin() {
   const { toast } = useToast();
 
-  async function getStatistics() {
+  async function getStatistics(): Promise<StatisticsProps> {
     try {
       const pelatihTari = await getPelatihTari();
       const users = (await getUsers()) as Array<
@@ -90,9 +97,11 @@ export default function Admin() {
           </div>
           <div className="p-6 2xl:space-x-10 mt-10 bg-[#EEEEEE]/70 flex-col 2xl:flex-row flex justify-center items-start rounded-xl">
             <div className="w-full space-y-6">
-              <div className="bg-white w-full rounded-xl drop-shadow-lg p-4">
-                <ChartTotalUser />
-              </div>
+              <Suspense>
+                <div className="bg-white w-full rounded-xl drop-shadow-lg p-4">
+                  <ChartTotalUser data={data} />
+                </div>
+              </Suspense>
               <div className="flex justify-center flex-col sm:flex-row w-full bg-white p-4 drop-shadow-lg rounded-xl items-center">
                 <Calendar className="sm:pr-8 sm:border-r-2 sm:border-[#4C4B4B]" />
                 <div className="p-4">

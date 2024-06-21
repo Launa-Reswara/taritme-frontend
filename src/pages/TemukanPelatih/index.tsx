@@ -1,6 +1,15 @@
 import IsError from "@/components/IsError";
 import IsPending from "@/components/IsPending";
 import Layout from "@/components/Layout";
+import {
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+} from "@/components/ui/command";
 import Image from "@/components/ui/image";
 import { Input } from "@/components/ui/input";
 import { Heading, Paragraph } from "@/components/ui/typography";
@@ -10,11 +19,9 @@ import { toRupiah } from "@/lib/helpers";
 import { PelatihProps } from "@/types";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { ChevronRight, Search } from "lucide-react";
-import { Suspense, lazy, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import slugify from "slugify";
-
-const SearchCommand = lazy(() => import("@/components/SearchCommand"));
 
 export default function TemukanPelatih() {
   const [open, setOpen] = useState<boolean>(false);
@@ -140,9 +147,52 @@ export default function TemukanPelatih() {
           </div>
         </div>
       </Layout>
-      <Suspense>
-        <SearchCommand open={open} setOpen={setOpen} data={data} />
-      </Suspense>
+      <SearchCommand open={open} setOpen={setOpen} data={data} />
     </>
+  );
+}
+
+type SearchCommandProps = {
+  data: PelatihProps[];
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+function SearchCommand({ data, open, setOpen }: SearchCommandProps) {
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === "k" && e.ctrlKey) {
+        e.preventDefault();
+        setOpen((open) => !open);
+      }
+    };
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+  }, [setOpen]);
+
+  const initialData = open ? data : [];
+
+  return (
+    <CommandDialog open={open} onOpenChange={setOpen}>
+      <CommandInput placeholder="Cari Pelatih...." />
+      <CommandList>
+        <CommandEmpty>No results found.</CommandEmpty>
+        <CommandGroup heading="Results">
+          {initialData.map((item) => (
+            <Link to={slugify(item.name, { lower: true })} key={item.id}>
+              <CommandItem>
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  className="mr-2 h-4 w-4"
+                />
+                <span>{item.name}</span>
+              </CommandItem>
+            </Link>
+          ))}
+        </CommandGroup>
+        <CommandSeparator />
+      </CommandList>
+    </CommandDialog>
   );
 }

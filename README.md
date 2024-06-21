@@ -12,6 +12,7 @@
 - React Query
 - Redux Toolkit
 - Contentful
+- Mailerlite
 
 ## Getting Started
 

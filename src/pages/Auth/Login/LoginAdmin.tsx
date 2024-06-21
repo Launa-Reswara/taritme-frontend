@@ -18,6 +18,8 @@ import { useForm } from "react-hook-form";
 
 export default function LoginAdmin() {
   const [isWrongAdminData, setIsWrongAdminData] = useState<boolean>(false);
+  const [errMessage, setErrMessage] = useState<string>("");
+
   const [, setIsAdmin] = useState<boolean>(false);
 
   const { toast } = useToast();
@@ -65,9 +67,16 @@ export default function LoginAdmin() {
             window.location.replace("/admin");
           }, 2000);
         } else {
+          toast({
+            title: "Failed!",
+            description: response.data.message,
+          });
           setIsWrongAdminData(true);
+          setErrMessage(response.data.message);
         }
       } catch (err: any) {
+        setIsWrongAdminData(true);
+        setErrMessage(err.response.data.message);
         toast({ title: "Error!", description: err.response.data.message });
       }
     }
@@ -123,15 +132,18 @@ export default function LoginAdmin() {
                 </div>
                 <div className="flex justify-between items-center w-full">
                   <div className="flex w-full justify-start space-x-2 items-center">
-                    <input type="checkbox" name="ingatkan-saya" id="" />
+                    <input
+                      type="checkbox"
+                      name="ingatkan-saya"
+                      id="ingatkan-saya"
+                    />
                     <Paragraph className="text-xs">Ingatkan saya</Paragraph>
                   </div>
-                  <CustomLink
-                    to="/auth/login/admin"
-                    className="text-xs w-full flex justify-end items-center"
-                  >
-                    Lupa Password?
-                  </CustomLink>
+                  <div className="w-full text-end">
+                    <CustomLink to="/auth/login/admin" className="text-xs">
+                      Lupa Password?
+                    </CustomLink>
+                  </div>
                 </div>
               </div>
               <div className="flex my-10 flex-col justify-center items-center w-full">
@@ -140,8 +152,7 @@ export default function LoginAdmin() {
                 </Button>
                 {isWrongAdminData ? (
                   <Paragraph className="font-medium text-red-500 text-center mt-5">
-                    Username atau password yang kamu masukkan salah! Silahkan
-                    coba lagi.
+                    {errMessage}
                   </Paragraph>
                 ) : null}
               </div>

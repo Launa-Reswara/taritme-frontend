@@ -3,7 +3,9 @@
   <p>Kenali Budaya, Mulai dari Tari!</p>
 </div>
 
-## MVP Features
+![thumbnail](./public/images/thumbnail.png)
+
+## Features
 
 - Temukan Pelatih
 - Arsip Kesenian
@@ -39,15 +41,24 @@
 
 ## Getting Started
 
-- Clone repo ini.
-- Masuk ke folder project, kemudian ketikkan `npm install` untuk menginstall semua dependencies yang diperlukan.
-- Setelah itu, ketik `npm run dev` untuk menjalankan project dan lihat hasilnya di Browser => http://localhost:3000
-- Jika ingin mengetes project ini dengan Docker, silahkan pastikan Docker telah terinstall, dan ketik `docker compose up --build`.
+### A. Prerequisites
+
+- Node.js (Latest Version).
+- Docker.
+
+### B. Process
+
+- Make sure that you've already setup the backend side. 
+- Clone this repo.
+- Go to the project folder, and type `npm install` to install all needed dependencies. 
+- Create a `.env` file. You can check the format in `.env.example` file.
+- After that, type `npm run dev` to run this project. See the result in the Browser => http://localhost:3000.
+- If you want to build this project in Docker Container, just type `docker compose up --build` in your terminal and see the result.
 
 ## Note
 
-- Project ini dideploy di VPS Ubuntu 22.04, menggunakan Nginx sebagai Web Server, PM2 untuk menjalankan + otomasi bagian Backend, dan Cloudflare untuk Subdomain.
-- Project ini menggunakan conventional commits untuk style setiap commit. Silahkan baca [disini](https://www.conventionalcommits.org/en/v1.0.0/) untuk mempelajarinya.
-- Untuk isolated deployment/testing, project ini menggunakan Docker. Silahkan baca [disini](https://www.docker.com/) untuk mengetahui apa itu Docker. Untuk tutorial belajar dasar-dasar Docker, silahkan ke playlist videonya [Pak Eko PZN](https://www.youtube.com/watch?v=3_yxVjV88Zk).
-- Project ini menggunakan Typescript sebagai bahasa utama. Silahkan baca [disini](https://www.typescriptlang.org/) untuk mengetahui apa itu Typescript. Untuk tutorial belajar dasar-dasar Typescript, silahkan ke playlist videonya [Pak Eko PZN](https://www.youtube.com/watch?v=C_C64faSO4c).
-- Untuk E2E (End to End) Testing, project ini menggunakan Cypress. Silahkan baca [dokumentasinya](https://docs.cypress.io/guides/overview/why-cypress) untuk mengetahui lebih dalam tentang Cypress.
+- This project are deployed in a VPS with Ubuntu 22.04 as the operating system, using Nginx as a Web Server, PM2 to run and automate Backend workflow, and Cloudflare for subdomain.
+- We use conventional commits as commit style and rules. If you want to know more about it, [read here](https://www.conventionalcommits.org/en/v1.0.0/).
+- For isolated build/deployment/testing, we use Docker. If you want to know more about it, [read here](https://www.docker.com/).
+- This project are using Typescript as the main programming language for Frontend side. If you want to know more about it, [read here](https://www.typescriptlang.org/).
+- For E2E (End to End) Testing, this project are using Cypress. If you want to know more about it, [read the documentation](https://docs.cypress.io/guides/overview/why-cypress).

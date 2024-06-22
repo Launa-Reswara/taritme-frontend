@@ -111,6 +111,7 @@ export default function LoginAdmin() {
                       placeholder="Masukkan email"
                       name="email"
                       className="mt-2 border-spanish-gray rounded-full px-6 py-7"
+                      data-cy="input-password"
                     />
                     <Paragraph className="font-medium mt-2 text-xs">
                       {errors.email?.message}
@@ -124,6 +125,7 @@ export default function LoginAdmin() {
                       placeholder="Masukkan password"
                       name="password"
                       className="mt-2 border-spanish-gray rounded-full px-6 py-7"
+                      data-cy="input-password"
                     />
                     <Paragraph className="font-medium mt-2 text-xs">
                       {errors.password?.message}
@@ -136,6 +138,7 @@ export default function LoginAdmin() {
                       type="checkbox"
                       name="ingatkan-saya"
                       id="ingatkan-saya"
+                      data-cy="checkbox-ingatkan-saya"
                     />
                     <Paragraph className="text-xs">Ingatkan saya</Paragraph>
                   </div>

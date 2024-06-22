@@ -45,7 +45,9 @@ export default function ArsipKesenian() {
   return (
     <Layout className="md:flex-row flex-col justify-between items-start">
       <div className="xl:mr-28 md:mr-14">
-        <Heading as="h1">Arsip Kesenian</Heading>
+        <Heading as="h1" data-cy="title">
+          Arsip Kesenian
+        </Heading>
         <div className="flex flex-col space-y-14 my-10 justify-start items-start">
           {data.items
             .sort(
@@ -53,8 +55,12 @@ export default function ArsipKesenian() {
                 (new Date(b.fields.date) as any) -
                 (new Date(a.fields.date) as any)
             )
-            .map((item: any) => (
-              <div key={item.sys.id} className="xl:w-[821px]">
+            .map((item: any, index: any) => (
+              <div
+                key={item.sys.id}
+                className="xl:w-[821px]"
+                data-cy={`article-arsip-kesenian-${index + 1}`}
+              >
                 <div className="flex justify-start items-center w-fit space-x-4">
                   <Image
                     src="/images/leonardo-da-vince.svg"

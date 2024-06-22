@@ -17,7 +17,9 @@ export default function ReadingTime({ content }: { content: string }) {
         draggable={false}
         className="w-6 h-6"
       />
-      <Paragraph className="text-sm">{memoizedReadingTime}</Paragraph>
+      <Paragraph className="text-sm line-clamp-1">
+        {memoizedReadingTime}
+      </Paragraph>
     </div>
   );
 }

@@ -107,8 +107,11 @@ export default function Registration() {
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="mt-20 xl:px-9 w-full"
+            data-cy="form-registration"
           >
-            <Heading as="h1">Buat Akun!</Heading>
+            <Heading as="h1" data-cy="title">
+              Buat Akun!
+            </Heading>
             <div className="mt-12 flex w-full justify-center items-center flex-col">
               <div className="flex justify-start items-center space-y-6 flex-col w-full">
                 <div className="w-full space-y-5">
@@ -121,6 +124,7 @@ export default function Registration() {
                       placeholder="Masukkan nama"
                       name="name"
                       className="mt-2 rounded-full px-6 py-7 border-spanish-gray"
+                      data-cy="input-nama-lengkap"
                     />
                     <Paragraph className="text-xs font-medium mt-2">
                       {errors.name?.message}
@@ -135,6 +139,7 @@ export default function Registration() {
                       placeholder="Masukkan email"
                       name="email"
                       className="mt-2 rounded-full px-6 py-7 border-spanish-gray"
+                      data-cy="input-email"
                     />
                     <Paragraph className="text-xs font-medium mt-2">
                       {errors.email?.message}
@@ -150,6 +155,7 @@ export default function Registration() {
                       placeholder="Masukkan password"
                       name="password"
                       className="mt-2 rounded-full px-6 py-7 border-spanish-gray"
+                      data-cy="input-password"
                     />
                     <Paragraph className="text-xs font-medium mt-2">
                       {errors.password?.message}
@@ -158,7 +164,12 @@ export default function Registration() {
                 </div>
                 <div className="flex justify-start items-center w-full">
                   <div className="flex w-full justify-start space-x-2 items-center">
-                    <input type="checkbox" name="agreement" required />
+                    <input
+                      type="checkbox"
+                      name="agreement"
+                      required
+                      data-cy="checkbox-terms"
+                    />
                     <Paragraph className="text-xs">
                       I agree to the terms of service and privacy and policy
                     </Paragraph>
@@ -169,6 +180,7 @@ export default function Registration() {
                 <Button
                   type="submit"
                   className="bg-secondary-color text-black hover:bg-secondary-color/90 rounded-3xl w-72 px-4 py-7"
+                  data-cy="button-daftar"
                 >
                   <Paragraph>Daftar</Paragraph>
                 </Button>

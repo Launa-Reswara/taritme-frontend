@@ -189,7 +189,7 @@ export default function Home() {
                     {data?.items.map((item: any) => (
                       <CarouselItem
                         key={item.sys.id}
-                        className="basis-1/3 min-w-[250px]"
+                        className="basis-1/3 min-w-[250px] w-full"
                       >
                         <Card className="p-4 rounded-xl md:w-full max-w-full bg-white">
                           <Image
@@ -203,7 +203,7 @@ export default function Home() {
                                 item.fields.content
                               ).toString()}
                             />
-                            <Paragraph className="font-medium mt-1">
+                            <Paragraph className="font-medium mt-1 line-clamp-1">
                               {item.fields.title}
                             </Paragraph>
                             <div className="flex mt-2 justify-center items-center space-x-2 w-fit">
@@ -211,7 +211,9 @@ export default function Home() {
                                 src="/images/leonardo-da-vince.svg"
                                 alt="author"
                               />
-                              <Paragraph>{item.fields.author}</Paragraph>
+                              <Paragraph className="line-clamp-1">
+                                {item.fields.author}
+                              </Paragraph>
                             </div>
                             <Link to={`/arsip-kesenian/${item.sys.id}`}>
                               <Button className="bg-primary-color flex justify-center items-center space-x-2 rounded-full mt-8 text-white hover:bg-primary-black">

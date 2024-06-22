@@ -359,7 +359,7 @@ function FormEditProfile({ profile }: { profile: JoinProps }) {
         </div>
       </div>
 
-      <div className="mt-10 flex my-10 justify-center space-x-10 items-center w-full">
+      <div className="flex flex-col sm:flex-row my-10 justify-center space-y-5 sm:space-y-0 sm:space-x-10 items-center w-full">
         <Button
           type="submit"
           className="text-black bg-secondary-color w-72 hover:bg-secondary-color/90 rounded-3xl space-x-3 px-4 py-6"

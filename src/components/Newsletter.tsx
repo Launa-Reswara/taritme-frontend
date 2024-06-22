@@ -53,7 +53,7 @@ export default function Newsletter() {
   }
 
   return (
-    <div className="w-full md:w-fit">
+    <div className="w-full md:w-fit" data-cy="newsletter">
       <Heading as="h2" className="font-normal hidden md:block">
         Newsletter
       </Heading>

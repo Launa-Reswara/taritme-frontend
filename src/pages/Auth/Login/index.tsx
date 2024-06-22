@@ -107,8 +107,11 @@ export default function Login() {
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="mt-20 xl:px-9 w-full"
+              data-cy="form-login-account"
             >
-              <Heading as="h1">Selamat Datang</Heading>
+              <Heading as="h1" data-cy="title">
+                Selamat Datang
+              </Heading>
               <div className="mt-12 flex w-full justify-center items-center flex-col">
                 <div className="flex justify-start items-center space-y-6 flex-col w-full">
                   <div className="w-full space-y-5">
@@ -119,6 +122,7 @@ export default function Login() {
                         className="mt-2 border-spanish-gray rounded-full px-6 py-7"
                         type="text"
                         {...register("email", { required: true })}
+                        data-cy="input-email"
                       />
                       <Paragraph className="font-medium mt-2 text-xs">
                         {errors.email?.message}
@@ -131,6 +135,7 @@ export default function Login() {
                         type="password"
                         className="mt-2 border-spanish-gray rounded-full px-6 py-7"
                         {...register("password", { required: true })}
+                        data-cy="input-password"
                       />
                       <Paragraph className="font-medium mt-2 text-xs">
                         {errors.password?.message}
@@ -139,7 +144,11 @@ export default function Login() {
                   </div>
                   <div className="flex justify-between items-center w-full">
                     <div className="flex w-full justify-start space-x-2 items-center">
-                      <input type="checkbox" name="ingatkan-saya" />
+                      <input
+                        type="checkbox"
+                        name="ingatkan-saya"
+                        data-cy="checkbox-ingatkan-saya"
+                      />
                       <Paragraph className="text-xs">Ingatkan saya</Paragraph>
                     </div>
                     <div className="w-full text-end">
@@ -153,6 +162,7 @@ export default function Login() {
                   <Button
                     className="text-primary-black bg-secondary-color hover:bg-secondary-color/90 rounded-3xl w-72 px-4 py-7"
                     type="submit"
+                    data-cy="button-masuk"
                   >
                     <Paragraph>Masuk</Paragraph>
                   </Button>

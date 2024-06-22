@@ -48,6 +48,7 @@ export default function TemukanPelatih() {
           <Heading
             as="h1"
             className="text-white text-lg md:text-xl lg:text-2xl xl:text-3xl"
+            data-cy="title"
           >
             Temukan pelatih tari yang cocok untukmu
           </Heading>
@@ -56,6 +57,7 @@ export default function TemukanPelatih() {
               className="bg-white w-fit md:w-[487px] rounded-full relative"
               placeholder="Cari Pelatih"
               onFocus={() => setOpen((prev) => !prev)}
+              data-cy="searchbar"
             />
             <Search className="absolute right-4" />
           </div>
@@ -65,8 +67,12 @@ export default function TemukanPelatih() {
             Rekomendasi untukmu
           </Heading>
           <div className="grid grid-cols-1 sm:grid-cols-2 w-full gap-x-9 gap-y-24 lg:grid-cols-3 xl:grid-cols-4 grid-rows-1">
-            {pelatih.slice(0, 3).map((item) => (
-              <Link to={slugify(item.name, { lower: true })} key={item.id}>
+            {pelatih.slice(0, 3).map((item, index) => (
+              <Link
+                to={slugify(item.name, { lower: true })}
+                key={item.id}
+                data-cy={`card-rekomendasi-pelatih-tari-${index + 1}`}
+              >
                 <div className="bg-primary-color p-5 h-[352px] flex justify-center items-center w-full relative rounded-xl">
                   <Image
                     src={item.image}
@@ -108,8 +114,12 @@ export default function TemukanPelatih() {
             Pelatih lainnya
           </Heading>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-9 gap-y-24 lg:grid-cols-3 xl:grid-cols-4 grid-rows-1">
-            {pelatih.slice(3, 8).map((item) => (
-              <Link to={slugify(item.name, { lower: true })} key={item.id}>
+            {pelatih.slice(3, 8).map((item, index) => (
+              <Link
+                to={slugify(item.name, { lower: true })}
+                key={item.id}
+                data-cy={`card-lainnya-pelatih-tari-${index + 1}`}
+              >
                 <div className="bg-primary-color p-5 h-[352px] flex justify-center items-center w-full relative rounded-xl">
                   <Image
                     src={item.image}

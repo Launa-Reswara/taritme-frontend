@@ -23,7 +23,7 @@ export const penilaianSchema = z.object({
 export const ikutiKursusSchema = z.object({
   tgl_kursus: z.string().date().min(1),
   nama: z.string().min(1),
-  no_hp: z.string().min(12),
+  no_hp: z.string().min(12).max(12),
   daerah: z.string().min(1),
 });
 

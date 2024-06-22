@@ -52,6 +52,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
               className="bg-center md:block h-full md:row-span-2 hidden bg-cover rounded-xl bg-abstract-home-image bg-no-repeat"
+              data-cy="image-abstract"
             ></m.div>
             <m.div
               transition={{ duration: 0.6 }}
@@ -60,6 +61,7 @@ export default function Home() {
               exit={{ opacity: 0 }}
               className="bg-secondary-color hover:cursor-pointer h-full md:col-span-2 rounded-xl px-7 py-5"
               onClick={() => navigate("/komunitas")}
+              data-cy="card-komunitas"
             >
               <Heading as="h1" className="font-medium text-primary-black">
                 Komunitas
@@ -100,6 +102,7 @@ export default function Home() {
               exit={{ opacity: 0 }}
               onClick={() => navigate("/temukan-pelatih")}
               className="w-full xl:col-span-1 md:col-span-2 hover:cursor-pointer"
+              data-cy="card-temukan-pelatih"
             >
               <Image
                 src="/images/pelatih-tari-home.png"
@@ -125,6 +128,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
               className="hidden md:block h-full w-full rounded-xl"
+              data-cy="image-payungtari"
             >
               <Image
                 src="/images/payung-tari.png"
@@ -133,7 +137,10 @@ export default function Home() {
                 draggable={false}
               />
             </m.div>
-            <div className="w-full md:col-span-2 h-full relative">
+            <div
+              className="w-full md:col-span-2 h-full relative"
+              data-cy="card-arsip-kesenian"
+            >
               <m.div
                 transition={{ duration: 0.6 }}
                 initial={{ opacity: 0, x: -20 }}

@@ -13,6 +13,7 @@
 - Redux Toolkit
 - Contentful
 - Mailerlite
+- Cypress
 
 ## Getting Started
 

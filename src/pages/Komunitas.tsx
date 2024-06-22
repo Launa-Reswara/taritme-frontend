@@ -45,7 +45,10 @@ export default function Komunitas() {
         <Heading as="h1" className="text-center">
           Komunitas
         </Heading>
-        <div className="relative w-full bg-cover bg-no-repeat mt-10 mb-10 p-4 rounded-xl flex justify-center items-center drop-shadow-lg h-[200px] sm:h-[355px] bg-rumah-gadang-komunitas-image mx-auto my-4">
+        <div
+          className="relative w-full bg-cover bg-no-repeat mt-10 mb-10 p-4 rounded-xl flex justify-center items-center drop-shadow-lg h-[200px] sm:h-[355px] bg-rumah-gadang-komunitas-image mx-auto my-4"
+          data-cy="hero"
+        >
           <div className="text-center">
             <Heading
               as="h2"
@@ -59,9 +62,16 @@ export default function Komunitas() {
           </div>
         </div>
         {/* Looping Kartu */}
-        <div className="relative mx-auto w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+        <div
+          className="relative mx-auto w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10"
+          data-cy="list-card-komunitas"
+        >
           {komunitas.map((item) => (
-            <Card key={item.id} className="p-5 rounded-xl bg-white">
+            <Card
+              key={item.id}
+              className="p-5 rounded-xl bg-white"
+              data-cy={`card-komunitas-${item.id}`}
+            >
               <div className="overflow-hidden rounded-xl">
                 <Image
                   src={item.image}

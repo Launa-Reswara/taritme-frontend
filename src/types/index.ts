@@ -128,6 +128,7 @@ export type RiwayatKursusProps = {
   email: string;
   id: number;
   order_id: string;
+  order_date: string;
   pelatih_tari_description: string;
   pelatih_tari_id: number;
   pelatih_tari_image: string;

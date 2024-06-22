@@ -49,7 +49,6 @@ export default function IkutiKursus() {
       tgl_kursus: "",
       nama: "",
       no_hp: "",
-      email: "",
       daerah: "Pilih Kota/Kabupaten",
       lama_sewa: "1",
     },
@@ -91,10 +90,10 @@ export default function IkutiKursus() {
     // change lama sewa from string to number
     const lamaSewa = Number(getValues("lama_sewa"));
 
-    // calculation price
+    // calculation price with discount every modulo 5
     const priceAfterDiskon =
       lamaSewa % 5 === 0
-        ? pelatihTari.price * lamaSewa - 50000 * (lamaSewa / 5)
+        ? pelatihTari.price * lamaSewa - 50000
         : pelatihTari.price * lamaSewa;
 
     async function submitDataTransaction(): Promise<void> {
@@ -111,7 +110,6 @@ export default function IkutiKursus() {
             pelatih_tari_name: slugify(pelatihName, { lower: true }),
             customer_details: {
               name: getValues("nama"),
-              email: getValues("email"),
               phone: getValues("no_hp"),
               city: getValues("daerah"),
               gross_amount: priceAfterDiskon,
@@ -125,9 +123,6 @@ export default function IkutiKursus() {
                 brand: "Taritme",
                 category: "Sewa instruktur tari",
                 merchant_name: "Launa Reswara",
-                tenor: "12",
-                code_plan: "000",
-                mid: "123456",
                 url: `${
                   CONDITION === "development"
                     ? DEVELOPMENT_API_URL
@@ -263,25 +258,6 @@ export default function IkutiKursus() {
                   </div>
                   <div className="w-full">
                     <label
-                      htmlFor="email"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Email
-                    </label>
-                    <Input
-                      {...register("email")}
-                      type="email"
-                      placeholder="Email"
-                      className="mt-1 w-full border border-spanish-gray rounded-full p-2"
-                    />
-                    <Paragraph className="text-xs font-medium mt-2">
-                      {errors.no_hp?.message}
-                    </Paragraph>
-                  </div>
-                </div>
-                <div className="flex justify-start items-start w-full xl:space-x-4 flex-col xl:flex-row">
-                  <div className="w-full">
-                    <label
                       htmlFor="bukti-pembayaran"
                       className="block text-sm font-medium text-gray-700"
                     >
@@ -297,6 +273,8 @@ export default function IkutiKursus() {
                       {errors.no_hp?.message}
                     </Paragraph>
                   </div>
+                </div>
+                <div className="flex justify-start items-start w-full xl:space-x-4 flex-col xl:flex-row">
                   <div className="w-full">
                     <label
                       htmlFor="city"

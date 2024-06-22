@@ -144,6 +144,9 @@ export default function IkutiKursus() {
           window.snap.pay(response.data.token, {
             onSuccess: (res: any) => {
               addRiwayatKursus(res.order_id);
+              window.location.replace(
+                `/temukan-pelatih/${name}/ikuti-kursus/penilaian?order_id=${res.order_id}&status_code=${res.status_code}&transaction_status=${res.transaction_status}`
+              );
             },
           });
         } else {

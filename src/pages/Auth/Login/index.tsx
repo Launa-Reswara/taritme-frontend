@@ -21,7 +21,7 @@ import { useNavigate } from "react-router-dom";
 export default function Login() {
   const [isWrongLoginData, setIsWrongLoginData] = useState<boolean>(false);
   const [errMessage, setErrMessage] = useState<string>("");
-  const [isHidePassword, setIsHidePassword] = useState<boolean>(false);
+  const [isHidePassword, setIsHidePassword] = useState<boolean>(true);
 
   const { toast } = useToast();
 
@@ -94,7 +94,10 @@ export default function Login() {
         exit={{ opacity: 0 }}
         className="flex justify-start min-h-svh items-start w-full"
       >
-        <div className="hidden md:block fixed left-0 top-0 md:w-1/2 min-h-svh bg-cover bg-center bg-no-repeat bg-login-side-image"></div>
+        <div
+          className="hidden md:block fixed left-0 top-0 md:w-1/2 min-h-svh bg-cover bg-center bg-no-repeat bg-login-side-image"
+          data-cy="bg-login-side-image"
+        ></div>
         <div className="flex justify-end items-center w-full">
           <div className="w-full md:w-1/2 py-10 px-6 xl:px-16">
             <button

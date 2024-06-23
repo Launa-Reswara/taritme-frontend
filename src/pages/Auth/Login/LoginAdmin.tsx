@@ -90,12 +90,16 @@ export default function LoginAdmin() {
       exit={{ opacity: 0 }}
       className="flex justify-start min-h-svh items-start w-full"
     >
-      <div className="hidden md:block fixed left-0 top-0 md:w-1/2 min-h-svh bg-cover bg-center bg-no-repeat bg-login-side-image"></div>
+      <div
+        className="hidden md:block fixed left-0 top-0 md:w-1/2 min-h-svh bg-cover bg-center bg-no-repeat bg-login-side-image"
+        data-cy="bg-login-side-image"
+      ></div>
       <div className="flex justify-end items-center w-full">
         <div className="w-full md:w-1/2 flex justify-center items-center min-h-svh px-6 xl:px-16">
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="mt-20 xl:px-9 w-full"
+            data-cy="form-login-admin"
           >
             <Heading as="h1" data-cy="title">
               Selamat Datang
@@ -163,7 +167,11 @@ export default function LoginAdmin() {
                 </div>
               </div>
               <div className="flex my-10 flex-col justify-center items-center w-full">
-                <Button className="text-black bg-secondary-color hover:bg-secondary-color/90 rounded-3xl w-72 px-4 py-7">
+                <Button
+                  type="submit"
+                  className="text-black bg-secondary-color hover:bg-secondary-color/90 rounded-3xl w-72 px-4 py-7"
+                  data-cy="button-masuk"
+                >
                   <Paragraph>Masuk</Paragraph>
                 </Button>
                 {isWrongAdminData ? (

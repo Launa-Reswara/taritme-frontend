@@ -5,6 +5,9 @@ describe("Registration page", () => {
     // test title
     cy.get(`[data-cy="title"]`).should("be.visible");
 
+    // test side image
+    cy.get(`[data-cy="bg-registration-side-image"]`).should("be.visible");
+
     // test form and input
     cy.get(`[data-cy="form-registration"]`)
       .should("be.visible")

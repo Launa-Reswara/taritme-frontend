@@ -2,7 +2,10 @@ describe("Login user page", () => {
   it("Should display login user page and test it", () => {
     cy.visit("http://localhost:3000/auth/login");
 
+    cy.get(`[data-cy="bg-login-side-image"]`).should("be.visible");
+
     cy.get(`[data-cy="title"]`);
+
     cy.get(`[data-cy="form-login-account"]`)
       .should("be.visible")
       .then(() => {

@@ -224,7 +224,10 @@ export default function Registration() {
             </div>
           </form>
         </div>
-        <div className="hidden md:block fixed right-0 top-0 md:w-1/2 min-h-svh bg-cover bg-center bg-no-repeat bg-registration-side-image" />
+        <div
+          className="hidden md:block fixed right-0 top-0 md:w-1/2 min-h-svh bg-cover bg-center bg-no-repeat bg-registration-side-image"
+          data-cy="bg-registration-side-image"
+        />
       </m.div>
     </>
   );

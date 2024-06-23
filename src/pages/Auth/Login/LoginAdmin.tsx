@@ -13,14 +13,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { AxiosResponse } from "axios";
 import { m } from "framer-motion";
 import Cookies from "js-cookie";
+import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function LoginAdmin() {
   const [isWrongAdminData, setIsWrongAdminData] = useState<boolean>(false);
   const [errMessage, setErrMessage] = useState<string>("");
-
-  const [, setIsAdmin] = useState<boolean>(false);
+  const [isHidePassword, setIsHidePassword] = useState<boolean>(true);
 
   const { toast } = useToast();
 
@@ -55,8 +55,6 @@ export default function LoginAdmin() {
         if (response.status === 200) {
           Cookies.set("token-admin", response.data.token);
           setIsWrongAdminData(false);
-
-          setIsAdmin(true);
 
           toast({
             title: "Success!",
@@ -99,7 +97,9 @@ export default function LoginAdmin() {
             onSubmit={handleSubmit(onSubmit)}
             className="mt-20 xl:px-9 w-full"
           >
-            <Heading as="h1">Selamat Datang</Heading>
+            <Heading as="h1" data-cy="title">
+              Selamat Datang
+            </Heading>
             <div className="mt-12 flex w-full justify-center items-center flex-col">
               <div className="flex justify-start items-center space-y-6 flex-col w-full">
                 <div className="w-full space-y-5">
@@ -111,7 +111,7 @@ export default function LoginAdmin() {
                       placeholder="Masukkan email"
                       name="email"
                       className="mt-2 border-spanish-gray rounded-full px-6 py-7"
-                      data-cy="input-password"
+                      data-cy="input-email"
                     />
                     <Paragraph className="font-medium mt-2 text-xs">
                       {errors.email?.message}
@@ -119,14 +119,27 @@ export default function LoginAdmin() {
                   </div>
                   <div className="w-full">
                     <label htmlFor="password">Password*</label>
-                    <Input
-                      type="password"
-                      {...register("password", { required: true })}
-                      placeholder="Masukkan password"
-                      name="password"
-                      className="mt-2 border-spanish-gray rounded-full px-6 py-7"
-                      data-cy="input-password"
-                    />
+                    <div className="relative mt-2 flex justify-center items-center">
+                      <Input
+                        type={isHidePassword ? "password" : "text"}
+                        {...register("password", { required: true })}
+                        placeholder="Masukkan password"
+                        name="password"
+                        className="border-spanish-gray rounded-full px-6 py-7"
+                        data-cy="input-password"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setIsHidePassword(!isHidePassword)}
+                        className="right-4 absolute text-spanish-gray"
+                      >
+                        {isHidePassword ? (
+                          <EyeOff size={26} />
+                        ) : (
+                          <Eye size={26} />
+                        )}
+                      </button>
+                    </div>
                     <Paragraph className="font-medium mt-2 text-xs">
                       {errors.password?.message}
                     </Paragraph>

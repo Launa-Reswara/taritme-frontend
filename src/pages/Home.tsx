@@ -46,14 +46,28 @@ export default function Home() {
           )}
         >
           <div className="md:grid md:grid-cols-3 w-full flex flex-col justify-center items-center gap-4 xl:space-y-0 xl:grid-cols-4 md:grid-rows-1">
-            <m.div
-              transition={{ duration: 0.6 }}
-              initial={{ opacity: 0, y: -50 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              className="bg-center md:block h-full md:row-span-2 hidden bg-cover rounded-xl bg-abstract-home-image bg-no-repeat"
-              data-cy="image-abstract"
-            ></m.div>
+            <div className="h-full hidden md:flex flex-col space-y-4 row-span-2">
+              <m.div
+                transition={{ duration: 0.6 }}
+                initial={{ opacity: 0, y: -50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                className="bg-center md:block h-full hidden bg-cover rounded-xl bg-abstract-home-image bg-no-repeat"
+                data-cy="image-abstract"
+              ></m.div>
+              <m.div
+                transition={{ duration: 0.6 }}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                className="bg-primary-color hidden md:block h-[200px] rounded-lg py-6 px-4"
+              >
+                <Heading as="h2" className="text-white font-normal">
+                  Kesenian adalah jalan hidup yang abadi
+                </Heading>
+                <Paragraph className="text-white mt-2">- Cak Nun</Paragraph>
+              </m.div>
+            </div>
             <m.div
               transition={{ duration: 0.6 }}
               initial={{ opacity: 0, y: 50 }}

@@ -13,6 +13,7 @@ import { BaseResponseApiProps } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { m } from "framer-motion";
+import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -21,6 +22,7 @@ export default function Registration() {
   const [isRegisteredAccount, setIsRegisteredAccount] =
     useState<boolean>(false);
   const [errMessage, setErrMessage] = useState<string>("");
+  const [isHidePassword, setIsHidePassword] = useState<boolean>(true);
 
   const { toast } = useToast();
 
@@ -149,14 +151,27 @@ export default function Registration() {
                     <label htmlFor="password">
                       <Paragraph>Password*</Paragraph>
                     </label>
-                    <Input
-                      {...register("password", { required: true })}
-                      type="password"
-                      placeholder="Masukkan password"
-                      name="password"
-                      className="mt-2 rounded-full px-6 py-7 border-spanish-gray"
-                      data-cy="input-password"
-                    />
+                    <div className="relative flex justify-center items-center mt-2">
+                      <Input
+                        {...register("password", { required: true })}
+                        type={isHidePassword ? "password" : "text"}
+                        placeholder="Masukkan password"
+                        name="password"
+                        className="rounded-full px-6 py-7 border-spanish-gray"
+                        data-cy="input-password"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setIsHidePassword(!isHidePassword)}
+                        className="right-4 absolute text-spanish-gray"
+                      >
+                        {isHidePassword ? (
+                          <EyeOff size={26} />
+                        ) : (
+                          <Eye size={26} />
+                        )}
+                      </button>
+                    </div>
                     <Paragraph className="text-xs font-medium mt-2">
                       {errors.password?.message}
                     </Paragraph>

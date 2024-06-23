@@ -5,6 +5,10 @@
 
 ![thumbnail](./public/images/thumbnail.png)
 
+## About
+
+Our website is based on an online platform that is presented as an innovative solution by making it easier for users to learn more about Indonesian culture, especially finding professional dance trainers, providing informative articles about traditional dance, and offering a community platform for traditional dance lovers to share experiences and make friends. Users can learn to explore traditional dances more easily, help preserve culture, and build a strong community network. Taritme is a complete solution for learning to understand and preserve traditional dance.
+
 ## Features
 
 - Temukan Pelatih
@@ -15,7 +19,7 @@
 
 |                                                                      |                                                                      |
 | :------------------------------------------------------------------: | :------------------------------------------------------------------: |
-| ![pic 1](./public/docs/Screenshot%20from%202024-06-21%2023-21-22.png) | ![pic 2](./public/docs/Screenshot%20from%202024-06-21%2023-21-30.png) |
+| ![pic 1](./public/docs/Screenshot%20from%202024-06-23%2006-36-43.png) | ![pic 2](./public/docs/Screenshot%20from%202024-06-21%2023-21-30.png) |
 | ![pic 3](./public/docs/Screenshot%20from%202024-06-21%2023-21-38.png) | ![pic 4](./public/docs/Screenshot%20from%202024-06-21%2023-21-46.png) |
 | ![pic 5](./public/docs/Screenshot%20from%202024-06-21%2023-22-03.png) | ![pic 6](./public/docs/Screenshot%20from%202024-06-21%2023-22-13.png) |
 | ![pic 7](./public/docs/Screenshot%20from%202024-06-21%2023-25-02.png) | ![pic 8](./public/docs/Screenshot%20from%202024-06-21%2023-25-09.png) |

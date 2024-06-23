@@ -13,6 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { AxiosResponse } from "axios";
 import { m } from "framer-motion";
 import Cookies from "js-cookie";
+import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -20,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 export default function Login() {
   const [isWrongLoginData, setIsWrongLoginData] = useState<boolean>(false);
   const [errMessage, setErrMessage] = useState<string>("");
+  const [isHidePassword, setIsHidePassword] = useState<boolean>(false);
 
   const { toast } = useToast();
 
@@ -130,13 +132,26 @@ export default function Login() {
                     </div>
                     <div className="w-full">
                       <label htmlFor="password">Password*</label>
-                      <Input
-                        placeholder="Masukkan password"
-                        type="password"
-                        className="mt-2 border-spanish-gray rounded-full px-6 py-7"
-                        {...register("password", { required: true })}
-                        data-cy="input-password"
-                      />
+                      <div className="relative mt-2 flex justify-center items-center">
+                        <Input
+                          placeholder="Masukkan password"
+                          type={isHidePassword ? "password" : "text"}
+                          className="border-spanish-gray rounded-full px-6 py-7"
+                          {...register("password", { required: true })}
+                          data-cy="input-password"
+                        />
+                        <button
+                          type="button"
+                          className="absolute right-4 text-spanish-gray"
+                          onClick={() => setIsHidePassword(!isHidePassword)}
+                        >
+                          {isHidePassword ? (
+                            <EyeOff size={26} />
+                          ) : (
+                            <Eye size={26} />
+                          )}
+                        </button>
+                      </div>
                       <Paragraph className="font-medium mt-2 text-xs">
                         {errors.password?.message}
                       </Paragraph>

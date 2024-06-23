@@ -84,7 +84,7 @@ export default function DetailArsipKesenian() {
           </button>
         </div>
       </div>
-      <div className="prose prose-gray mt-10 prose-lg max-w-full prose-h1:text-[32px] prose-h2:text-2xl prose-h3:text-xl prose-h4:text-lg prose-headings:font-normal w-full">
+      <div className="prose prose-gray prose-base lg:prose-lg mt-10 max-w-full prose-h1:text-[32px] prose-h2:text-2xl prose-h3:text-xl prose-h4:text-lg prose-headings:font-normal w-full">
         {documentToReactComponents(data.fields.content, {
           renderNode: {
             [BLOCKS.EMBEDDED_ASSET]: (node) => (

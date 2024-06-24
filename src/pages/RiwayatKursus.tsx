@@ -64,13 +64,14 @@ export default function RiwayatKursus() {
                       addSuffix: true,
                     })}
                   </Paragraph>
-                  <div className="w-full justify-center md:justify-end md:items-end items-center flex">
+                  <div className="w-full justify-end items-end flex">
                     <Link
                       to={`/temukan-pelatih/${slugify(item.pelatih_tari_name, {
                         lower: true,
                       })}/ikuti-kursus/penilaian`}
+                      className="w-fit mt-4"
                     >
-                      <Button className="text-primary-black bg-secondary-color hover:bg-secondary-color/90 rounded-full w-full md:w-72 px-4 py-7">
+                      <Button className="text-primary-black bg-secondary-color hover:bg-secondary-color/90 rounded-full w-full md:w-72 px-6 py-7">
                         <Paragraph>Beri Penilaian</Paragraph>
                       </Button>
                     </Link>

@@ -13,7 +13,9 @@ import { normalizeString, toRupiah } from "@/lib/helpers";
 import {
   CONDITION,
   DEVELOPMENT_API_URL,
+  DEVELOPMENT_URL,
   PRODUCTION_API_URL,
+  PRODUCTION_URL,
 } from "@/lib/utils/constants";
 import { daerah } from "@/lib/utils/daerah";
 import { ikutiKursusSchema } from "@/lib/utils/schemas";
@@ -145,7 +147,13 @@ export default function IkutiKursus() {
             onSuccess: (res: any) => {
               addRiwayatKursus(res.order_id);
               window.location.replace(
-                `/temukan-pelatih/${name}/ikuti-kursus/penilaian?order_id=${res.order_id}&status_code=${res.status_code}&transaction_status=${res.transaction_status}`
+                `${
+                  CONDITION === "development" ? DEVELOPMENT_URL : PRODUCTION_URL
+                }/temukan-pelatih/${name}/ikuti-kursus/penilaian?order_id=${
+                  res.order_id
+                }&status_code=${res.status_code}&transaction_status=${
+                  res.transaction_status
+                }`
               );
             },
           });

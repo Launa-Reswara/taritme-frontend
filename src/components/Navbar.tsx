@@ -92,8 +92,8 @@ export default function Navbar() {
         </ul>
         <div className="flex justify-center items-center space-x-3">
           <DropdownMenu>
-            <DropdownMenuTrigger asChild className="block lg:hidden">
-              <Button variant="outline">
+            <DropdownMenuTrigger asChild className="lg:hidden inline-flex">
+              <Button type="button" variant="outline" size="icon">
                 <Menu />
               </Button>
             </DropdownMenuTrigger>

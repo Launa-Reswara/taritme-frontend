@@ -190,6 +190,7 @@ export default function Login() {
                     <div className="w-full h-[1px] bg-primary-black/20"></div>
                   </div>
                   <Button
+                    type="button"
                     variant="outline"
                     className="flex justify-center px-4 w-72 py-7 rounded-3xl items-center space-x-2 border-spanish-gray"
                   >

@@ -80,7 +80,9 @@ export default function RiwayatKursus() {
             ))}
           </div>
         ) : (
-          <Paragraph className="mt-5">Tidak ada data!</Paragraph>
+          <Paragraph className="mt-5">
+            Kamu belum memesan jasa pelatih tari!
+          </Paragraph>
         )}
       </div>
     </Layout>

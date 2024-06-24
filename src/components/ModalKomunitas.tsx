@@ -7,6 +7,7 @@ import { Button } from "./ui/button";
 import Image from "./ui/image";
 import { Heading, Paragraph } from "./ui/typography";
 import { differenceInYears } from "date-fns";
+import { Link } from "react-router-dom";
 
 export default function ModalKomunitas({
   image,
@@ -61,18 +62,26 @@ export default function ModalKomunitas({
           <div className="flex flex-col justify-center items-start">
             <Paragraph className="font-medium">Temukan Kami</Paragraph>
             <div className="flex justify-center items-center mt-2 w-fit space-x-4">
-              <button>
-                <Image src="/images/whatsapp.svg" alt="whatsapp" />
-              </button>
-              <button>
-                <Image src="/images/instagram.svg" alt="instagram" />
-              </button>
-              <button>
-                <Image src="/images/facebook.svg" alt="facebook" />
-              </button>
-              <button>
-                <Image src="/images/twitter.svg" alt="twitter" />
-              </button>
+              <Link to="">
+                <button>
+                  <Image src="/images/whatsapp.svg" alt="whatsapp" />
+                </button>
+              </Link>
+              <Link to="">
+                <button>
+                  <Image src="/images/instagram.svg" alt="instagram" />
+                </button>
+              </Link>
+              <Link to="">
+                <button>
+                  <Image src="/images/facebook.svg" alt="facebook" />
+                </button>
+              </Link>
+              <Link to="">
+                <button>
+                  <Image src="/images/twitter.svg" alt="twitter" />
+                </button>
+              </Link>
             </div>
           </div>
         </div>

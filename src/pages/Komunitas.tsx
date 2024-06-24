@@ -84,7 +84,7 @@ export default function Komunitas() {
                 <Heading as="h3" className="font-medium text-primary/70 mt-4">
                   {item.name}
                 </Heading>
-                <Paragraph className="text-sm text-gray-600 mt-2">
+                <Paragraph className="text-gray-600 mt-2">
                   {item.description}
                 </Paragraph>
                 <Button
